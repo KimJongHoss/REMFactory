@@ -20,7 +20,7 @@ namespace REMFactory
         public async Task getPanel2Data()
         {
             // Define data path
-            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장 시간별 전력사용량_20230930.csv");
+            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
 
             // Load the data into the data frame
             var df = DataFrame.LoadCsv(dataPath);
