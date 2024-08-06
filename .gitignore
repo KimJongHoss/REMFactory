@@ -190,6 +190,7 @@ git_stats/*
 StyleCop.Cache
 bin
 obj
+.vs
 
 # Allow specific CSV files in net8.0-windows directory
 !bin/
