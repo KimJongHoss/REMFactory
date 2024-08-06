@@ -15,10 +15,12 @@ namespace REMFactory
 {
     public partial class MainWindow : Window
     {
+        private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+        private double efficiency = 10000;//각 라인당 max 전력량
         private string adminID = "admin123";
         private string adminPW = "admin123";
-        private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
 
+        //사용량 데이터 가져와서 그래프로 띄우기
         private DataFrame LoadUsingDataFrame(string path)
         {
             // Check if file exists
@@ -44,25 +46,29 @@ namespace REMFactory
                 if (DateTime.TryParse(row[0].ToString(), out date))
                 {
                     date = (DateTime)row[0]; // 첫 번째 컬럼이 날짜 컬럼이라고 가정
+
+                    if (date.Month <= 6) //6월까지만 출력
+                    {
+                        var rowData = new List<object>();
+
+                        foreach (var cell in row.Skip(1)) // 날짜 컬럼을 제외한 나머지 셀
+                        {
+                            rowData.Add(cell);
+                        }
+
+                        // 날짜별로 리스트에 추가
+                        if (!dateGroupedData.ContainsKey(date))
+                        {
+                            dateGroupedData[date] = new List<List<object>>();
+                        }
+                        dateGroupedData[date].Add(rowData);
+                    }
                 }
                 else
                 {
-                    // date 변환 실패 - 적절한 예외 처리 또는 로그 출력
-                    throw new InvalidCastException("첫 번째 컬럼을 DateTime 형식으로 변환할 수 없습니다.");
+                // date 변환 실패 - 적절한 예외 처리 또는 로그 출력
+                throw new InvalidCastException("첫 번째 컬럼을 DateTime 형식으로 변환할 수 없습니다.");
                 }
-                var rowData = new List<object>();
-
-                foreach (var cell in row.Skip(1)) // 날짜 컬럼을 제외한 나머지 셀
-                {
-                    rowData.Add(cell);
-                }
-
-                // 날짜별로 리스트에 추가
-                if (!dateGroupedData.ContainsKey(date))
-                {
-                    dateGroupedData[date] = new List<List<object>>();
-                }
-                dateGroupedData[date].Add(rowData);
             }
 
             // 결과 출력
@@ -117,6 +123,11 @@ namespace REMFactory
             var df = DataFrame.LoadCsv(dataPath);
         }
 
+        //각 라인당 전력 사용 효율
+
+
+
+        //관리자 모드
         public void login()
         {
             if (idTextBox.Text == adminID)
