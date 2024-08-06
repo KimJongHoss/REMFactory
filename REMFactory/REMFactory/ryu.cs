@@ -91,7 +91,8 @@ namespace REMFactory
         private void Read()
         {
             getPanel2Data();
-            
+            getefficiencyData();
+
             var dataPath = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
             var df = DataFrame.LoadCsv(dataPath);
             var df_1 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광1") == true).ToList();

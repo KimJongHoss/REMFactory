@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using Microsoft.Data.Analysis;
 using System.Diagnostics.Eventing.Reader;
 using ScottPlot.AxisLimitManagers;
+using System.Collections;
 
 namespace REMFactory
 {
@@ -35,10 +36,66 @@ namespace REMFactory
 
         public async Task getPanel2Data()
         {
-            var df = LoadUsingDataFrame(usingDataPath);
+            var df = LoadUsingDataFrame(usingDataPath);//데이터를 가져와서 dataFrame으로 반환
 
             var dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
 
+            usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
+
+            // 결과 출력
+            foreach (var date in dateGroupedData.Keys)
+            {
+                Console.WriteLine($"Date: {date.ToShortDateString()}");
+                foreach (var row in dateGroupedData[date])
+                {
+                    foreach (var value in row)
+                    {
+
+                        if (Dispatcher.CheckAccess())
+                        {
+                            UpdateLabelAndSlider(value);//label value와 slider value를 바꾸는 메서드 
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(() => UpdateLabelAndSlider(value));
+                        }
+
+                        // 20ms 대기
+                        await Task.Delay(500);
+                    }
+                }
+            }
+        }
+
+        void UpdateLabelAndSlider(object value)
+        {
+            labelLine1.Text = value.ToString();
+            labelLine2.Text = value.ToString();
+            labelLine3.Text = value.ToString();
+
+            if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
+            {
+                sliderLine1.Value = doubleValue;
+                sliderLine2.Value = doubleValue;
+                sliderLine3.Value = doubleValue;
+            }
+            else
+            {
+                // value를 double로 변환할 수 없는 경우에 대한 예외 처리 또는 로그 출력
+                Console.WriteLine("double로 처리할 수 없습니다.");
+            }
+        }
+
+        public void getUsingData()
+        {
+            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+
+            // Load the data into the data frame
+            var df = DataFrame.LoadCsv(dataPath);
+        }
+
+        public void usingDataToListDictionary(DataFrame df, Dictionary<DateTime, List<List<object>>> dateGroupedData)
+        {
             foreach (var row in df.Rows)
             {
 
@@ -66,10 +123,21 @@ namespace REMFactory
                 }
                 else
                 {
-                // date 변환 실패 - 적절한 예외 처리 또는 로그 출력
-                throw new InvalidCastException("첫 번째 컬럼을 DateTime 형식으로 변환할 수 없습니다.");
+                    // date 변환 실패 - 적절한 예외 처리 또는 로그 출력
+                    throw new InvalidCastException("첫 번째 컬럼을 DateTime 형식으로 변환할 수 없습니다.");
                 }
             }
+        }
+
+        //각 라인당 전력 사용 효율
+
+        public async Task getefficiencyData()
+        {
+            var df = LoadUsingDataFrame(usingDataPath);//데이터를 가져와서 dataFrame으로 반환
+
+            var dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
+
+            usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
             // 결과 출력
             foreach (var date in dateGroupedData.Keys)
@@ -82,11 +150,11 @@ namespace REMFactory
 
                         if (Dispatcher.CheckAccess())
                         {
-                            UpdateUI(value);//label value와 slider value를 바꾸는 메서드 
+                            howefficiencyData(value);//label value와 slider value를 바꾸는 메서드 
                         }
                         else
                         {
-                            Dispatcher.Invoke(() => UpdateUI(value));
+                            Dispatcher.Invoke(() => howefficiencyData(value));
                         }
 
                         // 20ms 대기
@@ -96,17 +164,14 @@ namespace REMFactory
             }
         }
 
-        void UpdateUI(object value)
+        void howefficiencyData(object value)
         {
-            labelLine1.Text = value.ToString();
-            labelLine2.Text = value.ToString();
-            labelLine3.Text = value.ToString();
-
-            if (double.TryParse(value.ToString(), out double doubleValue))
+            if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
             {
-                sliderLine1.Value = doubleValue;
-                sliderLine2.Value = doubleValue;
-                sliderLine3.Value = doubleValue;
+                double efficiencyData = doubleValue / efficiency * 100;
+                labelEfficiencyLine1.Text = efficiencyData.ToString();
+                labelEfficiencyLine2.Text = efficiencyData.ToString();
+                labelEfficiencyLine3.Text = efficiencyData.ToString();
             }
             else
             {
@@ -114,18 +179,6 @@ namespace REMFactory
                 Console.WriteLine("double로 처리할 수 없습니다.");
             }
         }
-
-        public void getUsingData()
-        {
-            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
-
-            // Load the data into the data frame
-            var df = DataFrame.LoadCsv(dataPath);
-        }
-
-        //각 라인당 전력 사용 효율
-
-
 
         //관리자 모드
         public void login()
