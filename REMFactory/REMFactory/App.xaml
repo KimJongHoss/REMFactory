@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:REMFactory"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Gauge\Images.xaml"/>
+                <ResourceDictionary Source="Gauge\Style.xaml"/>
+                <ResourceDictionary Source="Gauge\Font.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

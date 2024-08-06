@@ -20,7 +20,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Left">
+        <TabControl TabStripPlacement="Left" Background="#FF3C3C42">
             <TabItem x:Name="tabMain">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -54,24 +54,157 @@
                             </lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
-                    <Slider x:Name="sliderLine1" Maximum="10000" TickFrequency="5" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Margin="10,100,564,438" ValueChanged="slider_valueChanged"/>
-                    <Slider x:Name="sliderLine2" Maximum="10000" TickFrequency="5" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Margin="10,185,564,353" ValueChanged="slider_valueChanged"/>
-                    <Slider x:Name="sliderLine3" Maximum="10000" TickFrequency="5" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Margin="10,268,564,268" ValueChanged="slider_valueChanged"/>
-                    <Label x:Name="labelLine1" Margin="57,36,667,484"/>
-                    <Label x:Name="labelLine2" Margin="57,120,667,397"/>
-                    <Label x:Name="labelLine3" Margin="57,205,667,315" RenderTransformOrigin="0.5,0.683"/>
-                    <Canvas Width="200" Height="200" Margin="108,343,564,35">
-                        <Ellipse Width="200" Height="200" Stroke="LightGray" StrokeThickness="20"/>
-                        <Path x:Name="progressPath1" Stroke="Green" StrokeThickness="20" Fill="Transparent" />
-                    </Canvas>
-                    <Canvas Width="200" Height="200" Margin="365,343,307,35">
-                        <Ellipse Width="200" Height="200" Stroke="LightGray" StrokeThickness="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Path x:Name="progressPath2" Stroke="Green" StrokeThickness="20" Fill="Transparent" />
-                    </Canvas>
-                    <Canvas Width="200" Height="200" Margin="624,343,48,35">
-                        <Ellipse Width="200" Height="200" Stroke="LightGray" StrokeThickness="20"/>
-                        <Path x:Name="progressPath3" Stroke="Green" StrokeThickness="20" Fill="Transparent" />
-                    </Canvas>
+                    <!--라인별 사용량, 효율-->
+                    <Viewbox Margin="10,226,591,9">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="9*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="387*"/>
+                                <RowDefinition Height="311*"/>
+                            </Grid.RowDefinitions>
+                            <Border Height="500" Width="600" Background="#FF3C3C42" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" BorderBrush="#FFFFFF" BorderThickness="5" Margin="10,156,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBlock FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1">
+                            <Run Text="라인 A" Foreground="#FFFFFF"/>
+                            </TextBlock>
+                            <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
+                            <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
+                            <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
+                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,93,37"/>
+                                <Path x:Name="pathLine1" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path.Effect>
+                                        <DropShadowEffect BlurRadius="50" ShadowDepth="4" Direction="-90" Color="#FF4F7EE8"/>
+                                    </Path.Effect>
+                                </Path>
+                                <TextBlock x:Name="labelEfficiencyLine1" Foreground="#FF4F7EE8" Height="100" Width="98" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,131,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock x:Name="labelLine1" Foreground="#FF4F7EE8" Height="100" Width="128" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,-72,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
+                            </Grid>
+                            <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </Viewbox>
+                    <Viewbox Margin="300,226,300,9">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="9*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="387*"/>
+                                <RowDefinition Height="311*"/>
+                            </Grid.RowDefinitions>
+                            <Border Height="500" Width="600" Background="#FF3C3C42" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" BorderBrush="#FFFFFF" BorderThickness="5" Margin="10,156,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBlock FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1">
+                            <Run Text="라인 B" Foreground="#FFFFFF"/>
+                            </TextBlock>
+                            <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
+                            <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
+                            <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
+                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,93,37"/>
+                                <Path x:Name="pathLine2" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path.Effect>
+                                        <DropShadowEffect BlurRadius="50" ShadowDepth="4" Direction="-90" Color="#FF4F7EE8"/>
+                                    </Path.Effect>
+                                </Path>
+                                <TextBlock x:Name="labelEfficiencyLine2" Foreground="#FF4F7EE8" Height="100" Width="98" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="39,120,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock x:Name="labelLine2" Foreground="#FF4F7EE8" Height="100" Width="128" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,-72,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
+                            </Grid>
+                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </Viewbox>
+                    <Viewbox Margin="587,226,14,9">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="9*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="387*"/>
+                                <RowDefinition Height="311*"/>
+                            </Grid.RowDefinitions>
+                            <Border Height="500" Width="600" Background="#FF3C3C42" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" BorderBrush="#FFFFFF" BorderThickness="5" Margin="10,156,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBlock FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1">
+                            <Run Text="라인 C" Foreground="#FFFFFF"/>
+                            </TextBlock>
+                            <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
+                            <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
+                            <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
+                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,93,37"/>
+                                <Path x:Name="pathLine3" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path.Effect>
+                                        <DropShadowEffect BlurRadius="50" ShadowDepth="4" Direction="-90" Color="#FF4F7EE8"/>
+                                    </Path.Effect>
+                                </Path>
+                                <TextBlock x:Name="labelEfficiencyLine3" Foreground="#FF4F7EE8" Height="100" Width="98" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,131,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock x:Name="labelLine3" Foreground="#FF4F7EE8" Height="100" Width="128" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,-72,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
+                            </Grid>
+                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </Viewbox>
+                    <!--라인별 사용량, 효율-->
+                    <!--총 생산 전력-->
+                    <Viewbox Margin="10,-29,591,263">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="9*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="387*"/>
+                                <RowDefinition Height="311*"/>
+                            </Grid.RowDefinitions>
+                            <Border Height="500" Width="600" Background="#FF3C3C42" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" BorderBrush="#FFFFFF" BorderThickness="5" Margin="10,156,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBlock FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1">
+                            <Run Text="총 전력 생산량" Foreground="#FFFFFF"/>
+                            </TextBlock>
+                            <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
+                            <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
+                            <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
+                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,93,37"/>
+                                <Path x:Name="pathTotal" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path.Effect>
+                                        <DropShadowEffect BlurRadius="50" ShadowDepth="4" Direction="-90" Color="#FF4F7EE8"/>
+                                    </Path.Effect>
+                                </Path>
+                            <TextBlock x:Name="labelTotal" Foreground="#FF4F7EE8" Height="100" Width="128" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,-72,0,0">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                                <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
+                            </Grid>
+                            <Slider x:Name="sliderTotal" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </Viewbox>
+                    <!--총 생산 전력-->
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabOption">

@@ -92,9 +92,9 @@ namespace REMFactory
 
         void UpdateUI(object value)
         {
-            labelLine1.Content = value.ToString();
-            labelLine2.Content = value.ToString();
-            labelLine3.Content = value.ToString();
+            labelLine1.Text = value.ToString();
+            labelLine2.Text = value.ToString();
+            labelLine3.Text = value.ToString();
 
             if (double.TryParse(value.ToString(), out double doubleValue))
             {
