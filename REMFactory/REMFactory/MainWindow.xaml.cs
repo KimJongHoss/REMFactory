@@ -30,13 +30,13 @@ namespace REMFactory
             if (sliderLine1 != null && sliderLine2 != null && sliderLine3 != null &&
                 labelLine1 != null && labelLine2 != null && labelLine3 != null)
             {
-                labelLine1.Content = sliderLine1.Value;
-                labelLine2.Content = sliderLine2.Value;
-                labelLine3.Content = sliderLine3.Value;
+                labelLine1.Text = sliderLine1.Value.ToString();
+                labelLine2.Text = sliderLine2.Value.ToString();
+                labelLine3.Text = sliderLine3.Value.ToString();
 
-                UpdateProgress(progressPath1, sliderLine1.Value);
-                UpdateProgress(progressPath2, sliderLine2.Value);
-                UpdateProgress(progressPath3, sliderLine3.Value);
+                UpdateProgress(pathLine1, sliderLine1.Value);
+                UpdateProgress(pathLine2, sliderLine2.Value);
+                UpdateProgress(pathLine3, sliderLine3.Value);
             }
         }
         private void UpdateProgress(Path path, double value)
