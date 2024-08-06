@@ -15,10 +15,10 @@ namespace REMFactory
 {
     public partial class MainWindow : Window
     {
-        private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+        private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");//전력 사용량 csv 파일 path
         private double efficiency = 10000;//각 라인당 max 전력량
-        private string adminID = "admin123";
-        private string adminPW = "admin123";
+        private string adminID = "admin123";//관리자 아이디
+        private string adminPW = "admin123";//관리자 비밀번호
 
         //사용량 데이터 가져와서 그래프로 띄우기
         private DataFrame LoadUsingDataFrame(string path)
