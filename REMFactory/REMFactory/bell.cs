@@ -15,15 +15,25 @@ namespace REMFactory
 {
     public partial class MainWindow : Window
     {
-        string adminID = "admin123";
-        string adminPW = "admin123";
+        private string adminID = "admin123";
+        private string adminPW = "admin123";
+        private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+
+        private DataFrame LoadUsingDataFrame(string path)
+        {
+            // Check if file exists
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("The specified data file does not exist.", path);
+            }
+
+            // Load the data into the DataFrame
+            return DataFrame.LoadCsv(path);
+        }
+
         public async Task getPanel2Data()
         {
-            // Define data path
-            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
-
-            // Load the data into the data frame
-            var df = DataFrame.LoadCsv(dataPath);
+            var df = LoadUsingDataFrame(usingDataPath);
 
             var dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
 
@@ -97,6 +107,14 @@ namespace REMFactory
                 // value를 double로 변환할 수 없는 경우에 대한 예외 처리 또는 로그 출력
                 Console.WriteLine("double로 처리할 수 없습니다.");
             }
+        }
+
+        public void getUsingData()
+        {
+            var dataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+
+            // Load the data into the data frame
+            var df = DataFrame.LoadCsv(dataPath);
         }
 
         public void login()
