@@ -21,7 +21,8 @@ namespace REMFactory
     {
         private double _axisMax;
         private double _axisMin;
-        private double _trend;
+        private double _trend1;
+        private double _trend2;
 
         public void chart1()
         {
@@ -35,15 +36,7 @@ namespace REMFactory
             //the values property will store our values array
             ChartValues = new ChartValues<MeasureModel>();
 
-            //cartesianChart1.Series = new SeriesCollection
-            //{
-            //    new LineSeries
-            //    {
-            //        Values = ChartValues,
-            //        PointGeometrySize = 18,
-            //        StrokeThickness = 4
-            //    }
-            //};
+            
             //lets set how to display the X Labels
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
 
@@ -91,42 +84,54 @@ namespace REMFactory
         private void Read()
         {
             getPanel2Data();
+            var datapath1 = System.IO.Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+            var dataPath2 = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
+            var dfJong = DataFrame.LoadCsv(datapath1);
+            var df = DataFrame.LoadCsv(dataPath2);
             
-            var dataPath = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
-            var df = DataFrame.LoadCsv(dataPath);
             var df_1 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광1") == true).ToList();
             var df_2 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광2") == true).ToList();
             var df_3 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광3") == true).ToList();
-            List<int> list = new List<int>();
-            List<string> date = new List<string>();
 
+            
+            var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
+            List<int> listRyu = new List<int>();
+            List<string> date = new List<string>();
+            List<int> listJong = new List<int>();
             for (int i = 0; i < df_1.Count(); i++)
             {
                 for (int j = 3; j < df_1[0].Count(); j++)
                 {
-                    list.Add(Convert.ToInt32(df_1[i][j]) + Convert.ToInt32(df_2[i][j]) + Convert.ToInt32(df_3[i][j]));
+                    listRyu.Add(Convert.ToInt32(df_1[i][j]) + Convert.ToInt32(df_2[i][j]) + Convert.ToInt32(df_3[i][j]));
                 }
             }
 
-            for (int i = 0; i < df_1.Count(); i++)
+            for (int i = 0; i < dfJong_1.Count(); i++)
             {
-                for (int j = 1; j <= 24; j++)
+                for (int j = 1; j < dfJong_1[i].Count(); j++)
                 {
-                    date.Add(Convert.ToString(df_1[0][1]).Substring(0, 8) + $" {i}");
+                    listJong.Add(Convert.ToInt32(dfJong_1[i][j]));
                 }
             }
+            //for (int i = 0; i < df_1.Count(); i++)
+            //{
+            //    for (int j = 1; j <= 24; j++)
+            //    {
+            //        date.Add(Convert.ToString(df_1[0][1]).Substring(0, 8) + $" {i}");
+            //    }
+            //}
             int count = 0;
             while (IsReading)
             {
                 Thread.Sleep(1000);
                 var now = DateTime.Now;
 
-                _trend = list[count];
+                _trend1 = listRyu[count];
 
                 ChartValues.Add(new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend
+                    Value = _trend1
                 });
 
                 SetAxisLimits(now);

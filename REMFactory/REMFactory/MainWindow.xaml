@@ -45,9 +45,9 @@
                         </lvc:CartesianChart.Series>
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis LabelFormatter="{Binding }" 
-                  MaxValue="{Binding AxisMax}" 
-                  MinValue="{Binding AxisMin}"
-                  Unit="{Binding AxisUnit}">
+                                    MaxValue="{Binding AxisMax}" 
+                                    MinValue="{Binding AxisMin}"
+                                    Unit="{Binding AxisUnit}">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator Step="{Binding AxisStep}" />
                                 </lvc:Axis.Separator>
