@@ -42,6 +42,7 @@ namespace REMFactory
             //        Values = ChartValues,
             //        PointGeometrySize = 18,
             //        StrokeThickness = 4
+
             //    }
             //};
             //lets set how to display the X Labels
@@ -93,16 +94,18 @@ namespace REMFactory
             var r = new Random();
             var dataPath = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
             var df = DataFrame.LoadCsv(dataPath);
-            var df_1 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광1") == true).ToList();
-            var df_2 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광2") == true).ToList();
-            var df_3 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광3") == true).ToList();
+
+            var df_1 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광1") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
+            var df_2 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광2") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
+            var df_3 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광3") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
             List<int> list = new List<int>();
-            List<string> date = new List<string>();
+            List<DateTime> date = new List<DateTime>();
 
             for (int i = 0; i < df_1.Count(); i++)
             {
                 for (int j = 3; j < df_1[0].Count(); j++)
                 {
+
                     list.Add(Convert.ToInt32(df_1[i][j]) + Convert.ToInt32(df_2[i][j]) + Convert.ToInt32(df_3[i][j]));
                 }
             }
@@ -111,7 +114,7 @@ namespace REMFactory
             {
                 for (int j = 1; j <= 24; j++)
                 {
-                    date.Add(Convert.ToString(df_1[0][1]).Substring(0, 8) + $" {i}");
+                    date.Add(Convert.ToDateTime(df_1[i][1]).AddHours(j));
                 }
             }
             int count = 0;
