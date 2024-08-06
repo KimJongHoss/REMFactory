@@ -9,9 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Gauge\Roboto-Light.ttf" />
+    <None Remove="Gauge\Roboto-Medium.ttf" />
+    <None Remove="Gauge\Rubik-Light.ttf" />
+    <None Remove="Resources\mainicon.png" />
+    <None Remove="Resources\optionicon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Gauge\Font.xaml" />
+    <Page Remove="Gauge\Images.xaml" />
+    <Page Remove="Gauge\Style.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.Data.Analysis" Version="0.21.1" />
     <PackageReference Include="ScottPlot.WPF" Version="5.0.37" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Gauge\Font.xaml" />
+    <Resource Include="Gauge\Images.xaml" />
+    <Resource Include="Gauge\Roboto-Light.ttf" />
+    <Resource Include="Gauge\Roboto-Medium.ttf" />
+    <Resource Include="Gauge\Rubik-Light.ttf" />
+    <Resource Include="Gauge\Style.xaml" />
+    <Resource Include="Resources\mainicon.png" />
+    <Resource Include="Resources\optionicon.png" />
   </ItemGroup>
 
 </Project>
