@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\KJH\\REMFactory\\REMFactory\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\bell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\bell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\bell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\bell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\ryu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\ryu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\ws.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\seung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\seung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|c:\\kjh\\remfactory\\remfactory\\remfactory\\ryu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF60E448-5072-4F88-B819-C6E71E0F36C9}|REMFactory\\REMFactory.csproj|solutionrelative:remfactory\\ryu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,6 +36,33 @@
           "DockedWidth": 200,
           "SelectedChildIndex": 13,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "REMFactory\\MainWindow.xaml",
+              "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\MainWindow.xaml",
+              "RelativeToolTip": "REMFactory\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-08-05T04:51:32.645Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ryu.cs",
+              "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\ryu.cs",
+              "RelativeDocumentMoniker": "REMFactory\\ryu.cs",
+              "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\ryu.cs",
+              "RelativeToolTip": "REMFactory\\ryu.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAwwGsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-05T04:52:28.001Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:136:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
@@ -74,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ws.cs",
               "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\ws.cs",
               "RelativeDocumentMoniker": "REMFactory\\ws.cs",
@@ -87,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "seung.cs",
               "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\seung.cs",
               "RelativeDocumentMoniker": "REMFactory\\seung.cs",
@@ -100,40 +127,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "bell.cs",
               "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\bell.cs",
               "RelativeDocumentMoniker": "REMFactory\\bell.cs",
               "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\bell.cs",
               "RelativeToolTip": "REMFactory\\bell.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACoAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-05T04:52:43.975Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ryu.cs",
-              "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\ryu.cs",
-              "RelativeDocumentMoniker": "REMFactory\\ryu.cs",
-              "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\ryu.cs",
-              "RelativeToolTip": "REMFactory\\ryu.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T04:52:28.001Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "REMFactory\\MainWindow.xaml",
-              "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\MainWindow.xaml",
-              "RelativeToolTip": "REMFactory\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-08-05T04:51:32.645Z",
               "EditorCaption": ""
             },
             {
@@ -144,7 +146,7 @@
               "RelativeDocumentMoniker": "REMFactory\\MainWindow.xaml.cs",
               "ToolTip": "C:\\KJH\\REMFactory\\REMFactory\\REMFactory\\MainWindow.xaml.cs",
               "RelativeToolTip": "REMFactory\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABgAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-05T04:51:30.054Z",
               "EditorCaption": ""
