@@ -92,6 +92,7 @@ namespace REMFactory
 
         void UpdateUI(object value)
         {
+
             labelLine1.Text = value.ToString();
             labelLine2.Text = value.ToString();
             labelLine3.Text = value.ToString();
