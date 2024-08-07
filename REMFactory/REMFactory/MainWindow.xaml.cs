@@ -30,12 +30,22 @@ namespace REMFactory
             if (sliderLine1 != null && sliderLine2 != null && sliderLine3 != null &&
                 labelLine1 != null && labelLine2 != null && labelLine3 != null)
             {
-                labelTotal.Text = _trend1.ToString();
-                labelLine1.Text = _trend2.ToString();
-                labelLine2.Text = _trend3.ToString();
-                labelLine3.Text = _trend4.ToString();
+                sliderTotal.Value = _trend1;
+                //sliderLine1.Value = _trend2;
+                //sliderLine2.Value = _trend3;
+                //sliderLine3.Value = _trend4;
 
-                UpdateProgress(pathTotal, _trend1);
+                //labelTotal.Text = sliderTotal.Value.ToString();
+                labelLine1.Text = sliderLine1.Value.ToString();
+                labelLine2.Text = sliderLine2.Value.ToString();
+                labelLine3.Text = sliderLine3.Value.ToString();
+
+                labelTotal.Text = _trend1.ToString();
+                //labelLine1.Text = _trend2.ToString();
+                //labelLine2.Text = _trend3.ToString();
+                //labelLine3.Text = _trend4.ToString();
+
+                UpdateTotalProgress(pathTotal, _trend1);
                 UpdateProgress(pathLine1, _trend2);
                 UpdateProgress(pathLine2, _trend3);
                 UpdateProgress(pathLine3, _trend4);
@@ -43,7 +53,30 @@ namespace REMFactory
         }
         private void UpdateProgress(Path path, double value)
         {
-            double angle = value / 10000 * 360;
+            double angle = value / 20000 * 360;
+            double radius = 90;
+            double center = 100;
+
+            PathFigure pathFigure = new PathFigure();
+            pathFigure.StartPoint = new Point(center, center - radius);
+
+            ArcSegment arcSegment = new ArcSegment();
+            arcSegment.Point = new Point(center + radius * Math.Sin(angle * Math.PI / 180), center - radius * Math.Cos(angle * Math.PI / 180));
+            arcSegment.Size = new Size(radius, radius);
+            arcSegment.IsLargeArc = angle > 180;
+            arcSegment.SweepDirection = SweepDirection.Clockwise;
+
+            pathFigure.Segments.Add(arcSegment);
+
+            PathGeometry pathGeometry = new PathGeometry();
+            pathGeometry.Figures.Add(pathFigure);
+
+            path.Data = pathGeometry;
+        }
+
+        private void UpdateTotalProgress(Path path, double value)
+        {
+            double angle = value / 20000000 * 360;
             double radius = 90;
             double center = 100;
 

@@ -92,10 +92,10 @@ namespace REMFactory
 
         private void Read()
         {
-            getPanel2Data();
-            var datapath1 = System.IO.Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
+            
+            //var datapath1 = System.IO.Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
             var dataPath2 = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
-            var dfJong = DataFrame.LoadCsv(datapath1);
+            //var dfJong = DataFrame.LoadCsv(datapath1);
             var df = DataFrame.LoadCsv(dataPath2);
 
             var df_1 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광1") == true).ToList();
@@ -103,10 +103,10 @@ namespace REMFactory
             var df_3 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광3") == true).ToList();
 
 
-            var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
+            //var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
             List<int> listRyu = new List<int>();
             List<string> date = new List<string>();
-            List<int> listJong = new List<int>();
+            //List<int> listJong = new List<int>();
             for (int i = 0; i < df_1.Count(); i++)
             {
                 for (int j = 3; j < df_1[0].Count(); j++)
@@ -116,13 +116,13 @@ namespace REMFactory
 
             }
 
-            for (int i = 0; i < dfJong_1.Count(); i++)
-            {
-                for (int j = 1; j < dfJong_1[i].Count(); j++)
-                {
-                    listJong.Add(Convert.ToInt32(dfJong_1[i][j]));
-                }
-            }
+            //for (int i = 0; i < dfJong_1.Count(); i++)
+            //{
+            //    for (int j = 1; j < dfJong_1[i].Count(); j++)
+            //    {
+            //        listJong.Add(Convert.ToInt32(dfJong_1[i][j]));
+            //    }
+            //}
             //for (int i = 0; i < df_1.Count(); i++)
             //{
             //    for (int j = 1; j <= 24; j++)
@@ -130,17 +130,22 @@ namespace REMFactory
             //        date.Add(Convert.ToString(df_1[0][1]).Substring(0, 8) + $" {i}");
             //    }
             //}
+            List<double> listUsing = getModelData();
             int count = 0;
+            getPanel2Data();
+            getefficiencyData();
             while (IsReading)
             {
                 Thread.Sleep(1000);
+               
+
                 var now = DateTime.Now;
 
                 
                 _trend1 = listRyu[count];
-                _trend2 = listJong[count];
-                _trend3 = listJong[count] * 1.5;
-                _trend4 = listJong[count] * 2;
+                _trend2 = listUsing[count];
+                _trend3 = listUsing[count] * 1.5;
+                _trend4 = listUsing[count] * 2;
 
                 var model1 = new MeasureModel
                 {
@@ -180,8 +185,11 @@ namespace REMFactory
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
                     if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
                     if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
+
+                   
                 });
                 count++;
+               
             }
         }
 
