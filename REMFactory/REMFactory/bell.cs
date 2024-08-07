@@ -17,6 +17,7 @@ namespace REMFactory
     public partial class MainWindow : Window
     {
         private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");//전력 사용량 csv 파일 path
+        private int startDelayTime = 2000;
         private double efficiency = 10000;//각 라인당 max 전력량
         private string adminID = "admin123";//관리자 아이디
         private string adminPW = "admin123";//관리자 비밀번호
@@ -41,7 +42,7 @@ namespace REMFactory
             var dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
 
             usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
-
+            await Task.Delay(startDelayTime);
             // 결과 출력
             foreach (var date in dateGroupedData.Keys)
             {
@@ -61,7 +62,7 @@ namespace REMFactory
                         }
 
                         // 20ms 대기
-                        await Task.Delay(500);
+                        await Task.Delay(1000);
                     }
                 }
             }
@@ -69,9 +70,37 @@ namespace REMFactory
 
         void UpdateLabelAndSlider(object value)//사용량의 데이터를 라벨과 슬라이더에 업데이트하는 메서드
         {
-            labelLine1.Text = value.ToString();
-            labelLine2.Text = value.ToString();
-            labelLine3.Text = value.ToString(); 
+            //double doubleValue = (double)value;
+            double doubleValue;
+
+            try
+            {
+                doubleValue = Convert.ToDouble(value);
+                double value2 = doubleValue * 1.5;
+                double value3 = doubleValue * 2;
+                labelLine1.Text = doubleValue.ToString();
+                labelLine2.Text = value2.ToString();
+                labelLine3.Text = value3.ToString();
+                sliderLine1.Value = doubleValue;
+                sliderLine2.Value = value2;
+                sliderLine3.Value = value3;
+                Console.WriteLine($"Converted value: {doubleValue}");
+            }
+            catch (InvalidCastException)
+            {
+                Console.WriteLine("Object의 형식이 잘못되었습니다.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Object의 형식이 잘못되었습니다.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("값이 너무 큽니다.");
+            }
+            
+
+           
         }
 
         public void getUsingData()
@@ -117,6 +146,32 @@ namespace REMFactory
             }
         }
 
+        public List<double> getModelData() // 사용량 데이터 가져와서 리스트로 반환
+        {
+            var df = LoadUsingDataFrame(usingDataPath); // 데이터 로드
+
+            var dateGroupedData = new Dictionary<DateTime, List<List<object>>>(); // 딕셔너리 초기화
+
+            usingDataToListDictionary(df, dateGroupedData); // 데이터 그룹화
+
+            var resultList = new List<double>(); // 결과 리스트 생성
+
+            // 결과 출력
+            foreach (var date in dateGroupedData.Keys)
+            {
+                Console.WriteLine($"Date: {date.ToShortDateString()}"); // 날짜 출력
+                foreach (var row in dateGroupedData[date])
+                {
+                    foreach (var value in row)
+                    {
+                        double valueDouble = Convert.ToDouble(value);
+                        resultList.Add(valueDouble); // 결과 리스트에 값 추가
+                    }
+                }
+            }
+
+            return resultList; // 결과 리스트 반환
+        }
         //각 라인당 전력 사용 효율
 
         public async Task getefficiencyData()
@@ -127,6 +182,7 @@ namespace REMFactory
 
             usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
+            await Task.Delay(startDelayTime);
             // 결과 출력
             foreach (var date in dateGroupedData.Keys)
             {
@@ -146,7 +202,7 @@ namespace REMFactory
                         }
 
                         // 20ms 대기
-                        await Task.Delay(500);
+                        await Task.Delay(1000);
                     }
                 }
             }
@@ -160,9 +216,9 @@ namespace REMFactory
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = efficiencyData.ToString();
                 labelEfficiencyLine3.Text = efficiencyData.ToString();
-                sliderLine1.Value = efficiencyData;
-                sliderLine2.Value = efficiencyData;
-                sliderLine3.Value = efficiencyData;
+                //sliderLine1.Value = efficiencyData;
+                //sliderLine2.Value = efficiencyData;
+                //sliderLine3.Value = efficiencyData;
             }
             else
             {
