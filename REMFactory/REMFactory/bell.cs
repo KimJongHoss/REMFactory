@@ -22,7 +22,7 @@ namespace REMFactory
         private string adminPW = "admin123";//관리자 비밀번호
 
         //사용량 데이터 가져와서 그래프로 띄우기
-        private DataFrame LoadUsingDataFrame(string path)
+        private DataFrame LoadUsingDataFrame(string path)//path 이용해서 csv파일 불러오는 메서드
         {
             // Check if file exists
             if (!File.Exists(path))
@@ -34,7 +34,7 @@ namespace REMFactory
             return DataFrame.LoadCsv(path);
         }
 
-        public async Task getPanel2Data()
+        public async Task getPanel2Data()//사용량 데이터 가져와서 그래프로 띄우기 메인 메서드
         {
             var df = LoadUsingDataFrame(usingDataPath);//데이터를 가져와서 dataFrame으로 반환
 
@@ -67,23 +67,11 @@ namespace REMFactory
             }
         }
 
-        void UpdateLabelAndSlider(object value)
+        void UpdateLabelAndSlider(object value)//사용량의 데이터를 라벨과 슬라이더에 업데이트하는 메서드
         {
             labelLine1.Text = value.ToString();
             labelLine2.Text = value.ToString();
-            labelLine3.Text = value.ToString();
-
-            if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
-            {
-                sliderLine1.Value = doubleValue;
-                sliderLine2.Value = doubleValue;
-                sliderLine3.Value = doubleValue;
-            }
-            else
-            {
-                // value를 double로 변환할 수 없는 경우에 대한 예외 처리 또는 로그 출력
-                Console.WriteLine("double로 처리할 수 없습니다.");
-            }
+            labelLine3.Text = value.ToString(); 
         }
 
         public void getUsingData()
@@ -172,6 +160,9 @@ namespace REMFactory
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = efficiencyData.ToString();
                 labelEfficiencyLine3.Text = efficiencyData.ToString();
+                sliderLine1.Value = efficiencyData;
+                sliderLine2.Value = efficiencyData;
+                sliderLine3.Value = efficiencyData;
             }
             else
             {
