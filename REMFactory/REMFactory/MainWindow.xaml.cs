@@ -68,5 +68,18 @@ namespace REMFactory
         {
             login();
         }
+
+        private void lineAtext_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ChartValues1 == null || ChartValues2 == null || ChartValues3 == null || ChartValues4 == null)
+            {
+                MessageBox.Show("No data available to display.");
+                return;
+            }
+
+            // Open the new chart window
+            var chartWindow = new ChartWindow(ChartValues1, ChartValues2, ChartValues3, ChartValues4);
+            chartWindow.Show();
+        }
     }
 }

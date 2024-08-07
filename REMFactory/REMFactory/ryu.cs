@@ -19,6 +19,7 @@ namespace REMFactory
     }
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+
         private double _axisMax;
         private double _axisMin;
         private double _trend1;
