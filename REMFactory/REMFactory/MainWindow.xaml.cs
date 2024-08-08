@@ -22,6 +22,7 @@ namespace REMFactory
         {
             InitializeComponent();
             chart1();
+            LabelElec();
             //getPanel2Data();
         }
 
@@ -30,7 +31,7 @@ namespace REMFactory
             if (sliderLine1 != null && sliderLine2 != null && sliderLine3 != null &&
                 labelLine1 != null && labelLine2 != null && labelLine3 != null)
             {
-                sliderTotal.Value = _trend1;
+                //sliderTotal.Value = _trend1;
                 //sliderLine1.Value = _trend2;
                 //sliderLine2.Value = _trend3;
                 //sliderLine3.Value = _trend4;
@@ -46,9 +47,13 @@ namespace REMFactory
                 //labelLine3.Text = _trend4.ToString();
 
                 UpdateTotalProgress(pathTotal, _trend1);
-                UpdateProgress(pathLine1, _trend2);
-                UpdateProgress(pathLine2, _trend3);
-                UpdateProgress(pathLine3, _trend4);
+                if (_trend1 - (_trend2 + _trend3 + _trend4) > 0)
+                {
+                    UpdateProgress(pathLine1, _trend2);
+                    UpdateProgress(pathLine2, _trend3);
+                    UpdateProgress(pathLine3, _trend4);
+                }
+                
             }
         }
         private void UpdateProgress(Path path, double value)
@@ -100,6 +105,19 @@ namespace REMFactory
         private void managerLoginButton_Click(object sender, RoutedEventArgs e)
         {
             login();
+        }
+
+        private void lineAtext_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ChartValues1 == null || ChartValues2 == null || ChartValues3 == null || ChartValues4 == null)
+            {
+                MessageBox.Show("No data available to display.");
+                return;
+            }
+
+            // Open the new chart window
+            var chartWindow = new ChartWindow1(ChartValues1, ChartValues2, ChartValues3, ChartValues4);
+            chartWindow.Show();
         }
     }
 }
