@@ -177,7 +177,6 @@ namespace REMFactory
                     ChartValues2.Add(model2);
                     ChartValues3.Add(model3);
                     ChartValues4.Add(model4);
-
                     SetAxisLimits(now);
 
                     if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
@@ -188,7 +187,6 @@ namespace REMFactory
                    
                 });
                 count++;
-               
             }
         }
 

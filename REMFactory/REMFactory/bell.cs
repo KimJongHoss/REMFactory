@@ -18,6 +18,7 @@ namespace REMFactory
     {
         private string usingDataPath = Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");//전력 사용량 csv 파일 path
         private int startDelayTime = 2000;
+        double doubleValue;//사용량을 double로 parsing한 값
         private double efficiency = 10000;//각 라인당 max 전력량
         private string adminID = "admin123";//관리자 아이디
         private string adminPW = "admin123";//관리자 비밀번호
@@ -70,9 +71,6 @@ namespace REMFactory
 
         void UpdateLabelAndSlider(object value)//사용량의 데이터를 라벨과 슬라이더에 업데이트하는 메서드
         {
-            //double doubleValue = (double)value;
-            double doubleValue;
-
             try
             {
                 doubleValue = Convert.ToDouble(value);
@@ -84,7 +82,7 @@ namespace REMFactory
                 sliderLine1.Value = doubleValue;
                 sliderLine2.Value = value2;
                 sliderLine3.Value = value3;
-                Console.WriteLine($"Converted value: {doubleValue}");
+                Console.WriteLine($"적용된 value: {doubleValue}");
             }
             catch (InvalidCastException)
             {
@@ -213,9 +211,11 @@ namespace REMFactory
             if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
             {
                 double efficiencyData = doubleValue / efficiency * 100;
+                double line2Data = efficiencyData * 1.5;
+                double line3Data = efficiencyData * 2;
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
-                labelEfficiencyLine2.Text = efficiencyData.ToString();
-                labelEfficiencyLine3.Text = efficiencyData.ToString();
+                labelEfficiencyLine2.Text = line2Data.ToString();
+                labelEfficiencyLine3.Text = line3Data.ToString();
                 //sliderLine1.Value = efficiencyData;
                 //sliderLine2.Value = efficiencyData;
                 //sliderLine3.Value = efficiencyData;

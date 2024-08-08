@@ -124,7 +124,7 @@
                                 </TextBlock>
                                 <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175" Grid.ColumnSpan="2"/>
                             </Grid>
-                            <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                            <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged1" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Viewbox>
                     <Viewbox Margin="300,226,300,9">
@@ -162,7 +162,7 @@
                                 </TextBlock>
                                 <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
                             </Grid>
-                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="15000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="15000" ValueChanged="slider_valueChanged2" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Viewbox>
                     <Viewbox Margin="587,226,14,9">
@@ -200,7 +200,7 @@
                                 </TextBlock>
                                 <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
                             </Grid>
-                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="20000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="20000" ValueChanged="slider_valueChanged3" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Viewbox>
                     <!--라인별 사용량, 효율-->
