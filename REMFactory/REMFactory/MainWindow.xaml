@@ -28,7 +28,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
-                    
+
                     <Button Grid.Row="0" Click="InjectStopOnClick" Margin="337,289,418,260">
                         Inject/Stop Data
                     </Button>
@@ -223,13 +223,17 @@
                             <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                             <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
                             <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
-                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,93,37"/>
-                                <Path x:Name="pathTotal" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="199*"/>
+                                    <ColumnDefinition Width="91*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Stroke="#FF3C3C42" StrokeThickness="20" Margin="-10,45,2,37"/>
+                                <Path x:Name="pathTotal" Stroke="#FF4F7EE8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50" Grid.ColumnSpan="2">
                                     <Path.Effect>
                                         <DropShadowEffect BlurRadius="50" ShadowDepth="4" Direction="-90" Color="#FF4F7EE8"/>
                                     </Path.Effect>
                                 </Path>
-                                <TextBlock x:Name="labelTotal" Foreground="#FF4F7EE8" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-6,-55,0,0">
+                                <TextBlock x:Name="labelTotal" Foreground="#FF4F7EE8" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,-55,0,0" Grid.ColumnSpan="2">
                                     <TextBlock.Effect>
                                         <DropShadowEffect BlurRadius="30" ShadowDepth="2" Direction="-90" Color="#FF4F7EE8"/>
                                     </TextBlock.Effect>
@@ -237,6 +241,8 @@
                                 <TextBlock Text="KW" Foreground="#FFFFFF" Height="20" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="15" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,95,0,175"/>
                             </Grid>
                             <Slider x:Name="sliderTotal" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,0,0,16" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock x:Name="labelElec" HorizontalAlignment="Left" Margin="54,58,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="529" Height="93" FontSize="50"/>
+
                         </Grid>
                     </Viewbox>
                     <!--총 생산 전력-->

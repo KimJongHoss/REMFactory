@@ -1,5 +1,6 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Wpf.Charts.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,14 @@ namespace REMFactory
     /// <summary>
     /// ChartWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ChartWindow : Window
+    public partial class ChartWindow1 : Window
     {
-        public ChartWindow(ChartValues<MeasureModel> chartValues1, ChartValues<MeasureModel> chartValues2,
+        public ChartWindow1(ChartValues<MeasureModel> chartValues1, ChartValues<MeasureModel> chartValues2,
                            ChartValues<MeasureModel> chartValues3, ChartValues<MeasureModel> chartValues4)
         {
-
             InitializeComponent();
+
+            // Create and configure series for the chart
             var series1 = new LineSeries
             {
                 Title = "Series 1",
@@ -48,7 +50,7 @@ namespace REMFactory
             };
 
             // Add series to chart
-            Chart.Series = new SeriesCollection { series1, series2, series3, series4 };
+            Chart.Series = new SeriesCollection { series1};
 
             // Optionally configure axes, labels, etc.
             Chart.AxisX.Add(new Axis
