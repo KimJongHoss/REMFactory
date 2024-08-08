@@ -165,7 +165,7 @@ namespace REMFactory
                     foreach (var value in row)
                     {
                         double valueDouble = Convert.ToDouble(value);
-                        resultList.Add(valueDouble / 500); // 결과 리스트에 값 추가
+                        resultList.Add(valueDouble); // 결과 리스트에 값 추가
                     }
                 }
             }

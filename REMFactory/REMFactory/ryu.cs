@@ -148,7 +148,7 @@ namespace REMFactory
                 now = DateTime.Now;
 
                 
-                _trend1 += listRyu[count] / 500;
+                _trend1 += listRyu[count] / 300;
                 _trend2 = listUsing[count];
                 _trend3 = listUsing[count] * 1.5;
                 _trend4 = listUsing[count] * 2;
