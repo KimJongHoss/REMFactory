@@ -28,34 +28,43 @@ namespace REMFactory
 
         private void slider_valueChanged(object sender, RoutedEventArgs e)
         {
-            if (sliderLine1 != null && sliderLine2 != null && sliderLine3 != null &&
-                labelLine1 != null && labelLine2 != null && labelLine3 != null)
-            {
-                //sliderTotal.Value = _trend1;
-                //sliderLine1.Value = _trend2;
-                //sliderLine2.Value = _trend3;
-                //sliderLine3.Value = _trend4;
-
-                //labelTotal.Text = sliderTotal.Value.ToString();
-                labelLine1.Text = sliderLine1.Value.ToString();
-                labelLine2.Text = sliderLine2.Value.ToString();
-                labelLine3.Text = sliderLine3.Value.ToString();
-
-                labelTotal.Text = _trend1.ToString();
-                //labelLine1.Text = _trend2.ToString();
-                //labelLine2.Text = _trend3.ToString();
-                //labelLine3.Text = _trend4.ToString();
-
                 UpdateTotalProgress(pathTotal, _trend1);
-                if (_trend1 - (_trend2 + _trend3 + _trend4) > 0)
-                {
-                    UpdateProgress(pathLine1, _trend2);
-                    UpdateProgress(pathLine2, _trend3);
-                    UpdateProgress(pathLine3, _trend4);
-                }
-                
+                UpdateProgress(pathLine1, _trend2);
+                UpdateProgress(pathLine2, _trend3);
+                UpdateProgress(pathLine3, _trend4);
+        }
+
+        private void slider_valueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (sliderLine1 != null && labelLine1 != null)
+            {
+                labelTotal.Text = _trend1.ToString();
+                labelLine1.Text = sliderLine1.Value.ToString();
+                double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
+                labelEfficiencyLine1.Text = efficiencySlider1Value.ToString();
             }
         }
+
+        private void slider_valueChanged2(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (sliderLine2 != null && labelLine2 != null)
+            {
+                labelLine2.Text = sliderLine2.Value.ToString();
+                double efficiencySlider2Value = sliderLine2.Value / efficiency * 100;
+                labelEfficiencyLine2.Text = efficiencySlider2Value.ToString();
+            }
+        }
+
+        private void slider_valueChanged3(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (sliderLine3 != null && labelLine3 != null)
+            {
+                labelLine3.Text = sliderLine3.Value.ToString();
+                double efficiencySlider3Value = sliderLine3.Value / efficiency * 100;
+                labelEfficiencyLine3.Text = efficiencySlider3Value.ToString();
+            }
+        }
+
         private void UpdateProgress(Path path, double value)
         {
             double angle = value / 20000 * 360;
