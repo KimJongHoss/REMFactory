@@ -148,7 +148,6 @@ namespace REMFactory
                     dates.Add(Convert.ToDateTime(dfLine1[i][1]).AddHours(j));
                 }
             }
-            List<double> listUsing = getModelData();
             int count = 0;
             
             getPanel2Data();
@@ -161,14 +160,10 @@ namespace REMFactory
 
                 nowTime = DateTime.Now;
 
-                
-                powerTotal += listRyu[count] / 100;
-                usePower1 = listUsing[count];
-                usePower2 = listUsing[count] * r.Next(1,2);
-                usePower3 = listUsing[count] * r.Next(0,3);
-                powerTotal -= (usePower1 + usePower2 + usePower3);
-                GaugeValue = powerTotal;
 
+                powerTotal += listRyu[count] / 10;
+                powerTotal -= (doubleValue + doubleValue2 + doubleValue3);
+                GaugeValue = powerTotal;
                 var model1 = new MeasureModel
                 {
                     DateTime = nowTime,
@@ -178,17 +173,17 @@ namespace REMFactory
                 var model2 = new MeasureModel
                 {
                     DateTime = nowTime,
-                    Value = usePower1
+                    Value = doubleValue
                 };
                 var model3 = new MeasureModel
                 {
                     DateTime = nowTime,
-                    Value = usePower2
+                    Value = doubleValue2
                 };
                 var model4 = new MeasureModel
                 {
                     DateTime = nowTime,
-                    Value = usePower3
+                    Value = doubleValue3
                 };
 
                 SetAxisLimits(nowTime);
