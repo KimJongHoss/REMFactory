@@ -22,7 +22,8 @@ namespace REMFactory
         {
             InitializeComponent();
             chart1();
-            LabelElec();
+            
+            BasicColumn();
             //getPanel2Data();
         }
 
