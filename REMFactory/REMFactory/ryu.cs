@@ -158,7 +158,7 @@ namespace REMFactory
                 now = DateTime.Now;
 
                 
-                _trend1 += listRyu[count] / 100;
+                _trend1 += listRyu[count] / 10;
                 _trend1 -= (doubleValue + doubleValue2 + doubleValue3);
                 GaugeValue = _trend1;
                 var model1 = new MeasureModel
