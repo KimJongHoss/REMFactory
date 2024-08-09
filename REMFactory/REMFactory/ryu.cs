@@ -134,7 +134,6 @@ namespace REMFactory
                     dates.Add(Convert.ToDateTime(df_1[i][1]).AddHours(j));
                 }
             }
-            List<double> listUsing = getModelData();
             int count = 0;
             
             getPanel2Data();
@@ -148,11 +147,8 @@ namespace REMFactory
                 now = DateTime.Now;
 
                 
-                _trend1 += listRyu[count] / 300;
-                _trend2 = listUsing[count];
-                _trend3 = listUsing[count] * 1.5;
-                _trend4 = listUsing[count] * 2;
-                _trend1 -= (_trend2 + _trend3 + _trend4);
+                _trend1 += listRyu[count] / 100;
+                _trend1 -= (doubleValue + doubleValue2 + doubleValue3);
                 
                 var model1 = new MeasureModel
                 {
@@ -163,17 +159,17 @@ namespace REMFactory
                 var model2 = new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend2
+                    Value = doubleValue
                 };
                 var model3 = new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend3
+                    Value = doubleValue2
                 };
                 var model4 = new MeasureModel
                 {
                     DateTime = now,
-                    Value = _trend4
+                    Value = doubleValue3
                 };
 
                 SetAxisLimits(now);

@@ -252,8 +252,17 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image  Height="107" Width="108" Source="\Resources\optionicon.png" />
+                        
                     </StackPanel>
                 </TabItem.Header>
+                <Grid>
+                    <Label x:Name="electricityAllSellLabel" Content="Label" Margin="489,69,84,412" FontSize="48" RenderTransformOrigin="0.436,0.58">
+                        <Label.Foreground>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}"/>
+                        </Label.Foreground>
+                    </Label>
+                    <Label x:Name="electricityAllSellNameLabel" Content="전력 누적 판매량" Margin="489,0,84,497" FontSize="36" Foreground="White"/>
+                </Grid>
             </TabItem>
             <TabItem x:Name="tabManager">
                 <TabItem.Header>
@@ -282,6 +291,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
+           
 
         </TabControl>
     </Grid>

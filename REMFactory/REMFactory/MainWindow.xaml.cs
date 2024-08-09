@@ -29,9 +29,9 @@ namespace REMFactory
         private void slider_valueChanged(object sender, RoutedEventArgs e)
         {
                 UpdateTotalProgress(pathTotal, _trend1);
-                UpdateProgress(pathLine1, _trend2);
-                UpdateProgress(pathLine2, _trend3);
-                UpdateProgress(pathLine3, _trend4);
+                UpdateProgress(pathLine1, doubleValue);
+                UpdateProgress(pathLine2, doubleValue2);
+                UpdateProgress(pathLine3, doubleValue3);
         }
 
         private void slider_valueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
