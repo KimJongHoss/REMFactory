@@ -62,7 +62,6 @@ namespace REMFactory
                 {
                     foreach (var value in row)
                     {
-
                         if (Dispatcher.CheckAccess())
                         {
                             UpdateLabelAndSlider(value);//label value와 slider value를 바꾸는 메서드 
@@ -86,11 +85,14 @@ namespace REMFactory
                 doubleValue = Convert.ToDouble(value);
                 doubleValue2 = doubleValue * 1.5;
                 doubleValue3 = doubleValue * 2;
-                if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
                     doubleValue2 = 0;
                     doubleValue3 = 0;
+                    sliderLine1.Value = doubleValue;
+                    sliderLine2.Value = doubleValue2;
+                    sliderLine3.Value = doubleValue3;
                 }
                 labelLine1.Text = doubleValue.ToString();
                 labelLine2.Text = doubleValue2.ToString();
@@ -98,7 +100,7 @@ namespace REMFactory
                 sliderLine1.Value = doubleValue;
                 sliderLine2.Value = doubleValue2;
                 sliderLine3.Value = doubleValue3;
-                Console.WriteLine($"적용된 value: {doubleValue}");
+                //MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
             }
             catch (InvalidCastException)
             {
@@ -180,7 +182,7 @@ namespace REMFactory
                     foreach (var value in row)
                     {
                         double valueDouble = Convert.ToDouble(value);
-                        if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                        if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                         {
                             valueDouble = 0;
                         }
@@ -231,11 +233,12 @@ namespace REMFactory
         {
             if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
             {
-                if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                int overValue = 0;
+                if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
-                    labelEfficiencyLine1.Text = "0";
-                    labelEfficiencyLine2.Text = "0";
-                    labelEfficiencyLine3.Text = "0";
+                    labelEfficiencyLine1.Text = overValue.ToString();
+                    labelEfficiencyLine2.Text = overValue.ToString();
+                    labelEfficiencyLine3.Text = overValue.ToString();
                     return;
                 }
                 double efficiencyData = doubleValue / efficiency * 100;
@@ -244,9 +247,7 @@ namespace REMFactory
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = line2Data.ToString();
                 labelEfficiencyLine3.Text = line3Data.ToString();
-                //sliderLine1.Value = efficiencyData;
-                //sliderLine2.Value = efficiencyData;
-                //sliderLine3.Value = efficiencyData;
+                //MessageBox.Show($"1: {efficiencyData},2:{line2Data},3:{line3Data}");
             }
             else
             {

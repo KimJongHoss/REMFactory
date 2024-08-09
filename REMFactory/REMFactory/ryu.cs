@@ -153,6 +153,7 @@ namespace REMFactory
             getPanel2Data();
             getefficiencyData();
             
+            
             while (IsReading)
             {
                 Thread.Sleep(1000);
@@ -162,6 +163,7 @@ namespace REMFactory
 
 
                 powerTotal += listRyu[count] / 10;
+                
                 powerTotal -= (doubleValue + doubleValue2 + doubleValue3);
                 GaugeValue = powerTotal;
                 var model1 = new MeasureModel
