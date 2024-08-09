@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Run Production" Click="OnRunProductionClick" HorizontalAlignment="Left" Height="108" Margin="53,217,0,0" VerticalAlignment="Top" Width="312"/>
 
     </Grid>
 </Window>
