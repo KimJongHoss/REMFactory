@@ -22,23 +22,24 @@ namespace REMFactory
         {
             InitializeComponent();
             chart1();
-            LabelElec();
+            labelElec();
+            BasicColumn();
             //getPanel2Data();
         }
 
         private void slider_valueChanged(object sender, RoutedEventArgs e)
         {
-                UpdateTotalProgress(pathTotal, _trend1);
-                UpdateProgress(pathLine1, _trend2);
-                UpdateProgress(pathLine2, _trend3);
-                UpdateProgress(pathLine3, _trend4);
+                UpdateTotalProgress(pathTotal, powerTotal);
+                UpdateProgress(pathLine1, usePower1);
+                UpdateProgress(pathLine2, usePower2);
+                UpdateProgress(pathLine3, usePower3);
         }
 
         private void slider_valueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (sliderLine1 != null && labelLine1 != null)
             {
-                labelTotal.Text = _trend1.ToString();
+                labelTotal.Text = powerTotal.ToString();
                 labelLine1.Text = sliderLine1.Value.ToString();
                 double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString();

@@ -24,12 +24,13 @@ namespace REMFactory
 
         private double _axisMax;
         private double _axisMin;
-        private double _trend1;
-        private double _trend2;
-        private double _trend3;
-        private double _trend4;
-        private double sum;
-        private DateTime now;
+        private double powerTotal;
+        private double usePower1;
+        private double usePower2;
+        private double usePower3;
+        private double sumPower;
+        private DateTime nowTime;
+        private Dictionary<DateTime, double> dateDictionary = new Dictionary<DateTime, double>();
 
         public void chart1()
         {
@@ -96,26 +97,27 @@ namespace REMFactory
 
         private void Read()
         {
-            
+            var r = new Random();
             //var datapath1 = System.IO.Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
             var dataPath2 = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
             //var dfJong = DataFrame.LoadCsv(datapath1);
             var df = DataFrame.LoadCsv(dataPath2);
 
-            var df_1 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광1") == true).ToList();
-            var df_2 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광2") == true).ToList();
-            var df_3 = df.Rows.Where(row => row["발전기명"].ToString().Contains("태양광3") == true).ToList();
+            var dfLine1 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광1") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
+            var dfLine2 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광2") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
+            var dfLine3 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광3") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
 
 
             //var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
             List<Double> listRyu = new List<Double>();
             List<DateTime> dates = new List<DateTime>();
+            List<double> power = new List<double>();
             //List<int> listJong = new List<int>();
-            for (int i = 0; i < df_1.Count(); i++)
+            for (int i = 0; i < dfLine1.Count(); i++)
             {
-                for (int j = 3; j < df_1[0].Count(); j++)
+                for (int j = 3; j < dfLine1[0].Count(); j++)
                 {
-                    listRyu.Add(Convert.ToDouble(df_1[i][j]) + Convert.ToDouble(df_2[i][j]) + Convert.ToDouble(df_3[i][j]));
+                    listRyu.Add(Convert.ToDouble(dfLine1[i][j]) + Convert.ToDouble(dfLine2[i][j]) + Convert.ToDouble(dfLine3[i][j]));
                 }
 
             }
@@ -127,11 +129,11 @@ namespace REMFactory
             //        listJong.Add(Convert.ToInt32(dfJong_1[i][j]));
             //    }
             //}
-            for (int i = 0; i < df_1.Count(); i++)
+            for (int i = 0; i < dfLine1.Count(); i++)
             {
                 for (int j = 1; j <= 24; j++)
                 {
-                    dates.Add(Convert.ToDateTime(df_1[i][1]).AddHours(j));
+                    dates.Add(Convert.ToDateTime(dfLine1[i][1]).AddHours(j));
                 }
             }
             List<double> listUsing = getModelData();
@@ -145,38 +147,39 @@ namespace REMFactory
                 Thread.Sleep(1000);
                
 
-                now = DateTime.Now;
+                nowTime = DateTime.Now;
 
                 
-                _trend1 += listRyu[count] / 300;
-                _trend2 = listUsing[count];
-                _trend3 = listUsing[count] * 1.5;
-                _trend4 = listUsing[count] * 2;
-                _trend1 -= (_trend2 + _trend3 + _trend4);
+                powerTotal += listRyu[count] / 100;
+                usePower1 = listUsing[count];
+                usePower2 = listUsing[count] * r.Next(1,2);
+                usePower3 = listUsing[count] * r.Next(0,3);
+                powerTotal -= (usePower1 + usePower2 + usePower3);
+
                 
                 var model1 = new MeasureModel
                 {
-                    DateTime = now,
-                    Value = _trend1
+                    DateTime = nowTime,
+                    Value = powerTotal
                 };
 
                 var model2 = new MeasureModel
                 {
-                    DateTime = now,
-                    Value = _trend2
+                    DateTime = nowTime,
+                    Value = usePower1
                 };
                 var model3 = new MeasureModel
                 {
-                    DateTime = now,
-                    Value = _trend3
+                    DateTime = nowTime,
+                    Value = usePower2
                 };
                 var model4 = new MeasureModel
                 {
-                    DateTime = now,
-                    Value = _trend4
+                    DateTime = nowTime,
+                    Value = usePower3
                 };
 
-                SetAxisLimits(now);
+                SetAxisLimits(nowTime);
 
                 //lets only use the last 150 values
                 Application.Current.Dispatcher.Invoke(() =>
@@ -185,7 +188,7 @@ namespace REMFactory
                     ChartValues2.Add(model2);
                     ChartValues3.Add(model3);
                     ChartValues4.Add(model4);
-                    SetAxisLimits(now);
+                    SetAxisLimits(nowTime);
 
                     if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
@@ -197,17 +200,22 @@ namespace REMFactory
                 count++;
                 if (count % 24 == 0)
                 {
-                    sum += (_trend1 - 50000);
-                    _trend1 = 50000;
-                    MessageBox.Show(sum.ToString());
+                    sumPower += (powerTotal - 50000);
+                    powerTotal = 50000;
+                    MessageBox.Show(sumPower.ToString());
+                    dateDictionary.Add(dates[count], sumPower);
+                    
+
                 }
 
             }
             
         }
-        private void LabelElec()
+
+
+        private void labelElec()
         {
-            labelElec.Text = "누적 판매 전력량 :" + sum.ToString();
+             labelsumPower.Text = "누적 판매 전력량 :" + sumPower.ToString();
         }
         private void SetAxisLimits(DateTime now)
         {
@@ -232,6 +240,47 @@ namespace REMFactory
         }
 
         #endregion
+
+        public void BasicColumn()
+        {
+            List<string> dateChart2 = new List<string>();
+            List<double> powerChart2 = new List<double>();
+            foreach (KeyValuePair<DateTime, double> item in dateDictionary)
+            {
+                dateChart2.Add(item.Key.ToString("yyyy-MM-dd"));
+                powerChart2.Add(item.Value);
+            }
+
+
+            SeriesCollection = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "누적 전력량",
+                    Values = new ChartValues<double>(powerChart2)
+                }
+            };
+
+            //adding series will update and animate the chart automatically
+            SeriesCollection.Add(new ColumnSeries
+            {
+                Title = "2016",
+                Values = new ChartValues<double> { 11, 56, 42 }
+            });
+
+            //also adding values updates and animates the chart automatically
+
+
+            Labels = dateChart2.ToArray();
+            Formatter = value => value.ToString("N");
+
+            DataContext = this;
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
     }
 }
 
