@@ -11,6 +11,7 @@ using LiveCharts.Wpf;
 using System.ComponentModel;
 using System.Windows.Documents;
 using ScottPlot.Palettes;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace REMFactory
 {
@@ -166,7 +167,7 @@ namespace REMFactory
                 usePower2 = listUsing[count] * r.Next(1,2);
                 usePower3 = listUsing[count] * r.Next(0,3);
                 powerTotal -= (usePower1 + usePower2 + usePower3);
-                GaugeValue = _trend1;
+                GaugeValue = powerTotal;
 
                 var model1 = new MeasureModel
                 {
@@ -224,9 +225,9 @@ namespace REMFactory
         }
 
 
-        private void labelElec()
+        private void LabelElec()
         {
-             labelsumPower.Text = "누적 판매 전력량 :" + sumPower.ToString();
+            labelElec.Text = "누적 판매 전력량 :" + sumPower.ToString();
         }
         private void SetAxisLimits(DateTime now)
         {
