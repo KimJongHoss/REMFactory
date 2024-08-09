@@ -29,7 +29,7 @@
             </Button>
         </Grid>
         <Grid Margin="0 60 0 0" RenderTransformOrigin="0.5,0.5">
-            <dragablz:TabablzControl Background="#FFD25555">
+            <dragablz:TabablzControl Background="White">
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController/>
                 </dragablz:TabablzControl.InterTabController>
@@ -219,9 +219,14 @@
                     </Grid>
                     <!--총 생산 전력-->
                 </TabItem>
-                <TabItem Header="ETC">
-                    <TextBlock Text="Hello holly"/>
-                    
+                <TabItem Header="Tabbell">
+                    <local:belldesign Width="1200" Height="550" Background="White"/>
+                </TabItem>
+                <TabItem Header="TabRyu">
+                    <local:Ryudesign Width="1200" Height="550" Background="White"/>
+                </TabItem>
+                <TabItem Header="Tabws">
+                    <local:wsdesign Width="1200" Height="550" Background="White"/>
                 </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
