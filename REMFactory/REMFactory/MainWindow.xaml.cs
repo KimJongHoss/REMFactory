@@ -28,20 +28,16 @@ namespace REMFactory
 
         private void slider_valueChanged(object sender, RoutedEventArgs e)
         {
-                UpdateTotalProgress(pathTotal, _trend1);
-                UpdateProgress(pathLine1, _trend2);
-                UpdateProgress(pathLine2, _trend3);
-                UpdateProgress(pathLine3, _trend4);
         }
 
         private void slider_valueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (sliderLine1 != null && labelLine1 != null)
             {
-                labelTotal.Text = _trend1.ToString();
                 labelLine1.Text = sliderLine1.Value.ToString();
                 double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString();
+                UpdateProgress(pathLine1, _trend2);
             }
         }
 
@@ -52,6 +48,7 @@ namespace REMFactory
                 labelLine2.Text = sliderLine2.Value.ToString();
                 double efficiencySlider2Value = sliderLine2.Value / efficiency * 100;
                 labelEfficiencyLine2.Text = efficiencySlider2Value.ToString();
+                UpdateProgress(pathLine2, _trend3);
             }
         }
 
@@ -62,6 +59,7 @@ namespace REMFactory
                 labelLine3.Text = sliderLine3.Value.ToString();
                 double efficiencySlider3Value = sliderLine3.Value / efficiency * 100;
                 labelEfficiencyLine3.Text = efficiencySlider3Value.ToString();
+                UpdateProgress(pathLine3, _trend4);
             }
         }
 
