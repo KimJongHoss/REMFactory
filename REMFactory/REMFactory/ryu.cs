@@ -28,6 +28,7 @@ namespace REMFactory
         private double usePower1;
         private double usePower2;
         private double usePower3;
+        private double _gaugeValue;
         private double sumPower;
         private DateTime nowTime;
         private Dictionary<DateTime, double> dateDictionary = new Dictionary<DateTime, double>();
@@ -48,7 +49,7 @@ namespace REMFactory
             ChartValues4 = new ChartValues<MeasureModel>();
 
 
-            //lets set how to display the X Labels
+            //lets set how to display the X LabelElecs
             DateTimeFormatter = value => new DateTime((long)value).ToString("HH");
 
             //AxisStep forces the distance between each separator in the X axis
@@ -90,6 +91,16 @@ namespace REMFactory
             {
                 _axisMin = value;
                 OnPropertyChanged("AxisMin");
+            }
+        }
+
+        public double GaugeValue
+        {
+            get { return _gaugeValue; }
+            set
+            {
+                _gaugeValue = value;
+                OnPropertyChanged(nameof(GaugeValue));
             }
         }
 
@@ -155,8 +166,8 @@ namespace REMFactory
                 usePower2 = listUsing[count] * r.Next(1,2);
                 usePower3 = listUsing[count] * r.Next(0,3);
                 powerTotal -= (usePower1 + usePower2 + usePower3);
+                GaugeValue = _trend1;
 
-                
                 var model1 = new MeasureModel
                 {
                     DateTime = nowTime,
