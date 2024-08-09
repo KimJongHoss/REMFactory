@@ -29,7 +29,7 @@
             </Button>
         </Grid>
         <Grid Margin="0 60 0 0" RenderTransformOrigin="0.5,0.5">
-            <dragablz:TabablzControl Background="#FFD25555">
+            <dragablz:TabablzControl Background="White">
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController/>
                 </dragablz:TabablzControl.InterTabController>
@@ -220,8 +220,14 @@
                     <!--총 생산 전력-->
                 </TabItem>
                 <TabItem Header="ETC">
-                    <TextBlock Text="Hello holly"/>
-                    
+                    <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Salesman" Labels="{Binding Labels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
                 </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
