@@ -28,6 +28,7 @@ namespace REMFactory
         private double _trend2;
         private double _trend3;
         private double _trend4;
+        private double _gaugeValue;
         private double sum;
         private DateTime now;
 
@@ -47,7 +48,7 @@ namespace REMFactory
             ChartValues4 = new ChartValues<MeasureModel>();
 
 
-            //lets set how to display the X Labels
+            //lets set how to display the X LabelElecs
             DateTimeFormatter = value => new DateTime((long)value).ToString("HH");
 
             //AxisStep forces the distance between each separator in the X axis
@@ -89,6 +90,16 @@ namespace REMFactory
             {
                 _axisMin = value;
                 OnPropertyChanged("AxisMin");
+            }
+        }
+
+        public double GaugeValue
+        {
+            get { return _gaugeValue; }
+            set
+            {
+                _gaugeValue = value;
+                OnPropertyChanged(nameof(GaugeValue));
             }
         }
 
@@ -153,7 +164,8 @@ namespace REMFactory
                 _trend3 = listUsing[count] * 1.5;
                 _trend4 = listUsing[count] * 2;
                 _trend1 -= (_trend2 + _trend3 + _trend4);
-                
+                GaugeValue = _trend1;
+
                 var model1 = new MeasureModel
                 {
                     DateTime = now,
