@@ -38,7 +38,7 @@ namespace REMFactory
             {
                 doubleValue = sliderLine1.Value;
                 labelLine1.Text = doubleValue.ToString();
-                double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
+                double efficiencySlider1Value = doubleValue / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString();
                 UpdateProgress(pathLine1, doubleValue);
             }
@@ -50,7 +50,7 @@ namespace REMFactory
             {
                 doubleValue2 = sliderLine2.Value;
                 labelLine2.Text = doubleValue2.ToString();
-                double efficiencySlider2Value = sliderLine2.Value / efficiency * 100;
+                double efficiencySlider2Value = doubleValue2 / efficiency * 100;
                 labelEfficiencyLine2.Text = efficiencySlider2Value.ToString();
                 UpdateProgress(pathLine2, doubleValue2);
             }
@@ -62,7 +62,7 @@ namespace REMFactory
             {
                 doubleValue3 = sliderLine3.Value;
                 labelLine3.Text = doubleValue3.ToString();
-                double efficiencySlider3Value = sliderLine3.Value / efficiency * 100;
+                double efficiencySlider3Value = doubleValue3 / efficiency * 100;
                 labelEfficiencyLine3.Text = efficiencySlider3Value.ToString();
                 UpdateProgress(pathLine3, doubleValue3);
             }
