@@ -20,7 +20,7 @@ namespace REMFactory
 {
     public class MeasureModel
     {
-        public double X { get; set; }
+        public DateTime X { get; set; }
         public double Value { get; set; }
     }
     public partial class MainWindow : Window, INotifyPropertyChanged
@@ -38,7 +38,7 @@ namespace REMFactory
         public void chart1()
         {
             var mapper = Mappers.Xy<MeasureModel>()
-                .X(model => model.X)   //use DateTime.Ticks as X
+                .X(model => model.X.ToOADate())                //use DateTime.Ticks as X
                 .Y(model => model.Value);           //use the value property as Y
 
             //lets save the mapper globally.
@@ -50,52 +50,11 @@ namespace REMFactory
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
 
-            //cartesianChart1.Series = new SeriesCollection
-            //{
-            //    new LineSeries
-            //    {
-            //        Title = "powerTotal",
-            //        Values = ChartValues1,
-            //        PointGeometrySize = 10,
-            //        StrokeThickness = 2,
-            //        LineSmoothness = 0,
-            //        Stroke = Brushes.Red
-            //    }
-            //};
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line1",
-            //    Values = ChartValues2, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Blue
-            //});
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line2",
-            //    Values = ChartValues3, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Brown
-            //});
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line3",
-            //    Values = ChartValues4, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Orange
-            //});
-            //lets set how to display the X LabelElecs
-            //DateTimeFormatter = value => value.ToString("0");
 
-            AxisStep = 1; // X축의 단위 설정
+            AxisStep = 1 / 24.0; // X축의 시간 간격 설정
             AxisUnit = 1; // X축 단위 설정
 
-            SetAxisLimits(1); // 시작 값을 1로 설정
+            SetAxisLimits(DateTime.Now);
 
             //The next code simulates data changes every 300 ms
 
@@ -108,9 +67,10 @@ namespace REMFactory
         public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
-        public Func<double, string> XAxisLabelFormatter => value => {
-            int intValue = (int)value;
-            return ((intValue - 1) % 24 + 1).ToString(); // Ensures X-axis labels repeat from 1 to 24
+        public Func<double, string> XAxisLabelFormatter => value =>
+        {
+            DateTime dateTime = DateTime.FromOADate(value);
+            return dateTime.ToString("HH:mm"); // Format as needed
         };
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -208,27 +168,27 @@ namespace REMFactory
                 GaugeValue = powerTotal;
                 var model1 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = powerTotal
                 };
 
                 var model2 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue
                 };
                 var model3 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue2
                 };
                 var model4 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue3
                 };
 
-                SetAxisLimits(nowTime);
+                SetAxisLimits(today);
 
                 //lets only use the last 150 values
                 Application.Current.Dispatcher.Invoke(() =>
@@ -237,7 +197,7 @@ namespace REMFactory
                     ChartValues2.Add(model2);
                     ChartValues3.Add(model3);
                     ChartValues4.Add(model4);
-                    SetAxisLimits(nowTime);
+                    SetAxisLimits(today);
 
                     if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
@@ -268,15 +228,10 @@ namespace REMFactory
 
         }
 
-
-        private void LabelElec()
+        private void SetAxisLimits(DateTime currentDateTime)
         {
-            labelElec.Text = "누적 판매 전력량 :" + sumPower.ToString();
-        }
-        private void SetAxisLimits(double currentX)
-        {
-            AxisMax = currentX + 10; // 현재 X 값에서 10을 더한 값으로 설정
-            AxisMin = currentX - 5; // 현재 X 값에서 10을 뺀 값으로 설정
+            AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
+            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
@@ -291,8 +246,7 @@ namespace REMFactory
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
-            if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
