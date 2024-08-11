@@ -43,14 +43,14 @@ namespace REMFactory
                 return;
             }
 
-            if (_mainWindow.dateDictionary.Count == 0)
+            if (MainWindow.dateDictionary.Count == 0)
             {
                 MessageBox.Show("MainWindow의 dateDictionary에 데이터가 없습니다.");
                 return;
             }
 
             List<Data> datas = new List<Data>();
-            var ndic = _mainWindow.dateDictionary;
+            var ndic = MainWindow.dateDictionary;
 
             foreach (KeyValuePair<DateTime, double> item in ndic)
             {

@@ -33,7 +33,7 @@ namespace REMFactory
         private double sumPower;
         private double nowTime;
         private DateTime today;
-        public Dictionary<DateTime, double> dateDictionary { get; set; } = new Dictionary<DateTime, double>();
+        public static Dictionary<DateTime, double> dateDictionary { get; set; } = new Dictionary<DateTime, double>();
 
         public void chart1()
         {
@@ -256,7 +256,7 @@ namespace REMFactory
                     dateDictionary.Add(dates[count].Date, sumPower);
                     dateResult = dateDictionary[dates[count].Date].ToString();
                     Application.Current.Dispatcher.Invoke(() => {
-                        label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+                    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
                         
                     });
 
@@ -268,11 +268,6 @@ namespace REMFactory
 
         }
 
-
-        private void LabelElec()
-        {
-            labelElec.Text = "누적 판매 전력량 :" + sumPower.ToString();
-        }
         private void SetAxisLimits(double currentX)
         {
             AxisMax = currentX + 10; // 현재 X 값에서 10을 더한 값으로 설정
