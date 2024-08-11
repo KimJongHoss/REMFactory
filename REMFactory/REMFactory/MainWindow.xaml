@@ -17,11 +17,6 @@
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="buttonExit_Click">
                 <materialDesign:PackIcon Kind="Power"/>
             </Button>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="InjectStopOnClick" Margin="1136,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="SolarEnergy"/>
-                </StackPanel>
-            </Button>
             <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="OpenLink_Click" Margin="1184,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Github"/>
@@ -34,15 +29,18 @@
                     <dragablz:InterTabController/>
                 </dragablz:TabablzControl.InterTabController>
                 <TabItem Header="HOME">
-                    <Grid x:Name="gridMain">    
+                    <Grid x:Name="gridMain">
                         <!--Here we disable tooltips and hovering to get a better performance-->
-                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="420,22,35,288">
+                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="420,22,35,288" >
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues1}" 
-                             PointGeometry="{x:Null}" 
-                             LineSmoothness="1"
-                             StrokeThickness="1" 
-                             Stroke="#F34336"
+                                                PointGeometry="M 10,100 L 40,10 L 70,100 L 10,40 L 80,40 Z" 
+                                                LineSmoothness="0"
+                                                StrokeThickness="4" 
+                                                
+                                                PointGeometrySize="10"
+                                                Stroke="#F34336"
+                                                
                              Fill="Transparent"/>
                                 <lvc:LineSeries Values="{Binding ChartValues2}" 
                              PointGeometry="{x:Null}" 
@@ -64,16 +62,24 @@
                              Fill="Transparent"/>
                             </lvc:CartesianChart.Series>
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}"
-                         MaxValue="{Binding AxisMax}" 
-                         MinValue="{Binding AxisMin}"
-                         Unit="{Binding AxisUnit}">
+                                <lvc:Axis LabelFormatter="{Binding XAxisLabelFormatter}"
+                                          MaxValue="{Binding AxisMax}" 
+                                          MinValue="{Binding AxisMin}"
+                                          Unit="{Binding AxisUnit}">
                                     <lvc:Axis.Separator>
                                         <lvc:Separator Step="{Binding AxisStep}" />
                                     </lvc:Axis.Separator>
                                 </lvc:Axis>
                             </lvc:CartesianChart.AxisX>
                         </lvc:CartesianChart>
+
+                        <TextBlock x:Name="label1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 100" FontFamily="Arial Black"/>
+                        <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 30" FontFamily="Arial Black"/>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="InjectStopOnClick" Margin="400,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="SolarEnergy"/>
+                            </StackPanel>
+                        </Button>
 
                         <!--라인별 사용량, 효율-->
                         <Viewbox Margin="20,226,200,9">
@@ -183,7 +189,21 @@
                     <local:belldesign Width="1200" Height="550" Background="White"/>
                 </TabItem>
                 <TabItem Header="TabRyu">
-                    <local:Ryudesign Width="1200" Height="550" Background="White"/>
+                    <Grid>
+                        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
+                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <lvc:CartesianChart x:Name="cartesianChart"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Height="300" 
+                    Width="500" Margin="280,50,0,0"
+                    Background="White"/>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Tabws">
                     <local:wsdesign Width="1200" Height="550" Background="White"/>
