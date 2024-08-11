@@ -34,40 +34,41 @@ namespace REMFactory
 
         private void slider_valueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sliderLine1 != null && labelLine1 != null)
+            if (sliderLine1 != null && labelLine1 != null && efficiency != 0)
             {
-                labelLine1.Text = sliderLine1.Value.ToString();
+                labelLine1.Text = "라인 A 전력 : " + sliderLine1.Value.ToString("F0");
                 double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
-                labelEfficiencyLine1.Text = efficiencySlider1Value.ToString();
+                labelEfficiencyLine1.Text = efficiencySlider1Value.ToString("F2");
                 UpdateProgress(pathLine1, doubleValue);
             }
         }
 
         private void slider_valueChanged2(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sliderLine2 != null && labelLine2 != null)
+            if (sliderLine2 != null && labelLine2 != null && efficiency != 0)
             {
-                labelLine2.Text = sliderLine2.Value.ToString();
+                labelLine2.Text = "라인 B 전력 : " + sliderLine2.Value.ToString("F0");
                 double efficiencySlider2Value = sliderLine2.Value / efficiency * 100;
-                labelEfficiencyLine2.Text = efficiencySlider2Value.ToString();
+                labelEfficiencyLine2.Text = efficiencySlider2Value.ToString("F2");
                 UpdateProgress(pathLine2, doubleValue2);
             }
         }
 
         private void slider_valueChanged3(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sliderLine3 != null && labelLine3 != null)
+            if (sliderLine3 != null && labelLine3 != null && efficiency != 0)
             {
-                labelLine3.Text = sliderLine3.Value.ToString();
+                labelLine3.Text = "라인 C 전력 : " + sliderLine3.Value.ToString("F0");
                 double efficiencySlider3Value = sliderLine3.Value / efficiency * 100;
-                labelEfficiencyLine3.Text = efficiencySlider3Value.ToString();
+                labelEfficiencyLine3.Text = efficiencySlider3Value.ToString("F2");
                 UpdateProgress(pathLine3, doubleValue3);
             }
         }
 
         private void UpdateProgress(Path path, double value)
         {
-            double angle = value / 20000 * 360;
+            double cappedValue = Math.Min(value, 10000);
+            double angle = cappedValue / 10000 * 360;
             double radius = 90;
             double center = 100;
 

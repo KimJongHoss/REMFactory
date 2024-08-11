@@ -86,7 +86,7 @@ namespace REMFactory
                 doubleValue = Convert.ToDouble(value);
                 doubleValue2 = doubleValue * 1.5;
                 doubleValue3 = doubleValue * 2;
-                if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
                     doubleValue2 = 0;
@@ -180,7 +180,7 @@ namespace REMFactory
                     foreach (var value in row)
                     {
                         double valueDouble = Convert.ToDouble(value);
-                        if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                        if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                         {
                             valueDouble = 0;
                         }
@@ -231,7 +231,7 @@ namespace REMFactory
         {
             if (double.TryParse(value.ToString(), out double doubleValue))//파싱 성공하면 value를 doubleValue에 넣는다
             {
-                if (_trend1 < doubleValue + doubleValue2 + doubleValue3)
+                if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     labelEfficiencyLine1.Text = "0";
                     labelEfficiencyLine2.Text = "0";
@@ -239,8 +239,8 @@ namespace REMFactory
                     return;
                 }
                 double efficiencyData = doubleValue / efficiency * 100;
-                double line2Data = doubleValue2 / efficiency2 * 100;
-                double line3Data = doubleValue3 / efficiency3 * 100;
+                double line2Data = doubleValue2 / efficiency / 1.5 * 100;
+                double line3Data = doubleValue3 / efficiency / 2 * 100;
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = line2Data.ToString();
                 labelEfficiencyLine3.Text = line3Data.ToString();

@@ -218,12 +218,6 @@ namespace REMFactory
             }
             
         }
-
-
-        private void LabelElec()
-        {
-            labelElec.Text = "누적 판매 전력량 :" + sumPower.ToString();
-        }
         private void SetAxisLimits(DateTime now)
         {
             AxisMax = now.Ticks + TimeSpan.FromSeconds(5).Ticks; // lets force the axis to be 1 second ahead
