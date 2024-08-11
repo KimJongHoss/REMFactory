@@ -23,7 +23,7 @@ namespace REMFactory
             InitializeComponent();
             chart1();
             
-            BasicColumn();
+
             //getPanel2Data();
         }
 
@@ -118,14 +118,18 @@ namespace REMFactory
 
         private void lineAtext_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (ChartValues1 == null || ChartValues2 == null || ChartValues3 == null || ChartValues4 == null)
-            {
-                MessageBox.Show("No data available to display.");
-                return;
-            }
+            OpenChartWindow();
+        }
+        private void OpenChartWindow()
+        {
+            // Ensure dateDictionary has data before opening the chart window
+            //if (dateDictionary.Count == 0)
+            //{
+            //    MessageBox.Show("데이터가 없습니다.");
+            //    return;
+            //}
 
-            // Open the new chart window
-            var chartWindow = new ChartWindow1(ChartValues1, ChartValues2, ChartValues3, ChartValues4);
+            ChartWindow1 chartWindow = new ChartWindow1(this);
             chartWindow.Show();
         }
     }
