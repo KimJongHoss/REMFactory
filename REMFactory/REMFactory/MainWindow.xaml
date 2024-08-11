@@ -36,13 +36,16 @@
                 <TabItem Header="HOME">
                     <Grid x:Name="gridMain">
                         <!--Here we disable tooltips and hovering to get a better performance-->
-                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="420,22,35,288">
+                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="420,22,35,288" >
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues1}" 
-                             PointGeometry="{x:Null}" 
-                             LineSmoothness="1"
-                             StrokeThickness="1" 
-                             Stroke="#F34336"
+                                                PointGeometry="{x:Null}" 
+                                                LineSmoothness="0"
+                                                StrokeThickness="4" 
+                                                
+                                                PointGeometrySize="18"
+                                                  Stroke="#F34336"
+                                                
                              Fill="Transparent"/>
                                 <lvc:LineSeries Values="{Binding ChartValues2}" 
                              PointGeometry="{x:Null}" 
@@ -64,10 +67,10 @@
                              Fill="Transparent"/>
                             </lvc:CartesianChart.Series>
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}"
-                         MaxValue="{Binding AxisMax}" 
-                         MinValue="{Binding AxisMin}"
-                         Unit="{Binding AxisUnit}">
+                                <lvc:Axis LabelFormatter="{Binding XAxisLabelFormatter}"
+                                          MaxValue="{Binding AxisMax}" 
+                                          MinValue="{Binding AxisMin}"
+                                          Unit="{Binding AxisUnit}">
                                     <lvc:Axis.Separator>
                                         <lvc:Separator Step="{Binding AxisStep}" />
                                     </lvc:Axis.Separator>
@@ -224,6 +227,7 @@
                 </TabItem>
                 <TabItem Header="TabRyu">
                     <local:Ryudesign Width="1200" Height="550" Background="White"/>
+                    
                 </TabItem>
                 <TabItem Header="Tabws">
                     <local:wsdesign Width="1200" Height="550" Background="White"/>

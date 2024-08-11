@@ -20,9 +20,14 @@ namespace REMFactory
     /// </summary>
     public partial class Ryudesign : UserControl
     {
+    
         public Ryudesign()
         {
             InitializeComponent();
+            //foreach (KeyValuePair<DateTime, double> item in mainwindow.dateDictionary)
+            //{
+            //    listBoxdate.Items.Add(item.Key);
+            //}
         }
     }
 }

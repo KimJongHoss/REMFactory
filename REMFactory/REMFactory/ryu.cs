@@ -12,12 +12,15 @@ using System.ComponentModel;
 using System.Windows.Documents;
 using ScottPlot.Palettes;
 using static OpenTK.Graphics.OpenGL.GL;
+using Dragablz.Dockablz;
+using System.Windows.Media;
+
 
 namespace REMFactory
 {
     public class MeasureModel
     {
-        public System.DateTime DateTime { get; set; }
+        public double X { get; set; }
         public double Value { get; set; }
     }
     public partial class MainWindow : Window, INotifyPropertyChanged
@@ -26,18 +29,16 @@ namespace REMFactory
         private double _axisMax;
         private double _axisMin;
         private double powerTotal;
-        private double usePower1;
-        private double usePower2;
-        private double usePower3;
         private double _gaugeValue;
         private double sumPower;
-        private DateTime nowTime;
-        private Dictionary<DateTime, double> dateDictionary = new Dictionary<DateTime, double>();
+        private double nowTime;
+        private DateTime today;
+        public Dictionary<DateTime, double> dateDictionary { get; set; } = new Dictionary<DateTime, double>();
 
         public void chart1()
         {
             var mapper = Mappers.Xy<MeasureModel>()
-                .X(model => model.DateTime.Ticks)   //use DateTime.Ticks as X
+                .X(model => model.X)   //use DateTime.Ticks as X
                 .Y(model => model.Value);           //use the value property as Y
 
             //lets save the mapper globally.
@@ -49,17 +50,52 @@ namespace REMFactory
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
 
-
+            //cartesianChart1.Series = new SeriesCollection
+            //{
+            //    new LineSeries
+            //    {
+            //        Title = "powerTotal",
+            //        Values = ChartValues1,
+            //        PointGeometrySize = 10,
+            //        StrokeThickness = 2,
+            //        LineSmoothness = 0,
+            //        Stroke = Brushes.Red
+            //    }
+            //};
+            //cartesianChart1.Series.Add(new LineSeries
+            //{
+            //    Title = "Line1",
+            //    Values = ChartValues2, // 새 데이터
+            //    PointGeometrySize = 10,
+            //    StrokeThickness = 2,
+            //    LineSmoothness = 0,
+            //    Stroke = Brushes.Blue
+            //});
+            //cartesianChart1.Series.Add(new LineSeries
+            //{
+            //    Title = "Line2",
+            //    Values = ChartValues3, // 새 데이터
+            //    PointGeometrySize = 10,
+            //    StrokeThickness = 2,
+            //    LineSmoothness = 0,
+            //    Stroke = Brushes.Brown
+            //});
+            //cartesianChart1.Series.Add(new LineSeries
+            //{
+            //    Title = "Line3",
+            //    Values = ChartValues4, // 새 데이터
+            //    PointGeometrySize = 10,
+            //    StrokeThickness = 2,
+            //    LineSmoothness = 0,
+            //    Stroke = Brushes.Orange
+            //});
             //lets set how to display the X LabelElecs
-            DateTimeFormatter = value => new DateTime((long)value).ToString("HH");
+            //DateTimeFormatter = value => value.ToString("0");
 
-            //AxisStep forces the distance between each separator in the X axis
-            AxisStep = TimeSpan.FromSeconds(1).Ticks;
-            //AxisUnit forces lets the axis know that we are plotting seconds
-            //this is not always necessary, but it can prevent wrong labeling
-            AxisUnit = TimeSpan.TicksPerSecond;
+            AxisStep = 1; // X축의 단위 설정
+            AxisUnit = 1; // X축 단위 설정
 
-            SetAxisLimits(DateTime.Now);
+            SetAxisLimits(1); // 시작 값을 1로 설정
 
             //The next code simulates data changes every 300 ms
 
@@ -72,9 +108,13 @@ namespace REMFactory
         public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
-        public Func<double, string> DateTimeFormatter { get; set; }
+        public Func<double, string> XAxisLabelFormatter => value => {
+            int intValue = (int)value;
+            return ((intValue - 1) % 24 + 1).ToString(); // Ensures X-axis labels repeat from 1 to 24
+        };
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
+        public string dateResult { get; set; }
 
         public double AxisMax
         {
@@ -149,16 +189,17 @@ namespace REMFactory
                 }
             }
             int count = 0;
-            
+            int x = 1;
             getPanel2Data();
             getefficiencyData();
-            
+
             while (IsReading)
             {
                 Thread.Sleep(1000);
-               
 
-                nowTime = DateTime.Now;
+
+                nowTime = x;
+                today = dates[count];
 
 
                 powerTotal += listRyu[count] / 10;
@@ -166,23 +207,23 @@ namespace REMFactory
                 GaugeValue = powerTotal;
                 var model1 = new MeasureModel
                 {
-                    DateTime = nowTime,
+                    X = nowTime,
                     Value = powerTotal
                 };
 
                 var model2 = new MeasureModel
                 {
-                    DateTime = nowTime,
+                    X = nowTime,
                     Value = doubleValue
                 };
                 var model3 = new MeasureModel
                 {
-                    DateTime = nowTime,
+                    X = nowTime,
                     Value = doubleValue2
                 };
                 var model4 = new MeasureModel
                 {
-                    DateTime = nowTime,
+                    X = nowTime,
                     Value = doubleValue3
                 };
 
@@ -201,22 +242,29 @@ namespace REMFactory
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
                     if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
                     if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
+                    label3.Text = "TODAY :" + dates[count].Date.ToString("yyyy-MM-dd");
 
-                   
+
                 });
-                count++;
-                if (count % 24 == 0)
+                
+                
+                if (x % 24 == 0)
                 {
                     sumPower += (powerTotal - 50000);
                     powerTotal = 50000;
-                    MessageBox.Show(sumPower.ToString());
-                    dateDictionary.Add(dates[count], sumPower);
-                    
+                    dateDictionary.Add(dates[count].Date, sumPower);
+                    dateResult = dateDictionary[dates[count].Date].ToString();
+                    Application.Current.Dispatcher.Invoke(() => {
+                        label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+                        
+                    });
 
                 }
+                count++;
+                x++;
 
             }
-            
+
         }
 
 
@@ -224,10 +272,10 @@ namespace REMFactory
         {
             labelElec.Text = "누적 판매 전력량 :" + sumPower.ToString();
         }
-        private void SetAxisLimits(DateTime now)
+        private void SetAxisLimits(double currentX)
         {
-            AxisMax = now.Ticks + TimeSpan.FromSeconds(5).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(24).Ticks; // and 8 seconds behind
+            AxisMax = currentX + 10; // 현재 X 값에서 10을 더한 값으로 설정
+            AxisMin = currentX - 5; // 현재 X 값에서 10을 뺀 값으로 설정
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
@@ -248,46 +296,5 @@ namespace REMFactory
 
         #endregion
 
-        public void BasicColumn()
-        {
-            List<string> dateChart2 = new List<string>();
-            List<double> powerChart2 = new List<double>();
-            foreach (KeyValuePair<DateTime, double> item in dateDictionary)
-            {
-                dateChart2.Add(item.Key.ToString("yyyy-MM-dd"));
-                powerChart2.Add(item.Value);
-            }
-
-
-            SeriesCollection = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "누적 전력량",
-                    Values = new ChartValues<double>(powerChart2)
-                }
-            };
-
-            //adding series will update and animate the chart automatically
-            SeriesCollection.Add(new ColumnSeries
-            {
-                Title = "2016",
-                Values = new ChartValues<double> { 11, 56, 42 }
-            });
-
-            //also adding values updates and animates the chart automatically
-
-
-            Labels = dateChart2.ToArray();
-            Formatter = value => value.ToString("N");
-
-            DataContext = this;
-        }
-
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
-
     }
 }
-
