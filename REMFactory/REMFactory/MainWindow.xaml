@@ -221,10 +221,6 @@
                 </TabItem>
                 <TabItem Header="Tabbell">
                     <local:belldesign Width="1200" Height="550" Background="White"/>
-                    <Grid>
-                        <Label x:Name="electricityAllSellNameLabel" Content="전력 판매 누적 금액" Margin="0 10 0 0" FontSize="22"/>
-                        <Label x:Name="electricityAllSellLabel" Content="Hello holly" Margin="0 40 0 0" FontSize="20"/>
-                    </Grid>
                 </TabItem>
                 <TabItem Header="TabRyu">
                     <local:Ryudesign Width="1200" Height="550" Background="White"/>
