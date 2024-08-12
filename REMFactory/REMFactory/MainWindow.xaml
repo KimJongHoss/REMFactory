@@ -34,7 +34,6 @@
                         <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="0,22,35,288" Width="400" >
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues1}" 
-                                                PointGeometry="M 10,100 L 40,10 L 70,100 L 10,40 L 80,40 Z" 
                                                 LineSmoothness="0"
                                                 StrokeThickness="2" 
                                                 PointGeometrySize="10"
@@ -121,10 +120,10 @@
                                         <ColumnDefinition Width="52*"/>
                                         <ColumnDefinition Width="93*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Path x:Name="pathLine1" Stroke="#E9A621" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50" Grid.ColumnSpan="2">
+                                    <Path x:Name="pathLine1" Stroke="#36F34F" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50" Grid.ColumnSpan="2">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine1" Text="0" Foreground="#E9A621" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#E9A621" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine1" Text="0" Foreground="#36F34F" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#36F34F" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
@@ -145,10 +144,10 @@
                                 <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                                 <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
                                 <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
-                                    <Path x:Name="pathLine2" Stroke="#E9A621" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path x:Name="pathLine2" Stroke="#FFF336DA" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine2" Text="0" Foreground="#E9A621" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#E9A621" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine2" Text="0" Foreground="#FFF336DA" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#FFF336DA" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
@@ -169,10 +168,10 @@
                                 <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                                 <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
                                 <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
-                                    <Path x:Name="pathLine3" Stroke="#E9A621" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path x:Name="pathLine3" Stroke="#FF366AF3" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine3" Text="0" Foreground="#E9A621" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#E9A621" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine3" Text="0" Foreground="#FF366AF3" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#FF366AF3" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
@@ -208,19 +207,19 @@
                 </TabItem>
                 <TabItem Header="TabRyu">
                     <Grid>
-                        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
+                        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
+                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="-700,250,0,0" Background="White" VerticalScrollBarVisibility="Visible" Height="250" Width="500">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="*"/>
                                 <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <lvc:CartesianChart x:Name="cartesianChart"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Height="300" 
-                    Width="500" Margin="280,50,0,0"
-                    Background="White"/>
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top" 
+                                            Height="211" 
+                                            Width="1200" Margin="40,47,0,0"
+                                            Background="White"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Tabws">
