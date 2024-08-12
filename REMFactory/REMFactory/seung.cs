@@ -25,7 +25,6 @@ namespace REMFactory
         private double efficiencyData1;
         private double efficiencyData2;
         private double efficiencyData3;
-        public double shoeValue = 50;
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(); // WPF 애플리케이션 종료
@@ -159,15 +158,5 @@ namespace REMFactory
                     return date.ToString("MM/dd/yyyy");
                 };
             }
-        private void UpdateShoeValues()
-        {
-            double shoe1 = doubleValue / shoeValue;
-            double shoe2 = doubleValue2 / shoeValue;
-            double shoe3 = doubleValue3 / shoeValue;
-
-            shoe1TextBlock.Text = $"Shoe 1: {shoe1:F0}";
-            shoe2TextBlock.Text = $"Shoe 2: {shoe2:F0}";
-            shoe3TextBlock.Text = $"Shoe 3: {shoe3:F0}";
-        }
     }
  }
