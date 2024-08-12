@@ -20,8 +20,8 @@ namespace REMFactory
 
     public partial class MainWindow : Window
     {
-        bool isBlinking = false;
-        DispatcherTimer blinkTimer;
+        private bool isBlinkingRed = false;
+        DispatcherTimer blinkingTimer;
         private double efficiencyData1;
         private double efficiencyData2;
         private double efficiencyData3;
@@ -45,77 +45,52 @@ namespace REMFactory
                 MessageBox.Show("Unable to open link: " + ex.Message);
             }
         }
-        //private void redsign()
-        //{
-        //    if (doubleValue > 80)
-        //    {
-        //        boderLine1.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine1.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+        private void UpdateBorderColor(double currentValue, double maxValue, Border targetBorder)
+        {
+            double percentage = currentValue / maxValue * 100;
+            if (percentage >= 80)
+            {
+                StartBlinking(targetBorder);  // 80% 이상일 때 깜빡임 시작
+            }
+            else
+            {
+                StopBlinking(targetBorder);  // 80% 미만일 때 깜빡임 중지
+            }
+        }
+        private Dictionary<string, DispatcherTimer> borderTimers = new Dictionary<string, DispatcherTimer>();
 
-        //    if (doubleValue2 > 80)
-        //    {
-        //        boderLine2.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine2.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+        private void StartBlinking(Border targetBorder)
+        {
+            string borderName = targetBorder.Name;
 
-        //    if (doubleValue3 > 80)
-        //    {
-        //        boderLine3.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine3.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+            // 타이머가 없으면 생성
+            if (!borderTimers.ContainsKey(borderName))
+            {
+                DispatcherTimer newTimer = new DispatcherTimer();
+                newTimer.Interval = TimeSpan.FromMilliseconds(500);
+                newTimer.Tick += (sender, e) =>
+                {
+                    if (targetBorder.Background == Brushes.Red)
+                        targetBorder.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66));
+                    else
+                        targetBorder.Background = Brushes.Red;
+                };
+                borderTimers[borderName] = newTimer;
+            }
 
-        //    if (doubleValue > 5 && doubleValue2 > 5 && doubleValue3 > 5)
-        //    {
-        //        StartBlinking(gridMain);
-        //    }
-        //    else
-        //    {
-        //        StopBlinking(gridMain);
-        //    }
-        //    void StartBlinking(Grid gridMain)
-        //    {
-        //        if (blinkTimer == null)
-        //        {
-        //            blinkTimer = new DispatcherTimer();
-        //            blinkTimer.Interval = TimeSpan.FromMilliseconds(500); // 500ms 간격으로 깜빡임
-        //            blinkTimer.Tick += (s, e) =>
-        //            {
-        //                if (isBlinking)
-        //                {
-        //                    gridMain.Background = new SolidColorBrush(Colors.Red);
-        //                }
-        //                else
-        //                {
-        //                    gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
-        //                }
-        //                isBlinking = !isBlinking;
-        //            };
-        //        }
-        //        if (!blinkTimer.IsEnabled)
-        //        {
-        //            blinkTimer.Start();
-        //        }
-        //    }
+            borderTimers[borderName].Start();
+        }
 
-        //void StopBlinking(Grid gridMain)
-        //{
-        //    if (blinkTimer != null && blinkTimer.IsEnabled)
-        //    {
-        //        blinkTimer.Stop();
-        //        gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
-        //        isBlinking = false;
-        //    }
-        //}
+        private void StopBlinking(Border targetBorder)
+        {
+            string borderName = targetBorder.Name;
+
+            if (borderTimers.ContainsKey(borderName) && borderTimers[borderName].IsEnabled)
+            {
+                borderTimers[borderName].Stop();
+                targetBorder.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66));
+            }
+        }
         public class Data
         {
             public bool IsSelected { get; set; }
@@ -210,8 +185,8 @@ namespace REMFactory
                 soldDatas.Add(new soldData { date = item.Key, devideValue = item.Value });
             }
 
-            // soldDatas를 리스트 뷰에 바인딩
-            maxElectrocitySoldList.ItemsSource = soldDatas;
+            //// soldDatas를 리스트 뷰에 바인딩
+            //maxElectrocitySoldList.ItemsSource = soldDatas;
 
             // X축 설정
             var xAxis = new Axis
