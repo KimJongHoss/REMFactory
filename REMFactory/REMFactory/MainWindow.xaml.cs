@@ -1,4 +1,7 @@
-﻿using Microsoft.Data.Analysis;
+﻿using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using LiveCharts;
+using Microsoft.Data.Analysis;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -135,5 +138,7 @@ namespace REMFactory
             ChartWindow1 chartWindow = new ChartWindow1(this);
             chartWindow.Show();
         }
+
+       
     }
 }

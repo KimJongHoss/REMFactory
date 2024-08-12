@@ -23,6 +23,7 @@ namespace REMFactory
         public DateTime X { get; set; }
         public double Value { get; set; }
     }
+
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
@@ -34,6 +35,7 @@ namespace REMFactory
         private double nowTime;
         private DateTime today;
         public static Dictionary<DateTime, double> dateDictionary { get; set; } = new Dictionary<DateTime, double>();
+        
 
         public void chart1()
         {
@@ -41,20 +43,27 @@ namespace REMFactory
                 .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
                 .Y(model => model.Value);                       //use the value property as Y
 
+            var soldMapper = Mappers.Xy<MeasureSoldModel>()
+               .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
+               .Y(model => model.Value);                       //use the value property as Y
+
             //lets save the mapper globally.
             Charting.For<MeasureModel>(mapper);
+            Charting.For<MeasureSoldModel>(soldMapper);
 
             //the values property will store our values array
             ChartValues1 = new ChartValues<MeasureModel>();
             ChartValues2 = new ChartValues<MeasureModel>();
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
+            ChartValues5 = new ChartValues<MeasureSoldModel>();
 
 
             AxisStep = 1 / 24.0; // X축의 시간 간격 설정
             AxisUnit = 1; // X축 단위 설정
 
             SetAxisLimits(DateTime.Now);
+            //SetSoldAxisLimits(DateTime.Now);
 
 
             IsReading = false;
@@ -66,6 +75,7 @@ namespace REMFactory
         public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
+        public ChartValues<MeasureSoldModel> ChartValues5 { get; set; }
         public Func<double, string> XAxisLabelFormatter => value =>
         {
             DateTime dateTime = DateTime.FromOADate(value);
@@ -187,6 +197,11 @@ namespace REMFactory
                     X = today,
                     Value = doubleValue3
                 };
+                var model5 = new MeasureSoldModel
+                {
+                    X = openTime,
+                    Value = devideValue
+                };
 
                 SetAxisLimits(today);
 
@@ -209,7 +224,18 @@ namespace REMFactory
 
                 });
 
-                
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    AddTosoldChart(ChartValues5, model5);
+
+
+                    //SetSoldAxisLimits(openTime);
+                    if (ChartValues5.Count > 1000) ChartValues5.RemoveAt(0);
+                    //label4.Text = "OPENTIME :" + openTime.ToString("yyyy-MM-dd");
+
+                });
+
+
                 if (x % 24 == 0)
                 {
                     if (powerTotal > minElec)
@@ -222,6 +248,14 @@ namespace REMFactory
                         sumPower = 0;
                     }
                     dateDictionary.Add(dates[count].Date, sumPower);
+                    checkDateChange = true;
+                    ElectrocityStore();
+                    //dateResult = dateDictionary[dates[count].Date].ToString("n2");
+                    //Application.Current.Dispatcher.Invoke(() => {
+                    //label1.Text = "누적 판매 전력량 :" + dateResult;
+
+                    //});
+
                 }
                 count++;
                 x++;
@@ -238,7 +272,22 @@ namespace REMFactory
             }
         }
 
+        private void AddTosoldChart(ChartValues<MeasureSoldModel> chartValues, MeasureSoldModel newValue)
+        {
+            chartValues.Add(newValue);
+            if (chartValues.Count > 15) // Limit to 15 values
+            {
+                chartValues.RemoveAt(0); // Remove the oldest value
+            }
+        }
+
         private void SetAxisLimits(DateTime currentDateTime)
+        {
+            AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
+            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
+        }
+
+        private void SetSoldAxisLimits(DateTime currentDateTime )
         {
             AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
             AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
