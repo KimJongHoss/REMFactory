@@ -248,6 +248,7 @@ namespace REMFactory
                         sumPower = 0;
                     }
                     dateDictionary.Add(dates[count].Date, sumPower);
+                    cumulativeElectrocity += sumPower;
                     checkDateChange = true;
                     ElectrocityStore();
                     //dateResult = dateDictionary[dates[count].Date].ToString("n2");

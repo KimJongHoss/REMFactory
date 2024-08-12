@@ -221,12 +221,7 @@
                         </Grid>
                         <Grid>
                             <Button x:Name="maxElectrocitySoldData" Content="loadMoney" HorizontalAlignment="Left" Margin="800,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="maxElectrocitySoldData_Click"/>
-                            <!--<DataGrid x:Name="maxElectrocitySoldList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
-                                    <DataGridTextColumn Header="전력 판매 금액" Binding="{Binding devideValue}" Width="*"/>
-                                </DataGrid.Columns>
-                            </DataGrid>-->
+                       
                             <lvc:CartesianChart x:Name="maxElectrocitySoldChart"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 
