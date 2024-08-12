@@ -31,6 +31,16 @@ namespace REMFactory
         private string openDataPath = Path.GetFullPath(@"한국전력거래소_오늘의 REC 시장_20240502.csv");//전력 판매소 날짜별 시세 csv 파일 path
         double electricityAllSell;//판매 누적 금액 저장
         bool checkDateChange = true;//날짜가 바뀌는 것을 확인하는 boolean
+        double cumulativeElectrocity = 0;
+        double devideValue = 0;
+        private DateTime openTime;
+        public static Dictionary<DateTime, double> soldDateDictionary { get; set; } = new Dictionary<DateTime, double>();
+        public string soldDateResult { get; set; }
+        public class MeasureSoldModel
+        {
+            public DateTime X { get; set; }
+            public double Value { get; set; }
+        }
         private string adminID = "admin123";//관리자 아이디
         private string adminPW = "admin123";//관리자 비밀번호
 
@@ -316,7 +326,7 @@ namespace REMFactory
             foreach (var date in dateElectrocityStoreData.Keys)
             {
                 //MessageBox.Show("Date :"+date.Date + "today : "+today);
-                MessageBox.Show("Date :" + date.Date + "today : " + today);
+                openTime = date.Date;
                 // today와 date가 동일한지 비교합니다.
                 if (date.Date == today)
                 {
@@ -335,6 +345,7 @@ namespace REMFactory
                             }
                         }
                     }
+                    //MessageBox.Show("Date :" + date.Date + "today : " + today);
                     return;
                 }
                 else
@@ -412,8 +423,14 @@ namespace REMFactory
                 try
                 {
                     double maxElectorocityValue= Convert.ToDouble(value);
+                    double temp = maxElectorocityValue * cumulativeElectrocity / 100000;
+                    devideValue = Math.Truncate(temp);//소수점 삭제
 
-                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 : "+maxElectorocityValue * powerTotal+"원";
+                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue + "원";
+                    cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
+
+                    soldDateDictionary.Add(openTime, devideValue);
+                    soldDateResult = soldDateDictionary[openTime].ToString();
 
                     //MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
                 }
@@ -454,6 +471,8 @@ namespace REMFactory
                 MessageBox.Show("잘못된 아이디입니다.");
             }
         }
+
+        
 
         //public void SetManagerPage()
         //{

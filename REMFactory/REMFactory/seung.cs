@@ -122,6 +122,14 @@ namespace REMFactory
             public DateTime date { get; set; }
             public double powerResult { get; set; }
         }
+
+        public class soldData
+        {
+            public bool IsSelected { get; set; }
+            public DateTime date { get; set; }
+            public double devideValue { get; set; }
+        }
+
         private void loadData_Click(object sender, RoutedEventArgs e)   // Tab2 옮겨놈
             {
                 if (MainWindow.dateDictionary.Count == 0)
@@ -183,5 +191,74 @@ namespace REMFactory
                     return date.ToString("MM/dd/yyyy");
                 };
             }
+        private void maxElectrocitySoldData_Click(object sender, RoutedEventArgs e)
+        {
+            // 판매한 전력이 없으면 경고 메시지를 표시
+            if (MainWindow.soldDateDictionary == null || MainWindow.soldDateDictionary.Count == 0)
+            {
+                MessageBox.Show("판매한 전력이 없습니다.");
+                return;
+            }
+
+            // soldDateDictionary에서 soldData 리스트를 생성
+            List<soldData> soldDatas = new List<soldData>();
+            var ndic2 = MainWindow.soldDateDictionary;
+
+            foreach (KeyValuePair<DateTime, double> item in ndic2)
+            {
+                // soldData 객체를 생성하고 리스트에 추가
+                soldDatas.Add(new soldData { date = item.Key, devideValue = item.Value });
+            }
+
+            // soldDatas를 리스트 뷰에 바인딩
+            maxElectrocitySoldList.ItemsSource = soldDatas;
+
+            // X축 설정
+            var xAxis = new Axis
+            {
+                Title = "Date",
+                LabelFormatter = value =>
+                {
+                    // X축 값이 OADate 형식이므로 이를 날짜 형식으로 변환
+                    var date = DateTime.FromOADate(value);
+                    return date.ToString("MM/dd/yyyy");
+                },
+                Separator = new LiveCharts.Wpf.Separator
+                {
+                    Step = 1, // 날짜 단위로 구분
+                }
+            };
+
+            // Y축 설정 (변경된 부분: 제목을 "Devide Value"로 변경)
+            var yAxis = new Axis
+            {
+                Title = "Devide Value"
+            };
+
+            // 시리즈 설정 (변경된 부분: soldData의 devideValue를 사용)
+            var series = new ColumnSeries
+            {
+                Title = "Devide Value",
+                Values = new ChartValues<ObservablePoint>(soldDatas.Select(d => new ObservablePoint(
+                    d.date.ToOADate(), d.devideValue // 날짜를 OADate로 변환하고 devideValue를 사용
+                ))),
+                DataLabels = true
+            };
+
+            // 차트에 시리즈와 축 추가
+            maxElectrocitySoldChart.Series = new SeriesCollection { series };
+            maxElectrocitySoldChart.AxisX.Clear();
+            maxElectrocitySoldChart.AxisY.Clear();
+            maxElectrocitySoldChart.AxisX.Add(xAxis);
+            maxElectrocitySoldChart.AxisY.Add(yAxis);
+
+            // X축 레이블 포맷 설정
+            maxElectrocitySoldChart.AxisX[0].LabelFormatter = value =>
+            {
+                var date = DateTime.FromOADate(value);
+                return date.ToString("MM/dd/yyyy");
+            };
         }
     }
+
+}

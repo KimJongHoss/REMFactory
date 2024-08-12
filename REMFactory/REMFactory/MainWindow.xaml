@@ -55,7 +55,7 @@
                         </lvc:CartesianChart>
                         <lvc:CartesianChart x:Name="cartesianChart2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="850,22,35,288" Width="400">
                             <lvc:CartesianChart.Series>
-                                
+
                                 <lvc:LineSeries Values="{Binding ChartValues2}"
                                                 Title="라인 A"
                                                 LineSmoothness="0"
@@ -203,29 +203,41 @@
                     </Grid>
                     <!--총 생산 전력-->
                 </TabItem>
-                <TabItem Header="Tabbell">
-                    <local:belldesign Width="1200" Height="550" Background="White"/>
-                </TabItem>
                 <TabItem Header="TabRyu">
                     <Grid>
-                        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
-                                <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <lvc:CartesianChart x:Name="cartesianChart"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Height="300" 
-                    Width="500" Margin="280,50,0,0"
-                    Background="White"/>
-                        <Label x:Name="maxElectrocitySoldLabel" Margin="290,360,179,144" FontSize="22" Content="누적 전력 판매 금액" Foreground="White"></Label>
+                        <Grid>
+                            <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
+                            <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                    <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <lvc:CartesianChart x:Name="cartesianChart"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Height="300" 
+                            Width="500" Margin="280,50,0,0"
+                            Background="White"/>
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="maxElectrocitySoldData" Content="loadMoney" HorizontalAlignment="Left" Margin="800,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="maxElectrocitySoldData_Click"/>
+                            <DataGrid x:Name="maxElectrocitySoldList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                    <DataGridTextColumn Header="전력 판매 금액" Binding="{Binding devideValue}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <lvc:CartesianChart x:Name="maxElectrocitySoldChart"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Height="300" 
+                            Width="500" Margin="780,50,0,0"
+                            Background="White"/>
+                            <Label x:Name="maxElectrocitySoldLabel" Margin="290,360,179,144" FontSize="22" Content="누적 전력 판매 금액" Foreground="White"></Label>
+                        </Grid>
                     </Grid>
-                </TabItem>
-                <TabItem Header="Tabws">
-                    <local:wsdesign Width="1200" Height="550" Background="White"/>
+
                 </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
