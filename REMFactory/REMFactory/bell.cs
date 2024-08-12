@@ -94,10 +94,9 @@ namespace REMFactory
             try
             {
                 var r = new Random();
-                double doubleValueA = Convert.ToDouble(r.NextDouble().ToString("n2"));
                 doubleValue = Convert.ToDouble(value);
-                doubleValue2 = doubleValue * (1 + doubleValueA);
-                doubleValue3 = doubleValue * (2 + doubleValueA);
+                doubleValue2 = doubleValue * r.Next(1, 2);
+                doubleValue3 = doubleValue * r.Next(1, 3);
                 if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
@@ -264,7 +263,7 @@ namespace REMFactory
                             if (Dispatcher.CheckAccess())
                             {
                                 UpdateElectrocityStroreLabel(value); // label value와 slider value를 바꾸는 메서드
-                                MessageBox.Show("value :" + value);
+                                //MessageBox.Show("value :" + value);
                             }
                             else
                             {
@@ -272,7 +271,7 @@ namespace REMFactory
                             }
                         }
                     }
-                    MessageBox.Show("Date :" + date.Date + "today : " + today);
+                    //MessageBox.Show("Date :" + date.Date + "today : " + today);
                     return;
                 }
                 else
@@ -353,14 +352,14 @@ namespace REMFactory
                     double temp = maxElectorocityValue * cumulativeElectrocity / 100000;
                     devideValue = Math.Truncate(temp);//소수점 삭제
 
-                    MessageBox.Show("devideValue11111 : " + devideValue);
+                    //MessageBox.Show("devideValue11111 : " + devideValue);
                     maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue + "원";
                     cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
 
                     soldDateDictionary.Add(openTime, devideValue);
                     soldDateResult = soldDateDictionary[openTime].ToString();
 
-                    MessageBox.Show("devideValue2222 : "+ devideValue);
+                    //MessageBox.Show("devideValue2222 : "+ devideValue);
                 }
                 catch (InvalidCastException)
                 {
