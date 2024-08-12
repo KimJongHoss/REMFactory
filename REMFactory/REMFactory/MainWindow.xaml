@@ -203,6 +203,7 @@
                     Height="300" 
                     Width="500" Margin="280,50,0,0"
                     Background="White"/>
+                        <Label x:Name="maxElectrocitySoldLabel" Margin="290,360,179,144" FontSize="22" Content="누적 전력 판매 금액" Foreground="White"></Label>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Tabws">
