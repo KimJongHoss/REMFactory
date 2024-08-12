@@ -38,8 +38,8 @@ namespace REMFactory
         public void chart1()
         {
             var mapper = Mappers.Xy<MeasureModel>()
-                .X(model => model.X.ToOADate())                //use DateTime.Ticks as X
-                .Y(model => model.Value);           //use the value property as Y
+                .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
+                .Y(model => model.Value);                       //use the value property as Y
 
             //lets save the mapper globally.
             Charting.For<MeasureModel>(mapper);
@@ -56,7 +56,6 @@ namespace REMFactory
 
             SetAxisLimits(DateTime.Now);
 
-            //The next code simulates data changes every 300 ms
 
             IsReading = false;
 
@@ -70,7 +69,7 @@ namespace REMFactory
         public Func<double, string> XAxisLabelFormatter => value =>
         {
             DateTime dateTime = DateTime.FromOADate(value);
-            return dateTime.ToString("HH:mm"); // Format as needed
+            return dateTime.ToString("HH"); // Format as needed
         };
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -148,6 +147,7 @@ namespace REMFactory
                     dates.Add(Convert.ToDateTime(dfLine1[i][1]).AddHours(j));
                 }
             }
+            var minElec = (efficiency + efficiency2 + efficiency3) * 8; // 최소 전력
             int count = 0;
             int x = 1;
             getPanel2Data();
@@ -193,10 +193,11 @@ namespace REMFactory
                 //lets only use the last 150 values
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ChartValues1.Add(model1);
-                    ChartValues2.Add(model2);
-                    ChartValues3.Add(model3);
-                    ChartValues4.Add(model4);
+                    AddToChart(ChartValues1, model1);
+                    AddToChart(ChartValues2, model2);
+                    AddToChart(ChartValues3, model3);
+                    AddToChart(ChartValues4, model4);
+
                     SetAxisLimits(today);
 
                     if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
@@ -207,18 +208,18 @@ namespace REMFactory
 
 
                 });
-                
+
                 
                 if (x % 24 == 0)
                 {
-                    sumPower += (powerTotal - 50000);
-                    powerTotal = 50000;
+                    sumPower = (powerTotal - minElec);
+                    powerTotal = minElec;
                     dateDictionary.Add(dates[count].Date, sumPower);
-                    dateResult = dateDictionary[dates[count].Date].ToString();
-                    Application.Current.Dispatcher.Invoke(() => {
-                    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+                    //dateResult = dateDictionary[dates[count].Date].ToString("n2");
+                    //Application.Current.Dispatcher.Invoke(() => {
+                    //label1.Text = "누적 판매 전력량 :" + dateResult;
                         
-                    });
+                    //});
 
                 }
                 count++;
@@ -226,6 +227,14 @@ namespace REMFactory
 
             }
 
+        }
+        private void AddToChart(ChartValues<MeasureModel> chartValues, MeasureModel newValue)
+        {
+            chartValues.Add(newValue);
+            if (chartValues.Count > 15) // Limit to 15 values
+            {
+                chartValues.RemoveAt(0); // Remove the oldest value
+            }
         }
 
         private void SetAxisLimits(DateTime currentDateTime)

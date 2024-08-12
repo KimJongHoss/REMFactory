@@ -31,7 +31,7 @@
                 <TabItem Header="HOME">
                     <Grid x:Name="gridMain">
                         <!--Here we disable tooltips and hovering to get a better performance-->
-                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="420,22,35,288" >
+                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="0,22,35,288" Width="400" >
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues1}" 
                                                 PointGeometry="M 10,100 L 40,10 L 70,100 L 10,40 L 80,40 Z" 
@@ -40,27 +40,47 @@
                                                 PointGeometrySize="10"
                                                 Stroke="#F34336"
                                                 Fill="Transparent"/>
-                                <lvc:LineSeries Values="{Binding ChartValues2}" 
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="전력 생산량"
+                                          LabelFormatter="{Binding XAxisLabelFormatter}"
+                                          MaxValue="{Binding AxisMax}" 
+                                          MinValue="{Binding AxisMin}"
+                                          Unit="{Binding AxisUnit}">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="{Binding AxisStep}" />
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                        </lvc:CartesianChart>
+                        <lvc:CartesianChart x:Name="cartesianChart2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="850,22,35,288" Width="400">
+                            <lvc:CartesianChart.Series>
+                                
+                                <lvc:LineSeries Values="{Binding ChartValues2}"
+                                                Title="라인 A"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2"
                                                 Stroke="#36F34F"
                                                 PointGeometrySize="10"
                                                 Fill="Transparent"/>
-                                <lvc:LineSeries Values="{Binding ChartValues3}" 
+                                <lvc:LineSeries Values="{Binding ChartValues3}"
+                                                Title="라인 B"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2" 
                                                 Stroke="#FFF336DA"
                                                 PointGeometrySize="10"
                                                 Fill="Transparent"/>
                                 <lvc:LineSeries Values="{Binding ChartValues4}" 
+                                                Title="라인 C"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2" 
                                                 Stroke="#FF366AF3"
-                                                 PointGeometrySize="10"
+                                                PointGeometrySize="10"
                                                 Fill="Transparent"/>
                             </lvc:CartesianChart.Series>
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis LabelFormatter="{Binding XAxisLabelFormatter}"
+                                <lvc:Axis Title="라인별 전력 소비량"
+                                          LabelFormatter="{Binding XAxisLabelFormatter}"
                                           MaxValue="{Binding AxisMax}" 
                                           MinValue="{Binding AxisMin}"
                                           Unit="{Binding AxisUnit}">
@@ -189,7 +209,7 @@
                 <TabItem Header="TabRyu">
                     <Grid>
                         <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White">
+                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
                                 <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>

@@ -25,8 +25,6 @@ namespace REMFactory
         private double efficiencyData1;
         private double efficiencyData2;
         private double efficiencyData3;
-        public DateTime date { get; set; }
-        public double powerResult { get; set; }
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown(); // WPF 애플리케이션 종료
@@ -109,17 +107,22 @@ namespace REMFactory
         //        }
         //    }
 
-            //void StopBlinking(Grid gridMain)
-            //{
-            //    if (blinkTimer != null && blinkTimer.IsEnabled)
-            //    {
-            //        blinkTimer.Stop();
-            //        gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
-            //        isBlinking = false;
-            //    }
-            //}
-
-            private void loadData_Click(object sender, RoutedEventArgs e)   // Tab2 옮겨놈
+        //void StopBlinking(Grid gridMain)
+        //{
+        //    if (blinkTimer != null && blinkTimer.IsEnabled)
+        //    {
+        //        blinkTimer.Stop();
+        //        gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
+        //        isBlinking = false;
+        //    }
+        //}
+        public class Data
+        {
+            public bool IsSelected { get; set; }
+            public DateTime date { get; set; }
+            public double powerResult { get; set; }
+        }
+        private void loadData_Click(object sender, RoutedEventArgs e)   // Tab2 옮겨놈
             {
                 if (MainWindow.dateDictionary.Count == 0)
                 {
