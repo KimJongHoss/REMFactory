@@ -41,7 +41,6 @@ namespace REMFactory
                 double efficiencySlider1Value = doubleValue / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString("F2");
                 UpdateProgress1(pathLine1, doubleValue);
-                UpdateShoeValues();
             }
         }
 
@@ -54,7 +53,6 @@ namespace REMFactory
                 double efficiencySlider2Value = doubleValue2 / efficiency * 100 / 1.5;
                 labelEfficiencyLine2.Text = efficiencySlider2Value.ToString("F2");
                 UpdateProgress2(pathLine2, doubleValue2);
-                UpdateShoeValues();
             }
         }
 
@@ -67,7 +65,6 @@ namespace REMFactory
                 double efficiencySlider3Value = doubleValue3 / efficiency * 100 / 2;
                 labelEfficiencyLine3.Text = efficiencySlider3Value.ToString("F2");
                 UpdateProgress3(pathLine3, doubleValue3);
-                UpdateShoeValues();
             }
         }
         private void UpdateProgress1(Path path, double value)
