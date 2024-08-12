@@ -238,21 +238,15 @@ namespace REMFactory
 
                 if (x % 24 == 0)
                 {
-                    if (powerTotal > minElec)
-                    {
-                        sumPower = (powerTotal - minElec);
-                        powerTotal = minElec;
-                    }
-                    else
-                    {
-                        sumPower = 0;
-                    }
+                    sumPower = (powerTotal - minElec);
+                    cumulativeElectrocity += sumPower;
+                    powerTotal = minElec;
                     dateDictionary.Add(dates[count].Date, sumPower);
+                    dateResult = dateDictionary[dates[count].Date].ToString();
                     checkDateChange = true;
                     ElectrocityStore();
-                    //dateResult = dateDictionary[dates[count].Date].ToString("n2");
                     //Application.Current.Dispatcher.Invoke(() => {
-                    //label1.Text = "누적 판매 전력량 :" + dateResult;
+                    //    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
 
                     //});
 
