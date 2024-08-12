@@ -82,9 +82,10 @@ namespace REMFactory
         {
             try
             {
+                var r = new Random();
                 doubleValue = Convert.ToDouble(value);
-                doubleValue2 = doubleValue * 1.5;
-                doubleValue3 = doubleValue * 2;
+                doubleValue2 = doubleValue * r.Next(1, 2);
+                doubleValue3 = doubleValue * r.Next(1, 3);
                 if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
