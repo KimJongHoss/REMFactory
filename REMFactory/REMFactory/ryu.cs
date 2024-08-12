@@ -219,7 +219,7 @@ namespace REMFactory
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
                     if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
                     if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
-                    label3.Text = "TODAY :" + dates[count].Date.ToString("yyyy-MM-dd");
+                    label3.Text = dates[count].Date.ToString("yyyy-MM-dd");
 
 
                 });
@@ -236,20 +236,36 @@ namespace REMFactory
                 });
 
 
+                //if (x % 24 == 0)
+                //{
+                //    sumPower = (powerTotal - minElec);
+                //    cumulativeElectrocity += sumPower;
+                //    powerTotal = minElec;
+                //    dateDictionary.Add(dates[count].Date, sumPower);
+                //    dateResult = dateDictionary[dates[count].Date].ToString();
+                //    checkDateChange = true;
+                //    ElectrocityStore();
+                //    //Application.Current.Dispatcher.Invoke(() => {
+                //    //    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+
+                //    //});
+
+                //}
                 if (x % 24 == 0)
                 {
-                    sumPower = (powerTotal - minElec);
-                    cumulativeElectrocity += sumPower;
-                    powerTotal = minElec;
+                    if (powerTotal > minElec)
+                    {
+                        sumPower = (powerTotal - minElec);
+                        powerTotal = minElec;
+                    }
+                    else
+                    {
+                        sumPower = 0;
+                    }
                     dateDictionary.Add(dates[count].Date, sumPower);
-                    dateResult = dateDictionary[dates[count].Date].ToString();
+                    cumulativeElectrocity += sumPower;
                     checkDateChange = true;
                     ElectrocityStore();
-                    //Application.Current.Dispatcher.Invoke(() => {
-                    //    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
-
-                    //});
-
                 }
                 count++;
                 x++;
