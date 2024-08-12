@@ -89,9 +89,6 @@
                                 </lvc:Axis>
                             </lvc:CartesianChart.AxisX>
                         </lvc:CartesianChart>
-
-                        <TextBlock x:Name="label1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 100" FontFamily="Arial Black"/>
-                        <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 30" FontFamily="Arial Black"/>
                         <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="InjectStopOnClick" Margin="400,0,0,0">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="SolarEnergy"/>
@@ -178,26 +175,27 @@
                         <!--라인별 사용량, 효율-->
                         <!--총 생산 전력-->
                         <Grid Margin="0,116,592,276">
-                            <Border Height="590" Width="400" Background="#333333" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="20" BorderThickness="5" Margin="0 -105 0 -270"/>
+                            <Border Height="570" Width="400" Background="#333333" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="20" BorderThickness="5" Margin="0 -105 0 -270"/>
                             <lvc:AngularGauge Grid.Row="1" Value="{Binding GaugeValue}" 
                                           FromValue="1000000" ToValue="10000000" 
                                           LabelsStep="2000000" TicksStep="500000" 
                                           Wedge="300"
                                           TicksForeground="White" Foreground="White" 
                                           FontWeight="Bold" FontSize="10"
-                                          SectionsInnerRadius=".1" Margin="-150,-80,128,60" NeedleFill="#FFE9E9E9">
+                                          SectionsInnerRadius=".1" Margin="-150,-60,128,40" NeedleFill="#FFE9E9E9">
                                 <lvc:AngularGauge.Sections>
                                     <lvc:AngularSection FromValue="1000000" ToValue="10000000" Fill="#FFC33131"/>
                                     <lvc:AngularSection FromValue="1000000" ToValue="8000000" Fill="#FFD9A73A"/>
                                 </lvc:AngularGauge.Sections>
                             </lvc:AngularGauge>
-                            <TextBlock Text="{Binding GaugeValue, StringFormat='총 생산전력 : {0:N0} KW', UpdateSourceTrigger=PropertyChanged}" Foreground="#FFFFFF" Height="40" Width="250" FontFamily="{StaticResource Rubik_Light}" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" Margin="70,120,0,10"/>
+                            <TextBlock Text="{Binding GaugeValue, StringFormat='총 생산전력 : {0:N0} KW', UpdateSourceTrigger=PropertyChanged}" Foreground="#FFF68484" Height="40" Width="250" FontFamily="{StaticResource Rubik_Light}" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" Margin="70,120,0,10"/>
+                            <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="25" Margin="80 -170 0 0" FontFamily="Arial Black" Foreground="AliceBlue" Text="a"/>
                             <TextBlock x:Name="labelLine1" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-100" Grid.ColumnSpan="2" TextAlignment="Center"/>
                             <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged1" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-60" Foreground="#f3ecff"/>
                             <TextBlock x:Name="labelLine2" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-200" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged2" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-160" Foreground="#f3ecff"/>
+                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="15000" ValueChanged="slider_valueChanged2" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-160" Foreground="#f3ecff"/>
                             <TextBlock x:Name="labelLine3" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-300" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged3" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-260" Foreground="#f3ecff"/>
+                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="20000" ValueChanged="slider_valueChanged3" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-260" Foreground="#f3ecff"/>
                         </Grid>
                     </Grid>
                     <!--총 생산 전력-->
@@ -221,12 +219,7 @@
                         </Grid>
                         <Grid>
                             <Button x:Name="maxElectrocitySoldData" Content="loadMoney" HorizontalAlignment="Left" Margin="800,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="maxElectrocitySoldData_Click"/>
-                            <!--<DataGrid x:Name="maxElectrocitySoldList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White" >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
-                                    <DataGridTextColumn Header="전력 판매 금액" Binding="{Binding devideValue}" Width="*"/>
-                                </DataGrid.Columns>
-                            </DataGrid>-->
+                            
                             <lvc:CartesianChart x:Name="maxElectrocitySoldChart"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 
