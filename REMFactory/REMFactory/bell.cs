@@ -176,36 +176,6 @@ namespace REMFactory
             return dateListDictionary;
         }
 
-        //public List<double> getModelData() // 사용량 데이터 가져와서 리스트로 반환
-        //{
-        //    var df = LoadUsingDataFrame(usingDataPath); // 데이터 로드
-
-        //    var dateGroupedData = new Dictionary<DateTime, List<List<object>>>(); // 딕셔너리 초기화
-
-        //    usingDataToListDictionary(df, dateGroupedData); // 데이터 그룹화
-
-        //    var resultList = new List<double>(); // 결과 리스트 생성
-
-        //    // 결과 출력
-        //    foreach (var date in dateGroupedData.Keys)
-        //    {
-        //        Console.WriteLine($"Date: {date.ToShortDateString()}"); // 날짜 출력
-        //        foreach (var row in dateGroupedData[date])
-        //        {
-        //            foreach (var value in row)
-        //            {
-        //                double valueDouble = Convert.ToDouble(value);
-        //                if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
-        //                {
-        //                    valueDouble = 0;
-        //                }
-        //                resultList.Add(valueDouble); // 결과 리스트에 값 추가
-        //            }
-        //        }
-        //    }
-
-        //    return resultList; // 결과 리스트 반환
-        //}
         //각 라인당 전력 사용 효율
 
         public async Task getefficiencyData()
@@ -260,7 +230,6 @@ namespace REMFactory
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = line2Data.ToString();
                 labelEfficiencyLine3.Text = line3Data.ToString();
-                //MessageBox.Show($"1: {efficiencyData},2:{line2Data},3:{line3Data}");
             }
             else
             {
@@ -278,50 +247,6 @@ namespace REMFactory
 
             df = filteringDataFrame(df);
 
-            //// 날짜 열과 육지 평균가 열을 설정합니다.
-            //var dateColumnName = "거래일";
-            //var priceColumnName = "육지 평균가(원)";
-
-            //// 날짜 열과 육지 평균가 열을 가져옵니다.
-            //var dateColumn = df.Columns[dateColumnName] as PrimitiveDataFrameColumn<DateTime>;
-            //var priceColumn = df.Columns[priceColumnName] as PrimitiveDataFrameColumn<float>;
-
-            //// 유효한 컬럼인지 확인
-            //if (dateColumn == null || priceColumn == null)
-            //{
-            //    throw new InvalidOperationException("날짜 열 또는 육지 평균가 열이 올바른 형식이 아닙니다.");
-            //}
-
-            //// 필터링 조건을 만듭니다.
-            //var startDate = new DateTime(2023, 1, 1);
-            //var endDate = new DateTime(2023, 6, 30);
-
-            //// 필터링된 데이터를 저장할 리스트를 만듭니다.
-            //var filteredDates = new List<DateTime>();
-            //var filteredPrices = new List<double>();
-
-            //// 각 행을 순회하며 조건을 만족하는지 확인하고, 해당 데이터를 리스트에 추가합니다.
-            //for (int i = 0; i < df.Rows.Count; i++)
-            //{
-            //    var dateTemp = dateColumn[i];
-            //    var price = priceColumn[i];
-            //    if (dateTemp.HasValue)
-            //    {
-            //        DateTime date = dateTemp.Value; // dateTemp가 null이 아닌 경우에만 사용
-            //        if (date >= startDate && date <= endDate)
-            //        {
-            //            filteredDates.Add(date);
-            //            filteredPrices.Add((double)price); // float 값을 double로 변환하여 추가
-            //        }
-            //    }
-
-            //}
-            //// 필터링된 데이터를 기반으로 새로운 DataFrame을 생성합니다.
-            //var filteredDf = new DataFrame(new DataFrameColumn[]
-            //{
-            //new PrimitiveDataFrameColumn<DateTime>(dateColumnName, filteredDates),
-            //new PrimitiveDataFrameColumn<double>(priceColumnName, filteredPrices)
-            //});
             dateElectrocityStoreData = usingDataToListDictionary(df, dateElectrocityStoreData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
             // 결과 출력
@@ -347,7 +272,6 @@ namespace REMFactory
                             }
                         }
                     }
-                    //MessageBox.Show("Date :" + date.Date + "today : " + today);
                     return;
                 }
                 else
@@ -434,7 +358,6 @@ namespace REMFactory
                     soldDateDictionary.Add(openTime, devideValue);
                     soldDateResult = soldDateDictionary[openTime].ToString();
 
-                    //MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
                 }
                 catch (InvalidCastException)
                 {
