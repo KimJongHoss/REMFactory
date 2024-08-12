@@ -211,7 +211,7 @@ namespace REMFactory
             }
 
             // soldDatas를 리스트 뷰에 바인딩
-            maxElectrocitySoldList.ItemsSource = soldDatas;
+            //maxElectrocitySoldList.ItemsSource = soldDatas;
 
             // X축 설정
             var xAxis = new Axis
