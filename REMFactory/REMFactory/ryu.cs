@@ -165,7 +165,7 @@ namespace REMFactory
 
             while (IsReading)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
 
 
                 nowTime = x;

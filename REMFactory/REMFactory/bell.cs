@@ -252,7 +252,6 @@ namespace REMFactory
             // 결과 출력
             foreach (var date in dateElectrocityStoreData.Keys)
             {
-                //MessageBox.Show("Date :"+date.Date + "today : "+today);
                 openTime = date.Date;
                 // today와 date가 동일한지 비교합니다.
                 if (date.Date == today)
@@ -265,6 +264,7 @@ namespace REMFactory
                             if (Dispatcher.CheckAccess())
                             {
                                 UpdateElectrocityStroreLabel(value); // label value와 slider value를 바꾸는 메서드
+                                MessageBox.Show("value :" + value);
                             }
                             else
                             {
@@ -272,6 +272,7 @@ namespace REMFactory
                             }
                         }
                     }
+                    MessageBox.Show("Date :" + date.Date + "today : " + today);
                     return;
                 }
                 else
@@ -352,12 +353,14 @@ namespace REMFactory
                     double temp = maxElectorocityValue * cumulativeElectrocity / 100000;
                     devideValue = Math.Truncate(temp);//소수점 삭제
 
+                    MessageBox.Show("devideValue11111 : " + devideValue);
                     maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue + "원";
                     cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
 
                     soldDateDictionary.Add(openTime, devideValue);
                     soldDateResult = soldDateDictionary[openTime].ToString();
 
+                    MessageBox.Show("devideValue2222 : "+ devideValue);
                 }
                 catch (InvalidCastException)
                 {
