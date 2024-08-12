@@ -20,7 +20,7 @@ namespace REMFactory
 {
     public class MeasureModel
     {
-        public double X { get; set; }
+        public DateTime X { get; set; }
         public double Value { get; set; }
     }
     public partial class MainWindow : Window, INotifyPropertyChanged
@@ -38,8 +38,8 @@ namespace REMFactory
         public void chart1()
         {
             var mapper = Mappers.Xy<MeasureModel>()
-                .X(model => model.X)   //use DateTime.Ticks as X
-                .Y(model => model.Value);           //use the value property as Y
+                .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
+                .Y(model => model.Value);                       //use the value property as Y
 
             //lets save the mapper globally.
             Charting.For<MeasureModel>(mapper);
@@ -50,54 +50,12 @@ namespace REMFactory
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
 
-            //cartesianChart1.Series = new SeriesCollection
-            //{
-            //    new LineSeries
-            //    {
-            //        Title = "powerTotal",
-            //        Values = ChartValues1,
-            //        PointGeometrySize = 10,
-            //        StrokeThickness = 2,
-            //        LineSmoothness = 0,
-            //        Stroke = Brushes.Red
-            //    }
-            //};
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line1",
-            //    Values = ChartValues2, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Blue
-            //});
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line2",
-            //    Values = ChartValues3, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Brown
-            //});
-            //cartesianChart1.Series.Add(new LineSeries
-            //{
-            //    Title = "Line3",
-            //    Values = ChartValues4, // 새 데이터
-            //    PointGeometrySize = 10,
-            //    StrokeThickness = 2,
-            //    LineSmoothness = 0,
-            //    Stroke = Brushes.Orange
-            //});
-            //lets set how to display the X LabelElecs
-            //DateTimeFormatter = value => value.ToString("0");
 
-            AxisStep = 1; // X축의 단위 설정
+            AxisStep = 1 / 24.0; // X축의 시간 간격 설정
             AxisUnit = 1; // X축 단위 설정
 
-            SetAxisLimits(1); // 시작 값을 1로 설정
+            SetAxisLimits(DateTime.Now);
 
-            //The next code simulates data changes every 300 ms
 
             IsReading = false;
 
@@ -108,9 +66,10 @@ namespace REMFactory
         public ChartValues<MeasureModel> ChartValues2 { get; set; }
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
-        public Func<double, string> XAxisLabelFormatter => value => {
-            int intValue = (int)value;
-            return ((intValue - 1) % 24 + 1).ToString(); // Ensures X-axis labels repeat from 1 to 24
+        public Func<double, string> XAxisLabelFormatter => value =>
+        {
+            DateTime dateTime = DateTime.FromOADate(value);
+            return dateTime.ToString("HH");                // 그래프 x축 시간 표현
         };
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -188,6 +147,7 @@ namespace REMFactory
                     dates.Add(Convert.ToDateTime(dfLine1[i][1]).AddHours(j));
                 }
             }
+            var minElec = (efficiency + efficiency2 + efficiency3) * 8; // 최소 전력
             int count = 0;
             int x = 1;
             getPanel2Data();
@@ -195,7 +155,7 @@ namespace REMFactory
 
             while (IsReading)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
 
 
                 nowTime = x;
@@ -208,57 +168,58 @@ namespace REMFactory
                 GaugeValue = powerTotal;
                 var model1 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = powerTotal
                 };
 
                 var model2 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue
                 };
                 var model3 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue2
                 };
                 var model4 = new MeasureModel
                 {
-                    X = nowTime,
+                    X = today,
                     Value = doubleValue3
                 };
 
-                SetAxisLimits(nowTime);
+                SetAxisLimits(today);
 
                 //lets only use the last 150 values
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ChartValues1.Add(model1);
-                    ChartValues2.Add(model2);
-                    ChartValues3.Add(model3);
-                    ChartValues4.Add(model4);
-                    SetAxisLimits(nowTime);
+                    AddToChart(ChartValues1, model1);
+                    AddToChart(ChartValues2, model2);
+                    AddToChart(ChartValues3, model3);
+                    AddToChart(ChartValues4, model4);
+
+                    SetAxisLimits(today);
 
                     if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
                     if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
                     if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
-                    label3.Text = "TODAY :" + dates[count].Date.ToString("yyyy-MM-dd");
+                    label3.Text = dates[count].Date.ToString("yyyy-MM-dd");
 
 
                 });
-                
+
                 
                 if (x % 24 == 0)
                 {
-                    sumPower += (powerTotal - 50000);
-                    powerTotal = 50000;
+                    sumPower = (powerTotal - minElec);
+                    powerTotal = minElec;
                     dateDictionary.Add(dates[count].Date, sumPower);
-                    dateResult = dateDictionary[dates[count].Date].ToString();
-                    Application.Current.Dispatcher.Invoke(() => {
-                    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+                    //dateResult = dateDictionary[dates[count].Date].ToString("n2");
+                    //Application.Current.Dispatcher.Invoke(() => {
+                    //label1.Text = "누적 판매 전력량 :" + dateResult;
                         
-                    });
+                    //});
 
                 }
                 count++;
@@ -267,11 +228,19 @@ namespace REMFactory
             }
 
         }
-
-        private void SetAxisLimits(double currentX)
+        private void AddToChart(ChartValues<MeasureModel> chartValues, MeasureModel newValue)
         {
-            AxisMax = currentX + 10; // 현재 X 값에서 10을 더한 값으로 설정
-            AxisMin = currentX - 5; // 현재 X 값에서 10을 뺀 값으로 설정
+            chartValues.Add(newValue);
+            if (chartValues.Count > 15) // Limit to 15 values
+            {
+                chartValues.RemoveAt(0); // Remove the oldest value
+            }
+        }
+
+        private void SetAxisLimits(DateTime currentDateTime)
+        {
+            AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
+            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
@@ -286,8 +255,7 @@ namespace REMFactory
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
-            if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
