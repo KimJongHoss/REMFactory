@@ -9,7 +9,7 @@
         Title="ChartWindow1" Height="450" Width="800">
     <Grid>
         <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="0,95,536,0">
+        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="0,95,536,0" VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
                 <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
@@ -20,6 +20,7 @@
                     VerticalAlignment="Top" 
                     Height="300" 
                     Width="500" Margin="269,95,0,0"/>
+        
     </Grid>
 
 </Window>

@@ -32,6 +32,7 @@ namespace REMFactory
         }
         public class Data
         {
+            public bool IsSelected { get; set; }
             public DateTime date { get; set; }
             public double powerResult { get; set; }
         }
@@ -85,7 +86,7 @@ namespace REMFactory
                 Values = new ChartValues<ObservablePoint>(datas.Select(d => new ObservablePoint(
                     d.date.ToOADate(), d.powerResult // 날짜를 OADate로 변환
                 ))),
-                DataLabels = true
+                DataLabels = true,
             };
 
             // 차트에 시리즈와 축 추가

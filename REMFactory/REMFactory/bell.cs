@@ -264,43 +264,53 @@ namespace REMFactory
 
             dateElectrocityStoreData = new Dictionary<DateTime, List<List<object>>>();
 
-            // 날짜 열과 육지 평균가 열의 이름을 설정합니다.
-            var dateColumnName = "거래일";
-            var priceColumnName = "육지 평균가(원)";
+            df = filteringDataFrame(df);
 
-            // 날짜 열과 육지 평균가 열을 가져옵니다.
-            var dateColumn = df.Columns[dateColumnName] as PrimitiveDataFrameColumn<DateTime>;
-            var priceColumn = df.Columns[priceColumnName] as PrimitiveDataFrameColumn<double>;
+            //// 날짜 열과 육지 평균가 열을 설정합니다.
+            //var dateColumnName = "거래일";
+            //var priceColumnName = "육지 평균가(원)";
 
-            if (dateColumn == null || priceColumn == null)
-            {
-                throw new InvalidOperationException("날짜 열 또는 육지 평균가 열이 올바른 형식이 아닙니다.");
-            }
+            //// 날짜 열과 육지 평균가 열을 가져옵니다.
+            //var dateColumn = df.Columns[dateColumnName] as PrimitiveDataFrameColumn<DateTime>;
+            //var priceColumn = df.Columns[priceColumnName] as PrimitiveDataFrameColumn<float>;
 
-            // 필터링 조건을 만듭니다.
-            var startDate = new DateTime(2023, 1, 1);
-            var endDate = new DateTime(2023, 6, 30);
+            //// 유효한 컬럼인지 확인
+            //if (dateColumn == null || priceColumn == null)
+            //{
+            //    throw new InvalidOperationException("날짜 열 또는 육지 평균가 열이 올바른 형식이 아닙니다.");
+            //}
 
-            // 새로운 DataFrame을 만듭니다. 필요한 컬럼만 포함합니다.
-            var filteredDf = new DataFrame(new DataFrameColumn[]
-            {
-                new PrimitiveDataFrameColumn<DateTime>(dateColumnName),
-                new PrimitiveDataFrameColumn<double>(priceColumnName)
-            });
+            //// 필터링 조건을 만듭니다.
+            //var startDate = new DateTime(2023, 1, 1);
+            //var endDate = new DateTime(2023, 6, 30);
 
-            // 각 행을 순회하며 조건을 만족하는지 확인하고, 해당 데이터를 새로운 DataFrame에 추가합니다.
-            for (int i = 0; i < df.Rows.Count; i++)
-            {
-                var date = dateColumn[i];
+            //// 필터링된 데이터를 저장할 리스트를 만듭니다.
+            //var filteredDates = new List<DateTime>();
+            //var filteredPrices = new List<double>();
 
-                // 조건을 만족하는 경우 해당 행을 새로운 DataFrame에 추가합니다.
-                if (date >= startDate && date <= endDate)
-                {
-                    var filteredRow = new object[] { date, priceColumn[i] };
-                    filteredDf.Append(filteredRow);
-                }
-            }
-            dateElectrocityStoreData = usingDataToListDictionary(filteredDf, dateElectrocityStoreData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
+            //// 각 행을 순회하며 조건을 만족하는지 확인하고, 해당 데이터를 리스트에 추가합니다.
+            //for (int i = 0; i < df.Rows.Count; i++)
+            //{
+            //    var dateTemp = dateColumn[i];
+            //    var price = priceColumn[i];
+            //    if (dateTemp.HasValue)
+            //    {
+            //        DateTime date = dateTemp.Value; // dateTemp가 null이 아닌 경우에만 사용
+            //        if (date >= startDate && date <= endDate)
+            //        {
+            //            filteredDates.Add(date);
+            //            filteredPrices.Add((double)price); // float 값을 double로 변환하여 추가
+            //        }
+            //    }
+
+            //}
+            //// 필터링된 데이터를 기반으로 새로운 DataFrame을 생성합니다.
+            //var filteredDf = new DataFrame(new DataFrameColumn[]
+            //{
+            //new PrimitiveDataFrameColumn<DateTime>(dateColumnName, filteredDates),
+            //new PrimitiveDataFrameColumn<double>(priceColumnName, filteredPrices)
+            //});
+            dateElectrocityStoreData = usingDataToListDictionary(df, dateElectrocityStoreData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
             // 결과 출력
             foreach (var date in dateElectrocityStoreData.Keys)
@@ -330,6 +340,55 @@ namespace REMFactory
                     maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
                 }
             }
+        }
+
+        DataFrame filteringDataFrame(DataFrame dataFrame)
+        {
+            // 날짜 열과 육지 평균가 열을 설정합니다.
+            var dateColumnName = "거래일";
+            var priceColumnName = "육지 평균가(원)";
+
+            // 날짜 열과 육지 평균가 열을 가져옵니다.
+            var dateColumn = dataFrame.Columns[dateColumnName] as PrimitiveDataFrameColumn<DateTime>;
+            var priceColumn = dataFrame.Columns[priceColumnName] as PrimitiveDataFrameColumn<float>;
+
+            // 유효한 컬럼인지 확인
+            if (dateColumn == null || priceColumn == null)
+            {
+                throw new InvalidOperationException("날짜 열 또는 육지 평균가 열이 올바른 형식이 아닙니다.");
+            }
+
+            // 필터링 조건을 만듭니다.
+            var startDate = new DateTime(2023, 1, 1);
+            var endDate = new DateTime(2023, 6, 30);
+
+            // 필터링된 데이터를 저장할 리스트를 만듭니다.
+            var filteredDates = new List<DateTime>();
+            var filteredPrices = new List<double>();
+
+            // 각 행을 순회하며 조건을 만족하는지 확인하고, 해당 데이터를 리스트에 추가합니다.
+            for (int i = 0; i < dataFrame.Rows.Count; i++)
+            {
+                var dateTemp = dateColumn[i];
+                var price = priceColumn[i];
+                if (dateTemp.HasValue)
+                {
+                    DateTime date = dateTemp.Value; // dateTemp가 null이 아닌 경우에만 사용
+                    if (date >= startDate && date <= endDate)
+                    {
+                        filteredDates.Add(date);
+                        filteredPrices.Add((double)price); // float 값을 double로 변환하여 추가
+                    }
+                }
+
+            }
+            // 필터링된 데이터를 기반으로 새로운 DataFrame을 생성합니다.
+            var filteredDf = new DataFrame(new DataFrameColumn[]
+            {
+            new PrimitiveDataFrameColumn<DateTime>(dateColumnName, filteredDates),
+            new PrimitiveDataFrameColumn<double>(priceColumnName, filteredPrices)
+            });
+            return filteredDf;
         }
 
         void UpdateElectrocityStroreLabel(object value)//사용량의 데이터를 라벨과 슬라이더에 업데이트하는 메서드
