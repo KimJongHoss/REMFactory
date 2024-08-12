@@ -220,17 +220,6 @@
                     Background="White"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Tabws">
-                    <Grid>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock x:Name="shoe1TextBlock" Text="Shoe 1 Value" Margin="5"/>
-                            <TextBlock x:Name="shoe2TextBlock" Text="Shoe 2 Value" Margin="5"/>
-                            <TextBlock x:Name="shoe3TextBlock" Text="Shoe 3 Value" Margin="5"/>
-                        </StackPanel>
-                        
-                        
-                    </Grid>
-                </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
                         <Grid x:Name="loginGrid" >
