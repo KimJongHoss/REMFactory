@@ -69,7 +69,7 @@ namespace REMFactory
         public Func<double, string> XAxisLabelFormatter => value =>
         {
             DateTime dateTime = DateTime.FromOADate(value);
-            return dateTime.ToString("HH"); // Format as needed
+            return dateTime.ToString("HH");                // 그래프 x축 시간 표현
         };
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
