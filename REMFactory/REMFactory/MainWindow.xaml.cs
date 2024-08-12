@@ -22,7 +22,7 @@ namespace REMFactory
         {
             InitializeComponent();
             chart1();
-            
+
 
             //getPanel2Data();
         }
@@ -41,6 +41,7 @@ namespace REMFactory
                 double efficiencySlider1Value = sliderLine1.Value / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString("F2");
                 UpdateProgress(pathLine1, doubleValue);
+                UpdateShoeValues();
             }
         }
 
@@ -53,6 +54,7 @@ namespace REMFactory
                 double efficiencySlider2Value = sliderLine2.Value / efficiency * 100;
                 labelEfficiencyLine2.Text = efficiencySlider2Value.ToString("F2");
                 UpdateProgress(pathLine2, doubleValue2);
+                UpdateShoeValues();
             }
         }
 
@@ -65,6 +67,7 @@ namespace REMFactory
                 double efficiencySlider3Value = sliderLine3.Value / efficiency * 100;
                 labelEfficiencyLine3.Text = efficiencySlider3Value.ToString("F2");
                 UpdateProgress(pathLine3, doubleValue3);
+                UpdateShoeValues();
             }
         }
 

@@ -191,9 +191,9 @@
                 <TabItem Header="TabRyu">
                     <Grid>
                         <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White">
+                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="50,50,1000,50" Background="White"  SelectionMode="Single" SelectionUnit="FullRow">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100" Selector.IsSelected="True"/>
                                 <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -206,7 +206,15 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Tabws">
-                    <local:wsdesign Width="1200" Height="550" Background="White"/>
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="shoe1TextBlock" Text="Shoe 1 Value" Margin="5"/>
+                            <TextBlock x:Name="shoe2TextBlock" Text="Shoe 2 Value" Margin="5"/>
+                            <TextBlock x:Name="shoe3TextBlock" Text="Shoe 3 Value" Margin="5"/>
+                        </StackPanel>
+                        
+                        
+                    </Grid>
                 </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
