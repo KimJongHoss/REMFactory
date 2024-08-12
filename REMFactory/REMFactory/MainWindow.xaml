@@ -189,7 +189,7 @@
                                 </lvc:AngularGauge.Sections>
                             </lvc:AngularGauge>
                             <TextBlock Text="{Binding GaugeValue, StringFormat='총 생산전력 : {0:N0} KW', UpdateSourceTrigger=PropertyChanged}" Foreground="#FFF68484" Height="40" Width="250" FontFamily="{StaticResource Rubik_Light}" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" Margin="70,120,0,10"/>
-                            <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="25" Margin="80 -170 0 0" FontFamily="Arial Black" Foreground="AliceBlue" Text="a"/>
+                            <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="25" Margin="80 -170 0 0" FontFamily="Arial Black" Foreground="AliceBlue"/>
                             <TextBlock x:Name="labelLine1" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-100" Grid.ColumnSpan="2" TextAlignment="Center"/>
                             <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged1" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-60" Foreground="#f3ecff"/>
                             <TextBlock x:Name="labelLine2" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-200" Grid.ColumnSpan="2" TextAlignment="Center"/>
@@ -219,7 +219,7 @@
                         </Grid>
                         <Grid>
                             <Button x:Name="maxElectrocitySoldData" Content="loadMoney" HorizontalAlignment="Left" Margin="800,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="maxElectrocitySoldData_Click"/>
-                            
+                       
                             <lvc:CartesianChart x:Name="maxElectrocitySoldChart"
                             HorizontalAlignment="Left" 
                             VerticalAlignment="Top" 

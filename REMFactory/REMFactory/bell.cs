@@ -112,7 +112,7 @@ namespace REMFactory
                 sliderLine1.Value = doubleValue;
                 sliderLine2.Value = doubleValue2;
                 sliderLine3.Value = doubleValue3;
-                //MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
+                MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
             }
             catch (InvalidCastException)
             {
