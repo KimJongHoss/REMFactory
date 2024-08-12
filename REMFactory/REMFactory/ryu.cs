@@ -217,6 +217,7 @@ namespace REMFactory
                     dateDictionary.Add(dates[count].Date, sumPower);
                     dateResult = dateDictionary[dates[count].Date].ToString();
                     checkDateChange = true;
+                    ElectrocityStore();
                     Application.Current.Dispatcher.Invoke(() => {
                     label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
 

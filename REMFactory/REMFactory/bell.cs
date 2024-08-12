@@ -258,7 +258,7 @@ namespace REMFactory
         }
 
         //전력 거래소 관련 메서드
-        public async Task ElectrocityStore()//사용량 데이터 가져와서 그래프로 띄우기 메인 메서드
+        public void ElectrocityStore()//사용량 데이터 가져와서 그래프로 띄우기 메인 메서드
         {
             var df = LoadUsingDataFrame(openDataPath);//데이터를 가져와서 dataFrame으로 반환
 
@@ -315,11 +315,12 @@ namespace REMFactory
             // 결과 출력
             foreach (var date in dateElectrocityStoreData.Keys)
             {
+                //MessageBox.Show("Date :"+date.Date + "today : "+today);
+                MessageBox.Show("Date :" + date.Date + "today : " + today);
                 // today와 date가 동일한지 비교합니다.
                 if (date.Date == today)
                 {
-                    Console.WriteLine($"Date: {date.ToShortDateString()}");
-
+                    checkDateChange = true;
                     foreach (var row in dateElectrocityStoreData[date])
                     {
                         foreach (var value in row)
@@ -334,10 +335,23 @@ namespace REMFactory
                             }
                         }
                     }
+                    return;
                 }
                 else
                 {
-                    maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                    if (Dispatcher.CheckAccess())
+                    {
+                        // 이미 UI 스레드에서 실행 중이므로 바로 접근 가능
+                        maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                    }
+                    else
+                    {
+                        // UI 스레드에서 실행하도록 Dispatch
+                        Dispatcher.Invoke(() =>
+                        {
+                            maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                        });
+                    }
                 }
             }
         }
@@ -399,7 +413,7 @@ namespace REMFactory
                 {
                     double maxElectorocityValue= Convert.ToDouble(value);
 
-                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 : "+maxElectorocityValue * powerTotal;
+                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 : "+maxElectorocityValue * powerTotal+"원";
 
                     //MessageBox.Show($"적용된 doublevalue: {doubleValue},적용된 doublevalue2:{doubleValue2},적용된 doublevalue3:{doubleValue3}");
                 }
