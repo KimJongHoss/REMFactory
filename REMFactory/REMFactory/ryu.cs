@@ -165,7 +165,7 @@ namespace REMFactory
 
             while (IsReading)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
 
 
                 nowTime = x;
@@ -238,17 +238,23 @@ namespace REMFactory
 
                 if (x % 24 == 0)
                 {
-                    sumPower = (powerTotal - minElec);
-                    cumulativeElectrocity += sumPower;
-                    powerTotal = minElec;
+                    if (powerTotal > minElec)
+                    {
+                        sumPower = (powerTotal - minElec);
+                        powerTotal = minElec;
+                    }
+                    else
+                    {
+                        sumPower = 0;
+                    }
                     dateDictionary.Add(dates[count].Date, sumPower);
-                    dateResult = dateDictionary[dates[count].Date].ToString();
                     checkDateChange = true;
                     ElectrocityStore();
-                    Application.Current.Dispatcher.Invoke(() => {
-                    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
+                    //dateResult = dateDictionary[dates[count].Date].ToString("n2");
+                    //Application.Current.Dispatcher.Invoke(() => {
+                    //label1.Text = "누적 판매 전력량 :" + dateResult;
 
-                    });
+                    //});
 
                 }
                 count++;

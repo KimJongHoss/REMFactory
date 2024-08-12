@@ -153,7 +153,7 @@ namespace REMFactory
                     LabelFormatter = value =>
                     {
                         var date = DateTime.FromOADate(value);
-                        return date.ToString("MM/dd/yyyy");
+                        return date.ToString("yy/MM/dd");
                     },
                     Separator = new LiveCharts.Wpf.Separator
                     {
@@ -164,7 +164,8 @@ namespace REMFactory
 
                 var yAxis = new Axis
                 {
-                    Title = "Power Result"
+                    Title = "Power Result",
+                    LabelFormatter = value => value.ToString("F2")
                 };
 
                 // 시리즈 설정
@@ -188,8 +189,10 @@ namespace REMFactory
                 cartesianChart.AxisX[0].LabelFormatter = value =>
                 {
                     var date = DateTime.FromOADate(value);
-                    return date.ToString("MM/dd/yyyy");
+                    return date.ToString("yy/MM/dd");
                 };
+                
+                
             }
         private void maxElectrocitySoldData_Click(object sender, RoutedEventArgs e)
         {
