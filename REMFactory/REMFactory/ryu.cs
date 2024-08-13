@@ -34,8 +34,13 @@ namespace REMFactory
         private double sumPower;
         private double nowTime;
         private DateTime today;
+        private double _trend1;
+        private double _trend2;
+        private double _trend3;
+        public List<DateTime> dates = new List<DateTime>();
+
         public static Dictionary<DateTime, double> dateDictionary { get; set; } = new Dictionary<DateTime, double>();
-        
+
 
         public void chart1()
         {
@@ -57,7 +62,9 @@ namespace REMFactory
             ChartValues3 = new ChartValues<MeasureModel>();
             ChartValues4 = new ChartValues<MeasureModel>();
             ChartValues5 = new ChartValues<MeasureSoldModel>();
-
+            ChartValues6 = new ChartValues<MeasureModel>();
+            ChartValues7 = new ChartValues<MeasureModel>();
+            ChartValues8 = new ChartValues<MeasureModel>();
 
             AxisStep = 1 / 24.0; // X축의 시간 간격 설정
             AxisUnit = 1; // X축 단위 설정
@@ -76,6 +83,9 @@ namespace REMFactory
         public ChartValues<MeasureModel> ChartValues3 { get; set; }
         public ChartValues<MeasureModel> ChartValues4 { get; set; }
         public ChartValues<MeasureSoldModel> ChartValues5 { get; set; }
+        public ChartValues<MeasureModel> ChartValues6 { get; set; }
+        public ChartValues<MeasureModel> ChartValues7 { get; set; }
+        public ChartValues<MeasureModel> ChartValues8 { get; set; }
         public Func<double, string> XAxisLabelFormatter => value =>
         {
             DateTime dateTime = DateTime.FromOADate(value);
@@ -131,14 +141,20 @@ namespace REMFactory
 
             //var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
             List<Double> listRyu = new List<Double>();
-            List<DateTime> dates = new List<DateTime>();
+
             List<double> power = new List<double>();
+            List<Double> dfLine1List = new List<Double>();
+            List<Double> dfLine2List = new List<Double>();
+            List<Double> dfLine3List = new List<Double>();
             //List<int> listJong = new List<int>();
             for (int i = 0; i < dfLine1.Count(); i++)
             {
                 for (int j = 3; j < dfLine1[0].Count(); j++)
                 {
                     listRyu.Add(Convert.ToDouble(dfLine1[i][j]) + Convert.ToDouble(dfLine2[i][j]) + Convert.ToDouble(dfLine3[i][j]));
+                    dfLine1List.Add(Convert.ToDouble(dfLine1[i][j]));
+                    dfLine2List.Add(Convert.ToDouble(dfLine2[i][j]));
+                    dfLine3List.Add(Convert.ToDouble(dfLine3[i][j]));
                 }
 
             }
@@ -170,10 +186,13 @@ namespace REMFactory
 
                 nowTime = x;
                 today = dates[count];
+                _trend1 = dfLine1List[count];
+                _trend2 = dfLine2List[count];
+                _trend3 = dfLine3List[count];
 
 
                 powerTotal += listRyu[count] / 10;
-                
+
                 powerTotal -= (doubleValue + doubleValue2 + doubleValue3);
                 GaugeValue = powerTotal;
                 var model1 = new MeasureModel
@@ -202,7 +221,21 @@ namespace REMFactory
                     X = openTime,
                     Value = devideValue
                 };
-
+                var model6 = new MeasureModel
+                {
+                    X = today,
+                    Value = _trend1
+                };
+                var model7 = new MeasureModel
+                {
+                    X = today,
+                    Value = _trend2
+                };
+                var model8 = new MeasureModel
+                {
+                    X = today,
+                    Value = _trend3
+                };
                 SetAxisLimits(today);
 
                 //lets only use the last 150 values
@@ -212,6 +245,9 @@ namespace REMFactory
                     AddToChart(ChartValues2, model2);
                     AddToChart(ChartValues3, model3);
                     AddToChart(ChartValues4, model4);
+                    AddToChart(ChartValues6, model6);
+                    AddToChart(ChartValues7, model7);
+                    AddToChart(ChartValues8, model8);
 
                     SetAxisLimits(today);
 
@@ -219,6 +255,9 @@ namespace REMFactory
                     if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
                     if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
                     if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
+                    if (ChartValues6.Count > 1000) ChartValues6.RemoveAt(0);
+                    if (ChartValues7.Count > 1000) ChartValues7.RemoveAt(0);
+                    if (ChartValues8.Count > 1000) ChartValues8.RemoveAt(0);
                     label3.Text = dates[count].Date.ToString("yyyy-MM-dd");
 
 
@@ -297,7 +336,7 @@ namespace REMFactory
             AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
         }
 
-        private void SetSoldAxisLimits(DateTime currentDateTime )
+        private void SetSoldAxisLimits(DateTime currentDateTime)
         {
             AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
             AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time

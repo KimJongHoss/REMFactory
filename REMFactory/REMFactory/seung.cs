@@ -149,7 +149,8 @@ namespace REMFactory
                     Values = new ChartValues<ObservablePoint>(datas.Select(d => new ObservablePoint(
                         d.date.ToOADate(), d.powerResult // 날짜를 OADate로 변환
                     ))),
-                    DataLabels = true
+                    DataLabels = true,
+                    LabelPoint = point => point.Y.ToString("N0")
                 };
 
                 // 차트에 시리즈와 축 추가
@@ -217,7 +218,8 @@ namespace REMFactory
                 Values = new ChartValues<ObservablePoint>(soldDatas.Select(d => new ObservablePoint(
                     d.date.ToOADate(), d.devideValue // 날짜를 OADate로 변환하고 devideValue를 사용
                 ))),
-                DataLabels = true
+                DataLabels = true,
+                LabelPoint = point => point.Y.ToString("N0")
             };
 
             // 차트에 시리즈와 축 추가

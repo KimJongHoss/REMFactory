@@ -24,8 +24,8 @@ namespace REMFactory
         double doubleValue2;//Line2의 사용량을 double로 parsing한 값 
         double doubleValue3;//Line3의 사용량을 double로 parsing한 값
         private double efficiency = 10000;//라인1 max 전력량
-        private double efficiency2 = 20000;//라인2 max 전력량
-        private double efficiency3 = 30000;//라인3 max 전력량
+        private double efficiency2 = 15000;//라인2 max 전력량
+        private double efficiency3 = 20000;//라인3 max 전력량
         private bool openCheck = false;//전력 거래소 운영 여부 false가 운영X
         private List<double> electricitySellList;//하루 지났을 때 잔여 전력 판매 금액 리스트 ->여기에 판매 금액 넣고 판매 날짜(date)를 key값으로 딕셔너리 만들기
         private string openDataPath = Path.GetFullPath(@"한국전력거래소_오늘의 REC 시장_20240502.csv");//전력 판매소 날짜별 시세 csv 파일 path
@@ -94,9 +94,11 @@ namespace REMFactory
             try
             {
                 var r = new Random();
+                double randomFactor = r.NextDouble() * 1.2 + 0.3; //0.3 ~ 1.5까지 랜덤 
+                double randomFactor2 = r.NextDouble() * 1.5 + 0.5; //0.5 ~ 2까지 랜덤
                 doubleValue = Convert.ToDouble(value);
-                doubleValue2 = doubleValue * r.Next(1, 2);
-                doubleValue3 = doubleValue * r.Next(1, 3);
+                doubleValue2 = doubleValue * randomFactor;
+                doubleValue3 = doubleValue * randomFactor2;
                 if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
@@ -353,7 +355,7 @@ namespace REMFactory
                     devideValue = Math.Truncate(temp);//소수점 삭제
 
                     //MessageBox.Show("devideValue11111 : " + devideValue);
-                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue + "원";
+                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue.ToString("N0") + " 원";
                     cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
 
                     soldDateDictionary.Add(openTime, devideValue);

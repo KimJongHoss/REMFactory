@@ -8,19 +8,18 @@
         mc:Ignorable="d"
         Title="ChartWindow1" Height="450" Width="800">
     <Grid>
-        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="40,263,26,35" VerticalScrollBarVisibility="Visible">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
-                <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <lvc:CartesianChart x:Name="cartesianChart"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Height="211" 
-                    Width="764" Margin="10,47,0,0"/>
-
+        <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Date"
+                          LabelFormatter="{Binding XFormatter}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Value"
+              LabelFormatter="{Binding YFormatter}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 
 </Window>
