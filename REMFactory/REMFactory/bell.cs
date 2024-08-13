@@ -52,7 +52,6 @@ namespace REMFactory
             {
                 throw new FileNotFoundException("The specified data file does not exist.", path);
             }
-
             // Load the data into the DataFrame
             return DataFrame.LoadCsv(path);
         }
@@ -128,9 +127,6 @@ namespace REMFactory
             {
                 Console.WriteLine("값이 너무 큽니다.");
             }
-            
-
-           
         }
 
         public void getUsingData()
@@ -182,8 +178,6 @@ namespace REMFactory
         public async Task getefficiencyData()
         {
             var df = LoadUsingDataFrame(usingDataPath);//데이터를 가져와서 dataFrame으로 반환
-
-            //dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
 
             usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
@@ -360,8 +354,6 @@ namespace REMFactory
 
                     soldDateDictionary.Add(openTime, devideValue);
                     soldDateResult = soldDateDictionary[openTime].ToString();
-
-                    //MessageBox.Show("devideValue2222 : "+ devideValue);
                 }
                 catch (InvalidCastException)
                 {
@@ -400,22 +392,6 @@ namespace REMFactory
                 MessageBox.Show("잘못된 아이디입니다.");
             }
         }
-
-        
-
-        //public void SetManagerPage()
-        //{
-        //    // 값 설정
-        //    if (double.TryParse(valueTextBox.Text, out sliderLine1.Maximum))
-        //    {
-        //        // 슬라이더 값 설정
-        //        slider.Value = sliderLine1.Maximum;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Invalid value.");
-        //    }
-        //}
 
     }
 }
