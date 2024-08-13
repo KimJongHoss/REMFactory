@@ -236,6 +236,7 @@
                             Width="700" Margin="20,370,-120,10"
                             Background="#FFF7E7EA"/>
                             <Label x:Name="maxElectrocitySoldLabel" FontFamily="{StaticResource Roboto_Medium}" Margin="750,420,-360,90" FontSize="22" Content="누적 전력 판매 금액" Foreground="#FFF7E7EA"></Label>
+                            <Label x:Name="quoteLabel" FontFamily="{StaticResource Roboto_Medium}" Margin="750,460,-300,60" FontSize="22" Content="금일 전력 시세" Foreground="#FFF7E7EA"></Label>
                         </Grid>
                     </Grid>
 

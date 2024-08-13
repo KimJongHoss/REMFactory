@@ -276,6 +276,7 @@ namespace REMFactory
                     {
                         // 이미 UI 스레드에서 실행 중이므로 바로 접근 가능
                         maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                        quoteLabel.Content = "";
                     }
                     else
                     {
@@ -283,6 +284,7 @@ namespace REMFactory
                         Dispatcher.Invoke(() =>
                         {
                             maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                            quoteLabel.Content = "";
                         });
                     }
                 }
@@ -350,6 +352,7 @@ namespace REMFactory
 
                     //MessageBox.Show("devideValue11111 : " + devideValue);
                     maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue.ToString("N0") + " 원";
+                    quoteLabel.Content = maxElectorocityValue + "원";
                     cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
 
                     soldDateDictionary.Add(openTime, devideValue);
