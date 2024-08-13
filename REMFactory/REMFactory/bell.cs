@@ -24,12 +24,23 @@ namespace REMFactory
         double doubleValue2;//Line2의 사용량을 double로 parsing한 값 
         double doubleValue3;//Line3의 사용량을 double로 parsing한 값
         private double efficiency = 10000;//라인1 max 전력량
-        private double efficiency2 = 20000;//라인2 max 전력량
-        private double efficiency3 = 30000;//라인3 max 전력량
+        private double efficiency2 = 15000;//라인2 max 전력량
+        private double efficiency3 = 20000;//라인3 max 전력량
         private bool openCheck = false;//전력 거래소 운영 여부 false가 운영X
         private List<double> electricitySellList;//하루 지났을 때 잔여 전력 판매 금액 리스트 ->여기에 판매 금액 넣고 판매 날짜(date)를 key값으로 딕셔너리 만들기
         private string openDataPath = Path.GetFullPath(@"한국전력거래소_오늘의 REC 시장_20240502.csv");//전력 판매소 날짜별 시세 csv 파일 path
         double electricityAllSell;//판매 누적 금액 저장
+        bool checkDateChange = true;//날짜가 바뀌는 것을 확인하는 boolean
+        double cumulativeElectrocity = 0;
+        double devideValue = 0;
+        private DateTime openTime;
+        public static Dictionary<DateTime, double> soldDateDictionary { get; set; } = new Dictionary<DateTime, double>();
+        public string soldDateResult { get; set; }
+        public class MeasureSoldModel
+        {
+            public DateTime X { get; set; }
+            public double Value { get; set; }
+        }
         private string adminID = "admin123";//관리자 아이디
         private string adminPW = "admin123";//관리자 비밀번호
 
@@ -41,7 +52,6 @@ namespace REMFactory
             {
                 throw new FileNotFoundException("The specified data file does not exist.", path);
             }
-
             // Load the data into the DataFrame
             return DataFrame.LoadCsv(path);
         }
@@ -83,10 +93,11 @@ namespace REMFactory
             try
             {
                 var r = new Random();
-                double doubleValueA = Convert.ToDouble(r.NextDouble().ToString("n2"));
+                double randomFactor = r.NextDouble() * 1.2 + 0.3; //0.3 ~ 1.5까지 랜덤 
+                double randomFactor2 = r.NextDouble() * 1.5 + 0.5; //0.5 ~ 2까지 랜덤
                 doubleValue = Convert.ToDouble(value);
-                doubleValue2 = doubleValue * (1 + doubleValueA);
-                doubleValue3 = doubleValue * (2 + doubleValueA);
+                doubleValue2 = doubleValue * randomFactor;
+                doubleValue3 = doubleValue * randomFactor2;
                 if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
                 {
                     doubleValue = 0;
@@ -116,9 +127,6 @@ namespace REMFactory
             {
                 Console.WriteLine("값이 너무 큽니다.");
             }
-            
-
-           
         }
 
         public void getUsingData()
@@ -165,43 +173,11 @@ namespace REMFactory
             return dateListDictionary;
         }
 
-        public List<double> getModelData() // 사용량 데이터 가져와서 리스트로 반환
-        {
-            var df = LoadUsingDataFrame(usingDataPath); // 데이터 로드
-
-            var dateGroupedData = new Dictionary<DateTime, List<List<object>>>(); // 딕셔너리 초기화
-
-            usingDataToListDictionary(df, dateGroupedData); // 데이터 그룹화
-
-            var resultList = new List<double>(); // 결과 리스트 생성
-
-            // 결과 출력
-            foreach (var date in dateGroupedData.Keys)
-            {
-                Console.WriteLine($"Date: {date.ToShortDateString()}"); // 날짜 출력
-                foreach (var row in dateGroupedData[date])
-                {
-                    foreach (var value in row)
-                    {
-                        double valueDouble = Convert.ToDouble(value);
-                        if (powerTotal < doubleValue + doubleValue2 + doubleValue3)
-                        {
-                            valueDouble = 0;
-                        }
-                        resultList.Add(valueDouble); // 결과 리스트에 값 추가
-                    }
-                }
-            }
-
-            return resultList; // 결과 리스트 반환
-        }
         //각 라인당 전력 사용 효율
 
         public async Task getefficiencyData()
         {
             var df = LoadUsingDataFrame(usingDataPath);//데이터를 가져와서 dataFrame으로 반환
-
-            var dateGroupedData = new Dictionary<DateTime, List<List<object>>>();
 
             usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
 
@@ -249,7 +225,6 @@ namespace REMFactory
                 labelEfficiencyLine1.Text = efficiencyData.ToString();
                 labelEfficiencyLine2.Text = line2Data.ToString();
                 labelEfficiencyLine3.Text = line3Data.ToString();
-                //MessageBox.Show($"1: {efficiencyData},2:{line2Data},3:{line3Data}");
             }
             else
             {
@@ -259,36 +234,140 @@ namespace REMFactory
         }
 
         //전력 거래소 관련 메서드
-        public async Task ElectrocityStore()//사용량 데이터 가져와서 그래프로 띄우기 메인 메서드
+        public void ElectrocityStore()//사용량 데이터 가져와서 그래프로 띄우기 메인 메서드
         {
             var df = LoadUsingDataFrame(openDataPath);//데이터를 가져와서 dataFrame으로 반환
 
             dateElectrocityStoreData = new Dictionary<DateTime, List<List<object>>>();
 
-            usingDataToListDictionary(df, dateGroupedData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
-            await Task.Delay(startDelayTime);
+            df = filteringDataFrame(df);
+
+            dateElectrocityStoreData = usingDataToListDictionary(df, dateElectrocityStoreData);//데이터프레임 리스트로 만들어서 딕셔너리에 정리
+
             // 결과 출력
-            foreach (var date in dateGroupedData.Keys)
+            foreach (var date in dateElectrocityStoreData.Keys)
             {
-                Console.WriteLine($"Date: {date.ToShortDateString()}");
-                foreach (var row in dateGroupedData[date])
+                openTime = date.Date;
+                // today와 date가 동일한지 비교합니다.
+                if (date.Date == today)
                 {
-                    foreach (var value in row)
+                    checkDateChange = true;
+                    foreach (var row in dateElectrocityStoreData[date])
                     {
-
-                        if (Dispatcher.CheckAccess())
+                        foreach (var value in row)
                         {
-                            UpdateLabelAndSlider(value);//label value와 slider value를 바꾸는 메서드 
+                            if (Dispatcher.CheckAccess())
+                            {
+                                UpdateElectrocityStroreLabel(value); // label value와 slider value를 바꾸는 메서드
+                                //MessageBox.Show("value :" + value);
+                            }
+                            else
+                            {
+                                Dispatcher.Invoke(() => UpdateElectrocityStroreLabel(value));
+                            }
                         }
-                        else
+                    }
+                    //MessageBox.Show("Date :" + date.Date + "today : " + today);
+                    return;
+                }
+                else
+                {
+                    if (Dispatcher.CheckAccess())
+                    {
+                        // 이미 UI 스레드에서 실행 중이므로 바로 접근 가능
+                        maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                    }
+                    else
+                    {
+                        // UI 스레드에서 실행하도록 Dispatch
+                        Dispatcher.Invoke(() =>
                         {
-                            Dispatcher.Invoke(() => UpdateLabelAndSlider(value));
-                        }
-
-                        // 20ms 대기
-                        await Task.Delay(1000);
+                            maxElectrocitySoldLabel.Content = "오늘은 전력 거래소가 운영하지 않습니다.";
+                        });
                     }
                 }
+            }
+        }
+
+        DataFrame filteringDataFrame(DataFrame dataFrame)
+        {
+            // 날짜 열과 육지 평균가 열을 설정합니다.
+            var dateColumnName = "거래일";
+            var priceColumnName = "육지 평균가(원)";
+
+            // 날짜 열과 육지 평균가 열을 가져옵니다.
+            var dateColumn = dataFrame.Columns[dateColumnName] as PrimitiveDataFrameColumn<DateTime>;
+            var priceColumn = dataFrame.Columns[priceColumnName] as PrimitiveDataFrameColumn<float>;
+
+            // 유효한 컬럼인지 확인
+            if (dateColumn == null || priceColumn == null)
+            {
+                throw new InvalidOperationException("날짜 열 또는 육지 평균가 열이 올바른 형식이 아닙니다.");
+            }
+
+            // 필터링 조건을 만듭니다.
+            var startDate = new DateTime(2023, 1, 1);
+            var endDate = new DateTime(2023, 6, 30);
+
+            // 필터링된 데이터를 저장할 리스트를 만듭니다.
+            var filteredDates = new List<DateTime>();
+            var filteredPrices = new List<double>();
+
+            // 각 행을 순회하며 조건을 만족하는지 확인하고, 해당 데이터를 리스트에 추가합니다.
+            for (int i = 0; i < dataFrame.Rows.Count; i++)
+            {
+                var dateTemp = dateColumn[i];
+                var price = priceColumn[i];
+                if (dateTemp.HasValue)
+                {
+                    DateTime date = dateTemp.Value; // dateTemp가 null이 아닌 경우에만 사용
+                    if (date >= startDate && date <= endDate)
+                    {
+                        filteredDates.Add(date);
+                        filteredPrices.Add((double)price); // float 값을 double로 변환하여 추가
+                    }
+                }
+
+            }
+            // 필터링된 데이터를 기반으로 새로운 DataFrame을 생성합니다.
+            var filteredDf = new DataFrame(new DataFrameColumn[]
+            {
+            new PrimitiveDataFrameColumn<DateTime>(dateColumnName, filteredDates),
+            new PrimitiveDataFrameColumn<double>(priceColumnName, filteredPrices)
+            });
+            return filteredDf;
+        }
+
+        void UpdateElectrocityStroreLabel(object value)//사용량의 데이터를 라벨과 슬라이더에 업데이트하는 메서드
+        {
+            if (checkDateChange == true )//전력거래소가 운영중인지 체크
+            {
+                try
+                {
+                    double maxElectorocityValue= Convert.ToDouble(value);
+                    double temp = maxElectorocityValue * cumulativeElectrocity / 100000;
+                    devideValue = Math.Truncate(temp);//소수점 삭제
+
+                    //MessageBox.Show("devideValue11111 : " + devideValue);
+                    maxElectrocitySoldLabel.Content = "누적 전력 판매 금액 KW당: "+devideValue.ToString("N0") + " 원";
+                    cumulativeElectrocity = 0;//판매했으니 해당 변수 비워주기
+
+                    soldDateDictionary.Add(openTime, devideValue);
+                    soldDateResult = soldDateDictionary[openTime].ToString();
+                }
+                catch (InvalidCastException)
+                {
+                    Console.WriteLine("Object의 형식이 잘못되었습니다.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Object의 형식이 잘못되었습니다.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("값이 너무 큽니다.");
+                }
+                checkDateChange = false;//날짜가 변경 안됐다고 변경
             }
         }
 
@@ -313,20 +392,6 @@ namespace REMFactory
                 MessageBox.Show("잘못된 아이디입니다.");
             }
         }
-
-        //public void SetManagerPage()
-        //{
-        //    // 값 설정
-        //    if (double.TryParse(valueTextBox.Text, out sliderLine1.Maximum))
-        //    {
-        //        // 슬라이더 값 설정
-        //        slider.Value = sliderLine1.Maximum;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Invalid value.");
-        //    }
-        //}
 
     }
 }

@@ -20,8 +20,8 @@ namespace REMFactory
 
     public partial class MainWindow : Window
     {
-        bool isBlinking = false;
-        DispatcherTimer blinkTimer;
+        private bool isBlinkingRed = false;
+        DispatcherTimer blinkingTimer;
         private double efficiencyData1;
         private double efficiencyData2;
         private double efficiencyData3;
@@ -45,83 +45,66 @@ namespace REMFactory
                 MessageBox.Show("Unable to open link: " + ex.Message);
             }
         }
-        //private void redsign()
-        //{
-        //    if (doubleValue > 80)
-        //    {
-        //        boderLine1.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine1.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+        private void UpdateBorderColor(double currentValue, double maxValue, Border targetBorder)
+        {
+            double percentage = currentValue / maxValue * 100;
+            if (percentage >= 80)
+            {
+                StartBlinking(targetBorder);  // 80% 이상일 때 깜빡임 시작
+            }
+            else
+            {
+                StopBlinking(targetBorder);  // 80% 미만일 때 깜빡임 중지
+            }
+        }
+        private Dictionary<string, DispatcherTimer> borderTimers = new Dictionary<string, DispatcherTimer>();
 
-        //    if (doubleValue2 > 80)
-        //    {
-        //        boderLine2.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine2.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+        private void StartBlinking(Border targetBorder)
+        {
+            string borderName = targetBorder.Name;
 
-        //    if (doubleValue3 > 80)
-        //    {
-        //        boderLine3.Background = new SolidColorBrush(Colors.Red);
-        //    }
-        //    else
-        //    {
-        //        boderLine3.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66)); // original color #FF3C3C42
-        //    }
+            // 타이머가 없으면 생성
+            if (!borderTimers.ContainsKey(borderName))
+            {
+                DispatcherTimer newTimer = new DispatcherTimer();
+                newTimer.Interval = TimeSpan.FromMilliseconds(500);
+                newTimer.Tick += (sender, e) =>
+                {
+                    if (targetBorder.Background == Brushes.Red)
+                        targetBorder.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66));
+                    else
+                        targetBorder.Background = Brushes.Red;
+                };
+                borderTimers[borderName] = newTimer;
+            }
 
-        //    if (doubleValue > 5 && doubleValue2 > 5 && doubleValue3 > 5)
-        //    {
-        //        StartBlinking(gridMain);
-        //    }
-        //    else
-        //    {
-        //        StopBlinking(gridMain);
-        //    }
-        //    void StartBlinking(Grid gridMain)
-        //    {
-        //        if (blinkTimer == null)
-        //        {
-        //            blinkTimer = new DispatcherTimer();
-        //            blinkTimer.Interval = TimeSpan.FromMilliseconds(500); // 500ms 간격으로 깜빡임
-        //            blinkTimer.Tick += (s, e) =>
-        //            {
-        //                if (isBlinking)
-        //                {
-        //                    gridMain.Background = new SolidColorBrush(Colors.Red);
-        //                }
-        //                else
-        //                {
-        //                    gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
-        //                }
-        //                isBlinking = !isBlinking;
-        //            };
-        //        }
-        //        if (!blinkTimer.IsEnabled)
-        //        {
-        //            blinkTimer.Start();
-        //        }
-        //    }
+            borderTimers[borderName].Start();
+        }
 
-        //void StopBlinking(Grid gridMain)
-        //{
-        //    if (blinkTimer != null && blinkTimer.IsEnabled)
-        //    {
-        //        blinkTimer.Stop();
-        //        gridMain.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)); // original color #FF3C3C42
-        //        isBlinking = false;
-        //    }
-        //}
+        private void StopBlinking(Border targetBorder)
+        {
+            string borderName = targetBorder.Name;
+
+            if (borderTimers.ContainsKey(borderName) && borderTimers[borderName].IsEnabled)
+            {
+                borderTimers[borderName].Stop();
+                targetBorder.Background = new SolidColorBrush(Color.FromRgb(60, 60, 66));
+            }
+        }
         public class Data
         {
             public bool IsSelected { get; set; }
             public DateTime date { get; set; }
             public double powerResult { get; set; }
         }
+
+        public class soldData
+        {
+            public bool IsSelected { get; set; }
+            public DateTime date { get; set; }
+            public double devideValue { get; set; }
+        }
+
         private void loadData_Click(object sender, RoutedEventArgs e)   // Tab2 옮겨놈
             {
                 if (MainWindow.dateDictionary.Count == 0)
@@ -145,7 +128,7 @@ namespace REMFactory
                     LabelFormatter = value =>
                     {
                         var date = DateTime.FromOADate(value);
-                        return date.ToString("yy/MM/dd");
+                        return date.ToString("MM/dd/yyyy");
                     },
                     Separator = new LiveCharts.Wpf.Separator
                     {
@@ -156,8 +139,7 @@ namespace REMFactory
 
                 var yAxis = new Axis
                 {
-                    Title = "Power Result",
-                    LabelFormatter = value => value.ToString("F2")
+                    Title = "Power Result"
                 };
 
                 // 시리즈 설정
@@ -167,7 +149,8 @@ namespace REMFactory
                     Values = new ChartValues<ObservablePoint>(datas.Select(d => new ObservablePoint(
                         d.date.ToOADate(), d.powerResult // 날짜를 OADate로 변환
                     ))),
-                    DataLabels = true
+                    DataLabels = true,
+                    LabelPoint = point => point.Y.ToString("N0")
                 };
 
                 // 차트에 시리즈와 축 추가
@@ -181,10 +164,78 @@ namespace REMFactory
                 cartesianChart.AxisX[0].LabelFormatter = value =>
                 {
                     var date = DateTime.FromOADate(value);
-                    return date.ToString("yy/MM/dd");
+                    return date.ToString("MM/dd/yyyy");
                 };
-                
-                
             }
+        private void maxElectrocitySoldData_Click(object sender, RoutedEventArgs e)
+        {
+            // 판매한 전력이 없으면 경고 메시지를 표시
+            if (MainWindow.soldDateDictionary == null || MainWindow.soldDateDictionary.Count == 0)
+            {
+                MessageBox.Show("판매한 전력이 없습니다.");
+                return;
+            }
+
+            // soldDateDictionary에서 soldData 리스트를 생성
+            List<soldData> soldDatas = new List<soldData>();
+            var ndic2 = MainWindow.soldDateDictionary;
+
+            foreach (KeyValuePair<DateTime, double> item in ndic2)
+            {
+                // soldData 객체를 생성하고 리스트에 추가
+                soldDatas.Add(new soldData { date = item.Key, devideValue = item.Value });
+            }
+
+            // soldDatas를 리스트 뷰에 바인딩
+            //maxElectrocitySoldList.ItemsSource = soldDatas;
+
+            // X축 설정
+            var xAxis = new Axis
+            {
+                Title = "Date",
+                LabelFormatter = value =>
+                {
+                    // X축 값이 OADate 형식이므로 이를 날짜 형식으로 변환
+                    var date = DateTime.FromOADate(value);
+                    return date.ToString("MM/dd/yyyy");
+                },
+                Separator = new LiveCharts.Wpf.Separator
+                {
+                    Step = 1, // 날짜 단위로 구분
+                }
+            };
+
+            // Y축 설정 (변경된 부분: 제목을 "Devide Value"로 변경)
+            var yAxis = new Axis
+            {
+                Title = "Devide Value"
+            };
+
+            // 시리즈 설정 (변경된 부분: soldData의 devideValue를 사용)
+            var series = new ColumnSeries
+            {
+                Title = "Devide Value",
+                Values = new ChartValues<ObservablePoint>(soldDatas.Select(d => new ObservablePoint(
+                    d.date.ToOADate(), d.devideValue // 날짜를 OADate로 변환하고 devideValue를 사용
+                ))),
+                DataLabels = true,
+                LabelPoint = point => point.Y.ToString("N0")
+            };
+
+            // 차트에 시리즈와 축 추가
+            maxElectrocitySoldChart.Series = new SeriesCollection { series };
+            maxElectrocitySoldChart.AxisX.Clear();
+            maxElectrocitySoldChart.AxisY.Clear();
+            maxElectrocitySoldChart.AxisX.Add(xAxis);
+            maxElectrocitySoldChart.AxisY.Add(yAxis);
+
+            // X축 레이블 포맷 설정
+            maxElectrocitySoldChart.AxisX[0].LabelFormatter = value =>
+            {
+                var date = DateTime.FromOADate(value);
+                return date.ToString("MM/dd/yyyy");
+            };
         }
     }
+
+}

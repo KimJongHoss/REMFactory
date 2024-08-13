@@ -30,8 +30,9 @@
                 </dragablz:TabablzControl.InterTabController>
                 <TabItem Header="HOME">
                     <Grid x:Name="gridMain">
+                        <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="25" Margin="500 -350 -200 0" FontFamily="Arial Black" Foreground="AliceBlue"/>
                         <!--Here we disable tooltips and hovering to get a better performance-->
-                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="0,22,35,288" Width="400" >
+                        <lvc:CartesianChart x:Name="cartesianChart1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="0,50,35,270" Width="400" >
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding ChartValues1}" 
                                                 LineSmoothness="0"
@@ -52,28 +53,28 @@
                                 </lvc:Axis>
                             </lvc:CartesianChart.AxisX>
                         </lvc:CartesianChart>
-                        <lvc:CartesianChart x:Name="cartesianChart2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="850,22,35,288" Width="400">
+                        <lvc:CartesianChart x:Name="cartesianChart2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" Margin="850,50,35,270" Width="400">
                             <lvc:CartesianChart.Series>
-                                
+
                                 <lvc:LineSeries Values="{Binding ChartValues2}"
                                                 Title="라인 A"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2"
-                                                Stroke="#36F34F"
+                                                Stroke="#FF8AD293"
                                                 PointGeometrySize="10"
                                                 Fill="Transparent"/>
                                 <lvc:LineSeries Values="{Binding ChartValues3}"
                                                 Title="라인 B"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2" 
-                                                Stroke="#FFF336DA"
+                                                Stroke="#FFE679D8"
                                                 PointGeometrySize="10"
                                                 Fill="Transparent"/>
                                 <lvc:LineSeries Values="{Binding ChartValues4}" 
                                                 Title="라인 C"
                                                 LineSmoothness="0"
                                                 StrokeThickness="2" 
-                                                Stroke="#FF366AF3"
+                                                Stroke="#FF708CD4"
                                                 PointGeometrySize="10"
                                                 Fill="Transparent"/>
                             </lvc:CartesianChart.Series>
@@ -89,12 +90,14 @@
                                 </lvc:Axis>
                             </lvc:CartesianChart.AxisX>
                         </lvc:CartesianChart>
-
-                        <TextBlock x:Name="label1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 100" FontFamily="Arial Black"/>
-                        <TextBlock x:Name="label3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="200"  FontSize="30" Margin="200 200 0 30" FontFamily="Arial Black"/>
-                        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="InjectStopOnClick" Margin="400,0,0,0">
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="InjectStopOnClick" Margin="430,-520,0,0">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="SolarEnergy"/>
+                                <materialDesign:PackIcon Kind="Play"/>
+                            </StackPanel>
+                        </Button>
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryHueLightBrush}" Click="lineAtext_Click" Margin="470,-520,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="SolarCompass"/>
                             </StackPanel>
                         </Button>
 
@@ -110,8 +113,8 @@
                                     <RowDefinition Height="311*"/>
                                 </Grid.RowDefinitions>
                                 <Border x:Name="boderLine1" Height="500" Width="400" Background="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" CornerRadius="20" BorderThickness="5" Margin="10,156,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
-                                <TextBlock x:Name="lineAtext" FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1" MouseUp="lineAtext_MouseUp">
-                            <Run x:Name="lineA" Text="라인 A" Foreground="#FFFFFF"/>
+                                <TextBlock x:Name="lineAtext" FontSize="40" FontFamily="{StaticResource Roboto_Medium}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="132,550,0,0" Grid.Row="1" Grid.Column="1">
+                            <Run x:Name="lineA" Text="라인 A" Foreground="#FFFFFF"/> 
                                 </TextBlock>
                                 <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                                 <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
@@ -120,10 +123,10 @@
                                         <ColumnDefinition Width="52*"/>
                                         <ColumnDefinition Width="93*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Path x:Name="pathLine1" Stroke="#36F34F" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50" Grid.ColumnSpan="2">
+                                    <Path x:Name="pathLine1" Stroke="#FF8AD293" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50" Grid.ColumnSpan="2">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine1" Text="0" Foreground="#36F34F" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#36F34F" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine1" Text="0" Foreground="#FF8AD293" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#FF8AD293" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
@@ -144,10 +147,10 @@
                                 <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                                 <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
                                 <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
-                                    <Path x:Name="pathLine2" Stroke="#FFF336DA" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path x:Name="pathLine2" Stroke="#FFE679D8" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine2" Text="0" Foreground="#FFF336DA" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#FFF336DA" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine2" Text="0" Foreground="#FFE679D8" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#FFE679D8" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
@@ -168,62 +171,74 @@
                                 <Grid Height="70" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="209,241,0,0" Grid.Row="1" Grid.Column="1"/>
                                 <Image Height="297" Width="317" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource Dial_Image}" Stretch="Uniform" Margin="42,241,0,0" Grid.RowSpan="2" Grid.Column="1"/>
                                 <Grid Height="290" Width="290" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,240,0,0" Grid.RowSpan="2" Grid.Column="1">
-                                    <Path x:Name="pathLine3" Stroke="#FF366AF3" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
+                                    <Path x:Name="pathLine3" Stroke="#FF708CD4" StrokeThickness="28" Fill="Transparent" Margin="-8,50,8,-50">
                                     </Path>
-                                    <TextBlock x:Name="labelEfficiencyLine3" Text="0" Foreground="#FF366AF3" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                                    <TextBlock Text="%" Foreground="#FF366AF3" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
+                                    <TextBlock x:Name="labelEfficiencyLine3" Text="0" Foreground="#FF708CD4" Width="109" FontFamily="{StaticResource Roboto_Light}" FontSize="45" HorizontalAlignment="Left" Margin="35,100,0,59" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                                    <TextBlock Text="%" Foreground="#FF708CD4" Height="50" Width="210" FontFamily="{StaticResource Rubik_Light}" FontSize="30" HorizontalAlignment="Left" TextAlignment="Center" Margin="-13,150,0,50" Grid.ColumnSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Viewbox>
                         <!--라인별 사용량, 효율-->
                         <!--총 생산 전력-->
                         <Grid Margin="0,116,592,276">
-                            <Border Height="590" Width="400" Background="#333333" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="20" BorderThickness="5" Margin="0 -105 0 -270"/>
+                            <Border Height="570" Width="400" Background="#333333" VerticalAlignment="Bottom" HorizontalAlignment="Left" CornerRadius="20" BorderThickness="5" Margin="0 -105 0 -270"/>
                             <lvc:AngularGauge Grid.Row="1" Value="{Binding GaugeValue}" 
                                           FromValue="1000000" ToValue="10000000" 
                                           LabelsStep="2000000" TicksStep="500000" 
                                           Wedge="300"
                                           TicksForeground="White" Foreground="White" 
                                           FontWeight="Bold" FontSize="10"
-                                          SectionsInnerRadius=".1" Margin="-150,-80,128,60" NeedleFill="#FFE9E9E9">
+                                          SectionsInnerRadius=".5" Margin="-150,-60,128,40" NeedleFill="#FFE9E9E9">
                                 <lvc:AngularGauge.Sections>
                                     <lvc:AngularSection FromValue="1000000" ToValue="10000000" Fill="#FFC33131"/>
                                     <lvc:AngularSection FromValue="1000000" ToValue="8000000" Fill="#FFD9A73A"/>
                                 </lvc:AngularGauge.Sections>
                             </lvc:AngularGauge>
-                            <TextBlock Text="{Binding GaugeValue, StringFormat='총 생산전력 : {0:N0} KW', UpdateSourceTrigger=PropertyChanged}" Foreground="#FFFFFF" Height="40" Width="250" FontFamily="{StaticResource Rubik_Light}" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" Margin="70,120,0,10"/>
+                            <TextBlock Text="{Binding GaugeValue, StringFormat='당일 가용 전력 : {0:N0} KW', UpdateSourceTrigger=PropertyChanged}" Foreground="#F34336" Height="40" Width="300" FontFamily="{StaticResource Rubik_Light}" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" Margin="50,-320,0,10"/>
                             <TextBlock x:Name="labelLine1" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-100" Grid.ColumnSpan="2" TextAlignment="Center"/>
                             <Slider x:Name="sliderLine1" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged1" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-60" Foreground="#f3ecff"/>
                             <TextBlock x:Name="labelLine2" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-200" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged2" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-160" Foreground="#f3ecff"/>
+                            <Slider x:Name="sliderLine2" Minimum="0" Maximum="15000" ValueChanged="slider_valueChanged2" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-160" Foreground="#f3ecff"/>
                             <TextBlock x:Name="labelLine3" Foreground="#E9A621" Height="100" Width="200" FontFamily="{StaticResource Roboto_Light}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,100,0,-300" Grid.ColumnSpan="2" TextAlignment="Center"/>
-                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="10000" ValueChanged="slider_valueChanged3" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-260" Foreground="#f3ecff"/>
+                            <Slider x:Name="sliderLine3" Minimum="0" Maximum="20000" ValueChanged="slider_valueChanged3" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="94,100,0,-260" Foreground="#f3ecff"/>
                         </Grid>
                     </Grid>
                     <!--총 생산 전력-->
                 </TabItem>
-                <TabItem Header="Tabbell">
-                    <local:belldesign Width="1200" Height="550" Background="White"/>
-                </TabItem>
-                <TabItem Header="TabRyu">
+                <TabItem Header="TRADE MARKET">
                     <Grid>
-                        <Button x:Name="loadData" Content="load" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="Gray" Click="loadData_Click"/>
-                        <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="-700,250,0,0" Background="White" VerticalScrollBarVisibility="Visible" Height="250" Width="500">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="*"/>
-                                <DataGridTextColumn Header="판매량" Binding="{Binding powerResult}" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <lvc:CartesianChart x:Name="cartesianChart"
-                                            HorizontalAlignment="Left" 
-                                            VerticalAlignment="Top" 
-                                            Height="211" 
-                                            Width="1200" Margin="40,47,0,0"
-                                            Background="White"/>
+                        <Grid>
+                            <Button x:Name="loadData" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.578,0.4" Click="loadData_Click" Background="#FFEBEADE" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="MonitorDownload"/>
+                            </Button>
+                            <DataGrid x:Name="datatList" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="800,50,-120,210" Background="#FFEBEADE" Width="320">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="날짜" Binding="{Binding date}" Width="100"/>
+                                    <DataGridTextColumn Header="잔여 전력량" Binding="{Binding powerResult, StringFormat=N0}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <lvc:CartesianChart x:Name="cartesianChart"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Height="300" 
+                            Width="900" Margin="20,50,-100,0"
+                            Background="#FFEBEADE"/>
+
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="maxElectrocitySoldData" HorizontalAlignment="Left" Margin="750,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.578,-0.4" Background="#FFF7E7EA" Click="maxElectrocitySoldData_Click">
+                                <materialDesign:PackIcon Kind="MarketplaceOutline"/>
+                            </Button>
+                            <lvc:CartesianChart x:Name="maxElectrocitySoldChart"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top" 
+                            Height="183" 
+                            Width="700" Margin="20,370,-120,10"
+                            Background="#FFF7E7EA"/>
+                            <Label x:Name="maxElectrocitySoldLabel" FontFamily="{StaticResource Roboto_Medium}" Margin="750,420,-360,90" FontSize="22" Content="누적 전력 판매 금액" Foreground="#FFF7E7EA"></Label>
+                        </Grid>
                     </Grid>
-                </TabItem>
-                <TabItem Header="Tabws">
-                    <local:wsdesign Width="1200" Height="550" Background="White"/>
+
                 </TabItem>
                 <TabItem Header="OPTION">
                     <Grid>
