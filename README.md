@@ -72,12 +72,15 @@
 ![image](https://github.com/user-attachments/assets/627c7f6b-c356-497d-8c22-e524668a1923)
 ![image](https://github.com/user-attachments/assets/45065568-25fb-4cbd-bae5-0196af7e25d5)
 
-### 추가기능
+### 추가 기능
 
 관리자모드 추가(추후 구현 예정)
 🛠️	라인별 max 용량 설정 기능
+
 🛠️	라인별 이름 변경 기능 -> dropdown 버튼으로 구현
-🛠️	라인별 알림 % 설정 기능(몇 %에서 알람이 울릴건가)
+
+🛠️	라인별 알림 % 설정 기능 (몇 %에서 알람이 울릴건가)
+
 🛠️	그래프 이름 변경 기능
 
 
