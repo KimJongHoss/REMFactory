@@ -79,14 +79,14 @@ public Enginner RadialGag() {
 
 
 
-# 사용 도구
+# 개발 도구
 
+<img src ="https://img.shields.io/badge/-C%23-000000?logo=Csharp&style=flat" style="height: 30px;">
+<img src="https://img.shields.io/badge/-WPF-0078D7?style=flat&logo=windows&logoColor=white" style="height: 30px;">
+<img src="https://img.shields.io/badge/-LiveChart-0078D7?style=flat&logo=windows&logoColor=white" style="height: 30px;">
 
+# 소통 도구
 
-  
-
-
-
-
-
-### 정리내용
+<img src ="https://img.shields.io/badge/github-181717?logo=github&style=flat" style="height: 30px;">
+<img src ="https://img.shields.io/badge/notion-000000?logo=notion&style=flat" style="height: 30px;">
+<img src ="https://img.shields.io/badge/slack-4A154B?logo=slack&style=flat" style="height: 30px;">
