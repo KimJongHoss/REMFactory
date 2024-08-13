@@ -47,7 +47,7 @@ namespace REMFactory
             if (sliderLine1 != null && labelLine1 != null && efficiency != 0)
             {
                 doubleValue = sliderLine1.Value;
-                labelLine1.Text = "라인 A 전력 : " + doubleValue.ToString("F0");
+                labelLine1.Text = "라인 A 전력 : " + doubleValue.ToString("F0") + " KW";
                 double efficiencySlider1Value = doubleValue / efficiency * 100;
                 labelEfficiencyLine1.Text = efficiencySlider1Value.ToString("F2");
                 UpdateProgress1(pathLine1, doubleValue);
@@ -59,7 +59,7 @@ namespace REMFactory
             if (sliderLine2 != null && labelLine2 != null && efficiency != 0)
             {
                 doubleValue2 = sliderLine2.Value;
-                labelLine2.Text = "라인 B 전력 : " + doubleValue2.ToString("F0");
+                labelLine2.Text = "라인 B 전력 : " + doubleValue2.ToString("F0") + " KW";
                 double efficiencySlider2Value = doubleValue2 / efficiency * 100 / 1.5;
                 labelEfficiencyLine2.Text = efficiencySlider2Value.ToString("F2");
                 UpdateProgress2(pathLine2, doubleValue2);
@@ -71,7 +71,7 @@ namespace REMFactory
             if (sliderLine3 != null && labelLine3 != null && efficiency != 0)
             {
                 doubleValue3 = sliderLine3.Value;
-                labelLine3.Text = "라인 C 전력 : " + doubleValue3.ToString("F0");
+                labelLine3.Text = "라인 C 전력 : " + doubleValue3.ToString("F0") + " KW";
                 double efficiencySlider3Value = doubleValue3 / efficiency * 100 / 2;
                 labelEfficiencyLine3.Text = efficiencySlider3Value.ToString("F2");
                 UpdateProgress3(pathLine3, doubleValue3);
@@ -155,7 +155,7 @@ namespace REMFactory
             login();
         }
 
-        private void lineAtext_MouseUp(object sender, MouseButtonEventArgs e)
+        private void lineAtext_Click(object sender, RoutedEventArgs e)
         {
             OpenChartWindow();
         }
@@ -168,7 +168,7 @@ namespace REMFactory
             //    return;
             //}
 
-            ChartWindow1 chartWindow = new ChartWindow1(this);
+            var chartWindow = new ChartWindow1(ChartValues6, ChartValues7, ChartValues8, dates);
             chartWindow.Show();
         }
 
