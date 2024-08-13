@@ -45,12 +45,12 @@ namespace REMFactory
         public void chart1()
         {
             var mapper = Mappers.Xy<MeasureModel>()
-                .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
-                .Y(model => model.Value);                       //use the value property as Y
+                .X(model => model.X.ToOADate())                 // DateTime.Ticks 을 X로 사용
+                .Y(model => model.Value);                       //value값을 Y로 사용
 
             var soldMapper = Mappers.Xy<MeasureSoldModel>()
-               .X(model => model.X.ToOADate())                 //use DateTime.Ticks as X
-               .Y(model => model.Value);                       //use the value property as Y
+               .X(model => model.X.ToOADate())                 // DateTime.Ticks 을 X로 사용
+               .Y(model => model.Value);                       //value값을 Y로 사용
 
             //lets save the mapper globally.
             Charting.For<MeasureModel>(mapper);
@@ -70,7 +70,6 @@ namespace REMFactory
             AxisUnit = 1; // X축 단위 설정
 
             SetAxisLimits(DateTime.Now);
-            //SetSoldAxisLimits(DateTime.Now);
 
 
             IsReading = false;
@@ -129,24 +128,19 @@ namespace REMFactory
         private void Read()
         {
             var r = new Random();
-            //var datapath1 = System.IO.Path.GetFullPath(@"제주특별자치도개발공사_제주삼다수공장_시간별_전력사용량_20230930.csv");
             var dataPath2 = System.IO.Path.GetFullPath(@"한국서부발전(주)_태양광 발전 현황_20230630.csv");
-            //var dfJong = DataFrame.LoadCsv(datapath1);
             var df = DataFrame.LoadCsv(dataPath2);
 
             var dfLine1 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광1") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
             var dfLine2 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광2") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
             var dfLine3 = df.Rows.Where(row => (row["발전기명"].ToString().Contains("태양광3") == true) && (((DateTime)row["년월일"]).Year == 2023)).ToList();
 
-
-            //var dfJong_1 = dfJong.Rows.Where(row => ((DateTime)row["일시"]).Month <= 6).ToList();
             List<Double> listRyu = new List<Double>();
 
             List<double> power = new List<double>();
             List<Double> dfLine1List = new List<Double>();
             List<Double> dfLine2List = new List<Double>();
             List<Double> dfLine3List = new List<Double>();
-            //List<int> listJong = new List<int>();
             for (int i = 0; i < dfLine1.Count(); i++)
             {
                 for (int j = 3; j < dfLine1[0].Count(); j++)
@@ -159,13 +153,6 @@ namespace REMFactory
 
             }
 
-            //for (int i = 0; i < dfJong_1.Count(); i++)
-            //{
-            //    for (int j = 1; j < dfJong_1[i].Count(); j++)
-            //    {
-            //        listJong.Add(Convert.ToInt32(dfJong_1[i][j]));
-            //    }
-            //}
             for (int i = 0; i < dfLine1.Count(); i++)
             {
                 for (int j = 1; j <= 24; j++)
@@ -173,7 +160,7 @@ namespace REMFactory
                     dates.Add(Convert.ToDateTime(dfLine1[i][1]).AddHours(j));
                 }
             }
-            var minElec = (efficiency + efficiency2 + efficiency3) * 8; // 최소 전력
+            var minElec = (efficiency + efficiency2 + efficiency3) * 8; // 전력이 생산 되지 않는 시간동안 가동에 필요한 최소 전력
             int count = 0;
             int x = 1;
             getPanel2Data();
@@ -238,58 +225,32 @@ namespace REMFactory
                 };
                 SetAxisLimits(today);
 
-                //lets only use the last 150 values
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    AddToChart(ChartValues1, model1);
-                    AddToChart(ChartValues2, model2);
-                    AddToChart(ChartValues3, model3);
-                    AddToChart(ChartValues4, model4);
-                    AddToChart(ChartValues6, model6);
-                    AddToChart(ChartValues7, model7);
-                    AddToChart(ChartValues8, model8);
+                    ChartValues1.Add(model1);
+                    ChartValues2.Add(model2);
+                    ChartValues3.Add(model3);
+                    ChartValues4.Add(model4);
+                    ChartValues6.Add(model6);
+                    ChartValues7.Add(model7);
+                    ChartValues8.Add(model8);
+
 
                     SetAxisLimits(today);
 
-                    if (ChartValues1.Count > 1000) ChartValues1.RemoveAt(0);
-                    if (ChartValues2.Count > 1000) ChartValues2.RemoveAt(0);
-                    if (ChartValues3.Count > 1000) ChartValues3.RemoveAt(0);
-                    if (ChartValues4.Count > 1000) ChartValues4.RemoveAt(0);
-                    if (ChartValues6.Count > 1000) ChartValues6.RemoveAt(0);
-                    if (ChartValues7.Count > 1000) ChartValues7.RemoveAt(0);
-                    if (ChartValues8.Count > 1000) ChartValues8.RemoveAt(0);
+                    if (ChartValues1.Count > 15) ChartValues1.RemoveAt(0);     // 그래프의 y값이 15개가 넘어갈 경우 인덱스0 값 삭제
+                    if (ChartValues2.Count > 15) ChartValues2.RemoveAt(0);
+                    if (ChartValues3.Count > 15) ChartValues3.RemoveAt(0);
+                    if (ChartValues4.Count > 15) ChartValues4.RemoveAt(0);
+                    if (ChartValues6.Count > 15) ChartValues6.RemoveAt(0);
+                    if (ChartValues7.Count > 15) ChartValues7.RemoveAt(0);
+                    if (ChartValues8.Count > 15) ChartValues8.RemoveAt(0);
                     label3.Text = dates[count].Date.ToString("yyyy-MM-dd");
 
 
                 });
 
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    AddTosoldChart(ChartValues5, model5);
 
-
-                    //SetSoldAxisLimits(openTime);
-                    if (ChartValues5.Count > 1000) ChartValues5.RemoveAt(0);
-                    //label4.Text = "OPENTIME :" + openTime.ToString("yyyy-MM-dd");
-
-                });
-
-
-                //if (x % 24 == 0)
-                //{
-                //    sumPower = (powerTotal - minElec);
-                //    cumulativeElectrocity += sumPower;
-                //    powerTotal = minElec;
-                //    dateDictionary.Add(dates[count].Date, sumPower);
-                //    dateResult = dateDictionary[dates[count].Date].ToString();
-                //    checkDateChange = true;
-                //    ElectrocityStore();
-                //    //Application.Current.Dispatcher.Invoke(() => {
-                //    //    label1.Text = "누적 판매 전력량 :" + dateResult.ToString();
-
-                //    //});
-
-                //}
                 if (x % 24 == 0)
                 {
                     if (powerTotal > minElec)
@@ -312,35 +273,13 @@ namespace REMFactory
             }
 
         }
-        private void AddToChart(ChartValues<MeasureModel> chartValues, MeasureModel newValue)
-        {
-            chartValues.Add(newValue);
-            if (chartValues.Count > 15) // Limit to 15 values
-            {
-                chartValues.RemoveAt(0); // Remove the oldest value
-            }
-        }
-
-        private void AddTosoldChart(ChartValues<MeasureSoldModel> chartValues, MeasureSoldModel newValue)
-        {
-            chartValues.Add(newValue);
-            if (chartValues.Count > 15) // Limit to 15 values
-            {
-                chartValues.RemoveAt(0); // Remove the oldest value
-            }
-        }
 
         private void SetAxisLimits(DateTime currentDateTime)
         {
-            AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
-            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
+            AxisMax = currentDateTime.AddHours(10).ToOADate(); // 10시간 후 데이터
+            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // 5시간 전 데이터 까지 표현 그래프에 표현
         }
 
-        private void SetSoldAxisLimits(DateTime currentDateTime)
-        {
-            AxisMax = currentDateTime.AddHours(10).ToOADate(); // Add 10 hours to the current date/time
-            AxisMin = currentDateTime.AddHours(-5).ToOADate(); // Subtract 5 hours from the current date/time
-        }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
         {
