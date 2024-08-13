@@ -14,6 +14,9 @@ using System.Windows.Input;
 using LiveCharts.Defaults;
 using LiveCharts.Definitions.Charts;
 using static REMFactory.ChartWindow1;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Data;
 
 namespace REMFactory
 {
@@ -237,5 +240,6 @@ namespace REMFactory
             };
         }
     }
-
 }
+
+

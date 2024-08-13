@@ -26,7 +26,6 @@ namespace REMFactory
             InitializeComponent();
             chart1();
 
-
             //getPanel2Data();
         }
 
